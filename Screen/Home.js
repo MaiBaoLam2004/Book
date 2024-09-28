@@ -30,8 +30,23 @@ const Home = ({route, favorites, setFavorites}) => {
     }
   };
 
+  const fetchUserFavorites = async () => {
+    try {
+      const response = await fetch(`http://192.168.1.10:3000/users/${userId}`);
+      if (response.ok) {
+        const userData = await response.json();
+        setFavorites(userData.favorites || []);
+      } else {
+        console.error('Failed to fetch user favorites');
+      }
+    } catch (error) {
+      console.error('Error fetching user favorites:', error);
+    }
+  };
+
   useEffect(() => {
     fetchFootballFields();
+    fetchUserFavorites(); // Lấy danh sách yêu thích của người dùng khi màn hình Home được mở
   }, []);
 
   const onRefresh = useCallback(() => {

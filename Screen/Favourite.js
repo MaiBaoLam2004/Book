@@ -6,7 +6,6 @@ const Favourite = ({ favorites, setFavorites, userId }) => {
     const isFavorite = favorites.find(fav => fav.id === item.id);
 
     if (isFavorite) {
-      // If already a favorite, remove from the list
       try {
         console.log('Removing favorite:', item);
         const response = await fetch(`http://192.168.1.10:3000/users/${userId}`, {
@@ -15,40 +14,42 @@ const Favourite = ({ favorites, setFavorites, userId }) => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            favorites: favorites.filter(fav => fav.id !== item.id), // Update favorites list
+            favorites: favorites.filter(fav => fav.id !== item.id), // Cập nhật danh sách yêu thích
           }),
         });
-
+   
         if (response.ok) {
           const updatedFavorites = favorites.filter(fav => fav.id !== item.id);
           setFavorites(updatedFavorites);
           console.log('Favorite removed successfully:', item);
         } else {
-          console.error('Failed to remove favorite', await response.text());
+          const errorText = await response.text();
+          console.error('Failed to remove favorite:', errorText);
         }
       } catch (error) {
         console.error('Error removing favorite:', error);
       }
+    
+  
     } else {
-      // If not a favorite, add to the list
+      // Nếu chưa phải yêu thích, thêm vào danh sách
       try {
-        console.log('Adding favorite:', item);
         const response = await fetch(`http://192.168.1.10:3000/users/${userId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            favorites: [...favorites, item], // Update favorites list
+            favorites: [...favorites, item], // Cập nhật danh sách yêu thích
           }),
         });
 
         if (response.ok) {
           const updatedFavorites = [...favorites, item];
           setFavorites(updatedFavorites);
-          console.log('Favorite added successfully:', item);
         } else {
-          console.error('Failed to add favorite', await response.text());
+          const errorText = await response.text();
+          console.error('Failed to add favorite:', errorText);
         }
       } catch (error) {
         console.error('Error adding favorite:', error);
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderRadius: 10,
     width: '90%',
-    alignItems: 'center', // Center the content horizontally
+    alignItems: 'center',
   },
   image: {
     width: 100,
