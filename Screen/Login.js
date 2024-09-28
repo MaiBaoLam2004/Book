@@ -7,6 +7,9 @@ import {
   View,
   Alert,
   Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
 } from 'react-native';
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -52,63 +55,70 @@ function Login() {
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        resizeMode="center"
-        style={styles.logoapp}
-        source={require('../Images/icon_logo.png')}
-      />
-      <Text style={styles.title}>Đăng nhập</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Tài khoản"
-        placeholderTextColor="#888"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <View style={styles.passwordContainer}>
-        <TextInput
-          style={[styles.input, { flex: 1 }]}
-          placeholder="Mật khẩu"
-          placeholderTextColor="#888"
-          secureTextEntry={!passwordVisible}
-          value={password}
-          onChangeText={setPassword}
-        />
-        <TouchableOpacity
-          style={styles.eyeIcon}
-          onPress={() => setPasswordVisible(!passwordVisible)}
-        >
-          <Icon
-            name={passwordVisible ? 'eye' : 'eye-off'}
-            size={24}
-            color="#888"
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View style={styles.container}>
+          <Image
+            resizeMode="center"
+            style={styles.logoapp}
+            source={require('../Images/icon_logo.png')}
           />
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity
-        style={styles.forgotPassword}
-        onPress={() => navigation.navigate('ForgotPassword')}
-      >
-        <Text style={styles.forgotPasswordText}>Quên mật khẩu?</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>
-          Đăng nhập
-        </Text>
-      </TouchableOpacity>
-      <View
-        style={{ flexDirection: 'column', alignItems: 'center', marginTop: 20 }}
-      >
-        <Text style={{ fontSize: 16 }}>Bạn chưa có tài khoản?</Text>
-        <TouchableOpacity
-          style={styles.registerButton}
-          onPress={() => navigation.navigate('Register')}
-        >
-          <Text style={styles.registerButtonText}>Đăng ký</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+          <Text style={styles.title}>Đăng nhập</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Tài khoản"
+            placeholderTextColor="#888"
+            value={username}
+            onChangeText={setUsername}
+          />
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={[styles.input, { flex: 1 }]}
+              placeholder="Mật khẩu"
+              placeholderTextColor="#888"
+              secureTextEntry={!passwordVisible}
+              value={password}
+              onChangeText={setPassword}
+            />
+            <TouchableOpacity
+              style={styles.eyeIcon}
+              onPress={() => setPasswordVisible(!passwordVisible)}
+            >
+              <Icon
+                name={passwordVisible ? 'eye' : 'eye-off'}
+                size={24}
+                color="#888"
+              />
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            style={styles.forgotPassword}
+            onPress={() => navigation.navigate('ForgotPassword')}
+          >
+            <Text style={styles.forgotPasswordText}>Quên mật khẩu?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>
+              Đăng nhập
+            </Text>
+          </TouchableOpacity>
+          <View
+            style={{ flexDirection: 'column', alignItems: 'center', marginTop: 20 }}
+          >
+            <Text style={{ fontSize: 16 }}>Bạn chưa có tài khoản?</Text>
+            <TouchableOpacity
+              style={styles.registerButton}
+              onPress={() => navigation.navigate('Register')}
+            >
+              <Text style={styles.registerButtonText}>Đăng ký</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -117,7 +127,7 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    //justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
     backgroundColor: '#f5f5f5',
@@ -128,12 +138,12 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     color: '#333',
     textTransform: 'uppercase',
-    marginTop: 70,
+    marginTop: 100,
   },
   logoapp: {
-    width: 300,
-    height: 300,
-    position: 'absolute',
+    width: 200,
+    height: 200,
+    //position: 'absolute',
     top: 0,
   },
   input: {
@@ -145,6 +155,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
     backgroundColor: '#fff',
+    color: 'black',
   },
   passwordContainer: {
     flexDirection: 'row',

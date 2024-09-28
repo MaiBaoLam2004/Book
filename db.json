@@ -44,17 +44,6 @@
       "role": "user",
       "favorites": [
         {
-          "id": "2",
-          "name": "Sân B",
-          "location": "456 Đường Elm, Hà Nội",
-          "price_per_hour": 150,
-          "availability": "đã đặt",
-          "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
-          "surface_type": "cỏ nhân tạo",
-          "max_players": 22,
-          "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
-        },
-        {
           "id": "1",
           "name": "Sân A",
           "location": "123 Đường Chính, Hà Nội",

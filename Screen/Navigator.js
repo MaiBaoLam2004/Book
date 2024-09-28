@@ -1,12 +1,12 @@
-import { View, Text } from 'react-native';
-import React, { useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import {View, Text} from 'react-native';
+import React, {useState} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
 import WellCome from './WellCome';
 import Register from './Register';
 import Login from './Login';
 import Home from './Home';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Admin from './Admin';
 import Users from './Users';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -18,13 +18,13 @@ import Detail from './Detail';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function BottomTabNav() {
+function BottomTabNav({ userId }) { // Nhận userId từ props
   const [favorites, setFavorites] = useState([]);
 
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
           let iconName;
 
           if (route.name === 'Trang chủ') {
@@ -42,31 +42,40 @@ function BottomTabNav() {
         tabBarActiveTintColor: 'red',
         tabBarInactiveTintColor: 'black',
         headerShown: false,
-      })}
-    >
+      })}>
       <Tab.Screen name="Trang chủ">
-        {props => <Home {...props} favorites={favorites} setFavorites={setFavorites} />}
+        {props => (
+          <Home {...props} favorites={favorites} setFavorites={setFavorites} />
+        )}
       </Tab.Screen>
       <Tab.Screen name="Yêu thích">
-        {props => <Favourite {...props} favorites={favorites} />}
+        {props => (
+          <Favourite
+            {...props}
+            favorites={favorites}
+            setFavorites={setFavorites}
+            userId={userId} // Truyền userId vào đây
+          />
+        )}
       </Tab.Screen>
+
       <Tab.Screen name="Thông báo" component={Notification} />
       <Tab.Screen name="Tài khoản" component={Users} />
     </Tab.Navigator>
   );
 }
 
+
 function Navigator() {
-  const [user, setUser] = useState(null);
+  //const [user, setUser] = useState(null);
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
-          contentStyle: { paddingTop: 0 },
+          contentStyle: {paddingTop: 0},
         }}
-        initialRouteName="WellCome"
-      >
+        initialRouteName="WellCome">
         <Stack.Screen name="WellCome" component={WellCome} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />

@@ -54,75 +54,77 @@ const Home = ({route, favorites, setFavorites}) => {
     fetchFootballFields().then(() => setRefreshing(false));
   }, []);
 
-  const toggleFavorite = async item => {
+  const toggleFavorite = async (item) => {
     const isFavorite = favorites.find(fav => fav.id === item.id);
-
+  
+    // Lấy danh sách yêu thích hiện tại từ server
+    let currentFavorites = favorites;
+  
     if (isFavorite) {
-      // Nếu đã yêu thích, xóa khỏi danh sách
       try {
-        const updatedFavorites = favorites.filter(fav => fav.id !== item.id);
+        console.log('Removing favorite:', item);
+        const updatedFavorites = currentFavorites.filter(fav => fav.id !== item.id);
         console.log('Updated Favorites (Remove):', updatedFavorites);
-
-        const response = await fetch(
-          `http://192.168.1.10:3000/users/${userId}`,
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              favorites: updatedFavorites, // Cập nhật danh sách favorites
-            }),
+  
+        const response = await fetch(`http://192.168.1.10:3000/users/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
           },
-        );
-
-        console.log('Response (Remove):', response);
-
+          body: JSON.stringify({
+            favorites: updatedFavorites, // Cập nhật danh sách yêu thích
+          }),
+        });
+  
         if (response.ok) {
           setFavorites(updatedFavorites);
+          console.log('Favorite removed successfully:', item);
+          fetchUserFavorites(); // Cập nhật lại danh sách yêu thích
+          fetchFootballFields(); // Cập nhật lại danh sách sân bóng
         } else {
-          console.error('Failed to remove favorite');
+          const errorText = await response.text();
+          console.error('Failed to remove favorite:', errorText);
         }
       } catch (error) {
         console.error('Error removing favorite:', error);
       }
     } else {
-      // Nếu chưa yêu thích, thêm vào danh sách
+      // Nếu chưa phải yêu thích, thêm vào danh sách
       try {
-        const updatedFavorites = [...favorites, item];
+        const updatedFavorites = [...currentFavorites, item];
         console.log('Updated Favorites (Add):', updatedFavorites);
-
-        const response = await fetch(
-          `http://192.168.1.10:3000/users/${userId}`,
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              favorites: updatedFavorites, // Cập nhật danh sách favorites
-            }),
+  
+        const response = await fetch(`http://192.168.1.10:3000/users/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
           },
-        );
-
-        console.log('Response (Add):', response);
-
+          body: JSON.stringify({
+            favorites: updatedFavorites, // Cập nhật danh sách yêu thích
+          }),
+        });
+  
         if (response.ok) {
           setFavorites(updatedFavorites);
+          console.log('Favorite added successfully:', item);
+          fetchUserFavorites(); // Cập nhật lại danh sách yêu thích
+          fetchFootballFields(); // Cập nhật lại danh sách sân bóng
         } else {
-          console.error('Failed to add favorite');
+          const errorText = await response.text();
+          console.error('Failed to add favorite:', errorText);
         }
       } catch (error) {
         console.error('Error adding favorite:', error);
       }
     }
   };
-
+  
+  
   const renderItem = ({item}) => {
     return (
       <View style={styles.itemContainer}>
         <TouchableOpacity
-          style={[styles.touchableContainer, {alignSelf: 'flex-end'}]}
+          style={[styles.touchableContainer, ]}
           onPress={() => navigation.navigate('Detail', {product: item})}>
           <View>
             <Text style={styles.itemText}>Tên sân: {item.name}</Text>
@@ -142,7 +144,7 @@ const Home = ({route, favorites, setFavorites}) => {
         <TouchableOpacity
           style={styles.heartIcon}
           onPress={() => toggleFavorite(item)}>
-          <Text style={{fontSize: 20}}>
+          <Text style={{fontSize: 25}}>
             {favorites.find(fav => fav.id === item.id) ? '❤️' : '🤍'}
           </Text>
         </TouchableOpacity>
@@ -167,6 +169,7 @@ const Home = ({route, favorites, setFavorites}) => {
             fontSize: 30,
             alignSelf: 'flex-start',
             marginLeft: 25,
+            color: 'black',
           }}>
           Tất cả các sân
         </Text>
@@ -188,7 +191,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'ceter',
   },
   logo: {
     width: 100,
@@ -206,17 +209,26 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     padding: 10,
-    marginHorizontal: 5,
-    marginBottom: 10,
-    width: 200,
-    height: 200,
+    //marginHorizontal: 5,
+    //marginBottom: 10,
     borderWidth: 1,
     borderRadius: 20,
     borderColor: 'black',
-    marginLeft: 20,
+    marginLeft: 10,
+    //backgroundColor: 'blue',
+    marginRight: 10,
+  },
+  touchableContainer:{
+    //backgroundColor: 'white',
+    //height: '70%',
+    width: '100%',
+    //backgroundColor:'gray',
+    
   },
   itemText: {
     marginBottom: 5,
+    color: 'black',
+    fontSize: 16,
   },
   heartIcon: {
     position: 'absolute',

@@ -1,58 +1,76 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 
-const Favourite = ({ favorites, setFavorites, userId }) => {
-  const toggleFavorite = async (item) => {
+const Favourite = ({favorites, setFavorites, userId}) => {
+  const toggleFavorite = async item => {
     const isFavorite = favorites.find(fav => fav.id === item.id);
 
     if (isFavorite) {
+      // Nếu đã yêu thích, xóa khỏi danh sách
+      const updatedFavorites = favorites.filter(fav => fav.id !== item.id);
+      setFavorites(updatedFavorites); // Cập nhật danh sách ngay lập tức
+
       try {
-        console.log('Removing favorite:', item);
-        const response = await fetch(`http://192.168.1.10:3000/users/${userId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
+        const response = await fetch(
+          `http://192.168.1.10:3000/users/${userId}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              favorites: updatedFavorites, // Cập nhật danh sách yêu thích
+            }),
           },
-          body: JSON.stringify({
-            favorites: favorites.filter(fav => fav.id !== item.id), // Cập nhật danh sách yêu thích
-          }),
-        });
-   
-        if (response.ok) {
-          const updatedFavorites = favorites.filter(fav => fav.id !== item.id);
-          setFavorites(updatedFavorites);
-          console.log('Favorite removed successfully:', item);
-        } else {
+        );
+
+        if (!response.ok) {
           const errorText = await response.text();
           console.error('Failed to remove favorite:', errorText);
+          // Khôi phục lại danh sách yêu thích nếu có lỗi
+          setFavorites([...updatedFavorites, item]);
         }
       } catch (error) {
         console.error('Error removing favorite:', error);
+        // Khôi phục lại danh sách yêu thích nếu có lỗi
+        setFavorites([...updatedFavorites, item]);
       }
-    
-  
     } else {
       // Nếu chưa phải yêu thích, thêm vào danh sách
-      try {
-        const response = await fetch(`http://192.168.1.10:3000/users/${userId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            favorites: [...favorites, item], // Cập nhật danh sách yêu thích
-          }),
-        });
+      const updatedFavorites = [...favorites, item];
+      setFavorites(updatedFavorites); // Cập nhật danh sách ngay lập tức
 
-        if (response.ok) {
-          const updatedFavorites = [...favorites, item];
-          setFavorites(updatedFavorites);
-        } else {
+      try {
+        const response = await fetch(
+          `http://192.168.1.10:3000/users/${userId}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              favorites: updatedFavorites, // Cập nhật danh sách yêu thích
+            }),
+          },
+        );
+
+        if (!response.ok) {
           const errorText = await response.text();
           console.error('Failed to add favorite:', errorText);
+          // Khôi phục lại danh sách yêu thích nếu có lỗi
+          setFavorites(favorites);
         }
       } catch (error) {
         console.error('Error adding favorite:', error);
+        // Khôi phục lại danh sách yêu thích nếu có lỗi
+        setFavorites(favorites);
       }
     }
   };
@@ -60,24 +78,36 @@ const Favourite = ({ favorites, setFavorites, userId }) => {
   return (
     <View style={styles.container}>
       {favorites.length === 0 ? (
-        <Text>Không có sân nào trong danh sách yêu thích.</Text>
+        <View style={styles.noFavoritesContainer}>
+          <Text style={styles.noFavoritesText}>Không có sân nào trong danh sách yêu thích.</Text>
+        </View>
       ) : (
         <FlatList
           data={favorites}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <View style={styles.itemContainer}>
-              <Image source={{ uri: item.image_url }} style={styles.image} />
-              <Text>Tên sân: {item.name}</Text>
-              <Text>Địa điểm: {item.location}</Text>
-              <Text>Giá mỗi giờ: {item.price_per_hour} VND</Text>
-              <Text>Tình trạng: {item.availability}</Text>
-              <Text>Loại mặt sân: {item.surface_type}</Text>
-              <Text>Số lượng người chơi tối đa: {item.max_players}</Text>
+              <Image source={{uri: item.image_url}} style={styles.image} 
+              //resizeMode='center' 
+              />
+              <View>
+                <Text style={styles.text}>Tên sân: {item.name}</Text>
+                <Text style={styles.text}>Địa điểm: {item.location}</Text>
+                <Text style={styles.text}>
+                  Giá mỗi giờ: {item.price_per_hour} VND
+                </Text>
+                <Text style={styles.text}>Tình trạng: {item.availability}</Text>
+                <Text style={styles.text}>
+                  Loại mặt sân: {item.surface_type}
+                </Text>
+                <Text style={styles.text}>
+                  Số lượng người chơi tối đa: {item.max_players}
+                </Text>
+              </View>
+
               <TouchableOpacity
                 style={styles.heartIcon}
-                onPress={() => toggleFavorite(item)}
-              >
-                <Text style={{ fontSize: 20 }}>❤️</Text>
+                onPress={() => toggleFavorite(item)}>
+                <Text style={{fontSize: 30}}>❤️</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -94,7 +124,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    //justifyContent: 'center',
+  },
+  noFavoritesContainer: {
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noFavoritesText: {
+    color: 'black',
+    fontSize: 16,
   },
   itemContainer: {
     padding: 10,
@@ -102,17 +141,21 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 10,
-    width: '90%',
     alignItems: 'center',
+    top: 10,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 290,
+    height: 150,
     marginBottom: 10,
   },
   heartIcon: {
     position: 'absolute',
     right: 10,
     top: 5,
+  },
+  text: {
+    color: 'black',
+    fontSize: 16,
   },
 });

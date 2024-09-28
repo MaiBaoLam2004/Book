@@ -6,6 +6,9 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -57,49 +60,58 @@ const Register = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        resizeMode='center'
-        style={styles.logoapp}
-        source={require('../Images/icon_logo.png')}
-      />
-      <Text style={styles.title}>Đăng ký</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Tên đăng nhập"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Mật khẩu"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Nhập lại mật khẩu"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        secureTextEntry
-      />
-      <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
-        <Text style={{color:'white', fontWeight:'bold', fontSize:20}}>
-          Đăng ký
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.loginText}>Bạn đã có tài khoản? Đăng nhập</Text>
-      </TouchableOpacity>
-    </View>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView contentContainerStyle={styles.container}>
+        <Image
+          resizeMode='center'
+          style={[styles.logoapp, {marginTop: 0}]}
+          source={require('../Images/icon_logo.png')}
+        />
+        <Text style={styles.title}>Đăng ký</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Tên đăng nhập"
+          placeholderTextColor="#888"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor="#888"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Mật khẩu"
+          placeholderTextColor="#888"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Nhập lại mật khẩu"
+          placeholderTextColor="#888"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry
+        />
+        <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
+          <Text style={{color:'white', fontWeight:'bold', fontSize:20}}>
+            Đăng ký
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.loginText}>Bạn đã có tài khoản? Đăng nhập</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -107,8 +119,8 @@ export default Register;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
+    flexGrow: 1,
+    //justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
     backgroundColor: '#f5f5f5',
@@ -119,12 +131,12 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     color: '#333',
     textTransform: 'uppercase',
-    marginTop: 70 // Thêm khoảng cách phía trên
+    marginTop: 0 // Thêm khoảng cách phía trên
   },
   logoapp: {
-    width: 300,
-    height: 300,
-    position: 'absolute',
+    width: 200,
+    height: 200,
+    //position: 'absolute',
     top: 0,
     //backgroundColor: 'black',
   },
@@ -137,6 +149,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
     backgroundColor: '#fff',
+    color:'black'
 
   },
   registerButton: {
