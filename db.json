@@ -6,19 +6,7 @@
       "email": "a",
       "password": "a",
       "role": "user",
-      "favorites": [
-        {
-          "id": "1",
-          "name": "Sân A",
-          "location": "123 Đường Chính, Hà Nội",
-          "price_per_hour": 100,
-          "availability": "có sẵn",
-          "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
-          "surface_type": "cỏ tự nhiên",
-          "max_players": 22,
-          "image_url": "https://vecgroup.vn/upload_images/images/2021/12/09/kich-thuoc-san-bong-11-nguoi(1).png"
-        }
-      ]
+      "favorites": []
     }
   ],
   "football_fields": [
