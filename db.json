@@ -1,42 +1,6 @@
 {
   "users": [
     {
-      "id": "1",
-      "name": "Nguyen Van A",
-      "email": "user@example.com",
-      "role": "user",
-      "password": "123456"
-    },
-    {
-      "id": "5122",
-      "username": "tetst2a",
-      "email": "errerer",
-      "password": "1234",
-      "role": "user"
-    },
-    {
-      "id": "524d",
-      "username": "ad1",
-      "email": "dcv",
-      "password": "1234",
-      "role": "user",
-      "favorites": []
-    },
-    {
-      "id": "5324d",
-      "username": "ad2",
-      "email": "dcv",
-      "password": "1234",
-      "role": "admin"
-    },
-    {
-      "id": "1d77",
-      "username": "1",
-      "email": "1",
-      "password": "1",
-      "role": "user"
-    },
-    {
       "id": "3e9b",
       "username": "a",
       "email": "a",

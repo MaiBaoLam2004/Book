@@ -8,72 +8,89 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const Favourite = ({favorites, setFavorites, userId}) => {
-  const toggleFavorite = async item => {
-    const isFavorite = favorites.find(fav => fav.id === item.id);
+const Favourite = ({ favorites, setFavorites, userId }) => {
+  // Kiểm tra và log userId
+  console.log('User ID:', userId);
 
-    if (isFavorite) {
-      // Nếu đã yêu thích, xóa khỏi danh sách
-      const updatedFavorites = favorites.filter(fav => fav.id !== item.id);
-      setFavorites(updatedFavorites); // Cập nhật danh sách ngay lập tức
-
-      try {
-        const response = await fetch(
-          `http://192.168.1.10:3000/users/${userId}`,
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              favorites: updatedFavorites, // Cập nhật danh sách yêu thích
-            }),
-          },
-        );
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error('Failed to remove favorite:', errorText);
-          // Khôi phục lại danh sách yêu thích nếu có lỗi
-          setFavorites([...updatedFavorites, item]);
-        }
-      } catch (error) {
-        console.error('Error removing favorite:', error);
-        // Khôi phục lại danh sách yêu thích nếu có lỗi
-        setFavorites([...updatedFavorites, item]);
+  const deleteFavorite = async itemId => {
+    // Lọc danh sách yêu thích để xóa mục
+    const updatedFavorites = favorites.filter(fav => fav.id !== itemId);
+    setFavorites(updatedFavorites); // Cập nhật danh sách cục bộ ngay lập tức
+  
+    try {
+      if (!userId) {
+        console.error("User ID is undefined.");
+        return;
       }
+  
+      // Gửi yêu cầu PATCH để cập nhật favorites trên server
+      const response = await fetch(`http://192.168.1.10:3000/users/${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          favorites: updatedFavorites, // Cập nhật danh sách yêu thích
+        }),
+      });
+  
+      if (response.ok) {
+        console.log('Deleted favorite successfully');
+      } else {
+        const errorText = await response.text(); // Log nội dung lỗi
+        console.error(`Error deleting favorite: ${response.status} - ${errorText}`);
+      }
+    } catch (error) {
+      console.error('Error connecting to the server:', error);
+      // Nếu có lỗi, phục hồi lại trạng thái danh sách yêu thích
+      setFavorites(favorites); // Undo để đảm bảo không mất dữ liệu
+    }
+  };
+  
+
+  const toggleFavorite = async itemId => {
+    const isFavorite = favorites.find(fav => fav.id === itemId);
+  
+    if (isFavorite) {
+      // Nếu là yêu thích, gọi deleteFavorite
+      deleteFavorite(itemId);
     } else {
-      // Nếu chưa phải yêu thích, thêm vào danh sách
-      const updatedFavorites = [...favorites, item];
-      setFavorites(updatedFavorites); // Cập nhật danh sách ngay lập tức
-
+      // Nếu không phải yêu thích, thêm vào danh sách
+      const newFavorite = {
+        id: itemId, // ID của sân
+        name: 'Sân A', // Cập nhật theo thông tin thực tế
+        location: '123 Đường Chính, Hà Nội',
+        price_per_hour: 100,
+        image_url: 'https://vecgroup.vn/upload_images/images/2021/12/09/kich-thuoc-san-bong-11-nguoi(1).png',
+      };
+  
+      const updatedFavorites = [...favorites, newFavorite];
+      setFavorites(updatedFavorites);
+  
       try {
-        const response = await fetch(
-          `http://192.168.1.10:3000/users/${userId}`,
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              favorites: updatedFavorites, // Cập nhật danh sách yêu thích
-            }),
+        const response = await fetch(`http://192.168.1.10:3000/users/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
           },
-        );
-
-        if (!response.ok) {
+          body: JSON.stringify({
+            favorites: updatedFavorites, // Cập nhật danh sách yêu thích
+          }),
+        });
+  
+        if (response.ok) {
+          console.log('Added favorite successfully');
+        } else {
           const errorText = await response.text();
-          console.error('Failed to add favorite:', errorText);
-          // Khôi phục lại danh sách yêu thích nếu có lỗi
-          setFavorites(favorites);
+          console.error('Error adding favorite:', errorText);
         }
       } catch (error) {
-        console.error('Error adding favorite:', error);
-        // Khôi phục lại danh sách yêu thích nếu có lỗi
-        setFavorites(favorites);
+        console.error('Error connecting to the server:', error);
+        setFavorites(favorites); // Undo để không mất dữ liệu
       }
     }
   };
+  
 
   return (
     <View style={styles.container}>
@@ -84,34 +101,22 @@ const Favourite = ({favorites, setFavorites, userId}) => {
       ) : (
         <FlatList
           data={favorites}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <View style={styles.itemContainer}>
-              <Image source={{uri: item.image_url}} style={styles.image} 
-              //resizeMode='center' 
-              />
+              <Image source={{ uri: item.image_url }} style={styles.image} />
               <View>
                 <Text style={styles.text}>Tên sân: {item.name}</Text>
                 <Text style={styles.text}>Địa điểm: {item.location}</Text>
-                <Text style={styles.text}>
-                  Giá mỗi giờ: {item.price_per_hour} VND
-                </Text>
-                <Text style={styles.text}>Tình trạng: {item.availability}</Text>
-                <Text style={styles.text}>
-                  Loại mặt sân: {item.surface_type}
-                </Text>
-                <Text style={styles.text}>
-                  Số lượng người chơi tối đa: {item.max_players}
-                </Text>
+                <Text style={styles.text}>Giá mỗi giờ: {item.price_per_hour} VND</Text>
               </View>
-
               <TouchableOpacity
                 style={styles.heartIcon}
-                onPress={() => toggleFavorite(item)}>
-                <Text style={{fontSize: 30}}>❤️</Text>
+                onPress={() => toggleFavorite(item.id)}>
+                <Text style={{ fontSize: 30, color: 'red' }}>❤️</Text>
               </TouchableOpacity>
             </View>
           )}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={(item, index) => `${item.id}-${index}`} // Đảm bảo khóa là duy nhất
         />
       )}
     </View>
@@ -124,7 +129,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    //justifyContent: 'center',
   },
   noFavoritesContainer: {
     flex: 1,

@@ -36,7 +36,6 @@ function BottomTabNav({ userId }) { // Nhận userId từ props
           } else if (route.name === 'Tài khoản') {
             iconName = focused ? 'people' : 'people-outline';
           }
-
           return <Icon name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: 'red',
@@ -85,6 +84,7 @@ function Navigator() {
         <Stack.Screen name="Detail" component={Detail} />
         <Stack.Screen name="Notification" component={Notification} />
         <Stack.Screen name="Users" component={Users} />
+        <Stack.Screen name="Favourite" component={Favourite} />
       </Stack.Navigator>
     </NavigationContainer>
   );

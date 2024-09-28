@@ -56,16 +56,14 @@ const Home = ({route, favorites, setFavorites}) => {
 
   const toggleFavorite = async (item) => {
     const isFavorite = favorites.find(fav => fav.id === item.id);
-  
-    // Lấy danh sách yêu thích hiện tại từ server
-    let currentFavorites = favorites;
-  
+    
+    // Nếu là yêu thích, xóa khỏi danh sách yêu thích
     if (isFavorite) {
-      try {
-        console.log('Removing favorite:', item);
-        const updatedFavorites = currentFavorites.filter(fav => fav.id !== item.id);
-        console.log('Updated Favorites (Remove):', updatedFavorites);
+      const updatedFavorites = favorites.filter(fav => fav.id !== item.id);
+      setFavorites(updatedFavorites); // Cập nhật danh sách cục bộ ngay lập tức
   
+      try {
+        // Gửi yêu cầu PATCH đến server để cập nhật danh sách favorites
         const response = await fetch(`http://192.168.1.10:3000/users/${userId}`, {
           method: 'PATCH',
           headers: {
@@ -77,23 +75,23 @@ const Home = ({route, favorites, setFavorites}) => {
         });
   
         if (response.ok) {
-          setFavorites(updatedFavorites);
-          console.log('Favorite removed successfully:', item);
-          fetchUserFavorites(); // Cập nhật lại danh sách yêu thích
-          fetchFootballFields(); // Cập nhật lại danh sách sân bóng
+          console.log('Xóa yêu thích thành công:', item);
         } else {
-          const errorText = await response.text();
-          console.error('Failed to remove favorite:', errorText);
+          const errorText = await response.text(); // Log nội dung lỗi
+          console.error('Lỗi khi xóa yêu thích:', errorText);
         }
       } catch (error) {
-        console.error('Error removing favorite:', error);
+        console.error('Lỗi khi kết nối đến server:', error);
+        // Nếu có lỗi, phục hồi lại trạng thái danh sách yêu thích
+        setFavorites([...updatedFavorites, item]);
       }
     } else {
       // Nếu chưa phải yêu thích, thêm vào danh sách
-      try {
-        const updatedFavorites = [...currentFavorites, item];
-        console.log('Updated Favorites (Add):', updatedFavorites);
+      const updatedFavorites = [...favorites, item];
+      setFavorites(updatedFavorites); // Cập nhật danh sách cục bộ ngay lập tức
   
+      try {
+        // Gửi yêu cầu PATCH đến server để cập nhật danh sách favorites
         const response = await fetch(`http://192.168.1.10:3000/users/${userId}`, {
           method: 'PATCH',
           headers: {
@@ -105,49 +103,49 @@ const Home = ({route, favorites, setFavorites}) => {
         });
   
         if (response.ok) {
-          setFavorites(updatedFavorites);
-          console.log('Favorite added successfully:', item);
-          fetchUserFavorites(); // Cập nhật lại danh sách yêu thích
-          fetchFootballFields(); // Cập nhật lại danh sách sân bóng
+          console.log('Thêm yêu thích thành công:', item);
         } else {
-          const errorText = await response.text();
-          console.error('Failed to add favorite:', errorText);
+          const errorText = await response.text(); // Log nội dung lỗi
+          console.error('Lỗi khi thêm yêu thích:', errorText);
         }
       } catch (error) {
-        console.error('Error adding favorite:', error);
+        console.error('Lỗi khi kết nối đến server:', error);
+        // Nếu có lỗi, phục hồi lại trạng thái danh sách yêu thích
+        setFavorites([...updatedFavorites.filter(fav => fav.id !== item.id)]);
       }
     }
   };
   
-  
   const renderItem = ({item}) => {
     return (
       <View style={styles.itemContainer}>
-        <TouchableOpacity
-          style={[styles.touchableContainer, ]}
-          onPress={() => navigation.navigate('Detail', {product: item})}>
-          <View>
-            <Text style={styles.itemText}>Tên sân: {item.name}</Text>
-            <Text style={styles.itemText}>Địa điểm: {item.location}</Text>
-            <Text style={styles.itemText}>
-              Giá mỗi giờ: {item.price_per_hour} VND
-            </Text>
-            <Text style={styles.itemText}>Tình trạng: {item.availability}</Text>
-            <Text style={styles.itemText}>
-              Loại mặt sân: {item.surface_type}
-            </Text>
-            <Text style={styles.itemText}>
-              Số lượng người chơi tối đa: {item.max_players}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.heartIcon}
-          onPress={() => toggleFavorite(item)}>
-          <Text style={{fontSize: 25}}>
-            {favorites.find(fav => fav.id === item.id) ? '❤️' : '🤍'}
-          </Text>
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.touchableContainer, ]}
+        onPress={() => navigation.navigate('Detail', {product: item})}>
+        <View>
+        <Image
+        source={{uri: item.image_url}}
+        style={styles.itemImage}
+        />
+        <Text style={styles.itemText}>Tên sân: {item.name}</Text>
+        <Text style={styles.itemText}>Địa điểm: {item.location}</Text>
+        <Text style={styles.itemText}>
+          Giá mỗi giờ: {item.price_per_hour} VND
+        </Text>
+        <Text style={styles.itemText}>Tình trạng: {item.availability}</Text>
+        <Text style={styles.itemText}>
+          Loại mặt sân: {item.surface_type}
+        </Text>
+
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.heartIcon}
+        onPress={() => toggleFavorite(item)}>
+        <Text style={{fontSize: 25, color: favorites.find(fav => fav.id === item.id) ? 'red' : 'gray'}}>
+        {favorites.find(fav => fav.id === item.id) ? '❤️' : '🤍'}
+        </Text>
+      </TouchableOpacity>
       </View>
     );
   };
@@ -228,7 +226,14 @@ const styles = StyleSheet.create({
   itemText: {
     marginBottom: 5,
     color: 'black',
-    fontSize: 16,
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+  itemImage:{
+
+    height: 150,
+    marginBottom: 10,
+    borderRadius: 20,
   },
   heartIcon: {
     position: 'absolute',
