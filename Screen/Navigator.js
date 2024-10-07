@@ -14,11 +14,13 @@ import ForgotPassword from './ForgotPassword';
 import Favourite from './Favourite';
 import Notification from './Notification';
 import Detail from './Detail';
+import BookingSucces from './BookingSucces';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function BottomTabNav({ userId }) { // Nhận userId từ props
+function BottomTabNav({route}) { // Nhận userId từ props
+  //const { userId } = route.params;
   const [favorites, setFavorites] = useState([]);
 
   return (
@@ -53,13 +55,20 @@ function BottomTabNav({ userId }) { // Nhận userId từ props
             {...props}
             favorites={favorites}
             setFavorites={setFavorites}
-            userId={userId} // Truyền userId vào đây
+            //userId={userId} // Truyền userId vào đây
           />
         )}
       </Tab.Screen>
 
       <Tab.Screen name="Thông báo" component={Notification} />
-      <Tab.Screen name="Tài khoản" component={Users} />
+      <Tab.Screen name="Tài khoản">
+        {props => (
+          <Users
+            {...props}
+            //userId={userId} // Truyền userId vào đây
+          />
+        )}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }
@@ -85,6 +94,7 @@ function Navigator() {
         <Stack.Screen name="Notification" component={Notification} />
         <Stack.Screen name="Users" component={Users} />
         <Stack.Screen name="Favourite" component={Favourite} />
+        <Stack.Screen name="BookingSucces" component={BookingSucces} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -20,7 +20,7 @@ const Home = ({route, favorites, setFavorites}) => {
 
   const fetchFootballFields = async () => {
     try {
-      const response = await fetch('http://192.168.1.10:3000/football_fields');
+      const response = await fetch('http://192.168.0.104:3000/football_fields');
       const json = await response.json();
       setFootballFields(json);
     } catch (error) {
@@ -32,7 +32,7 @@ const Home = ({route, favorites, setFavorites}) => {
 
   const fetchUserFavorites = async () => {
     try {
-      const response = await fetch(`http://192.168.1.10:3000/users/${userId}`);
+      const response = await fetch(`http://192.168.0.104:3000/users/${userId}`);
       if (response.ok) {
         const userData = await response.json();
         setFavorites(userData.favorites || []);
@@ -64,7 +64,7 @@ const Home = ({route, favorites, setFavorites}) => {
   
       try {
         // Gửi yêu cầu PATCH đến server để cập nhật danh sách favorites
-        const response = await fetch(`http://192.168.1.10:3000/users/${userId}`, {
+        const response = await fetch(`http://192.168.0.104:3000/users/${userId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ const Home = ({route, favorites, setFavorites}) => {
   
       try {
         // Gửi yêu cầu PATCH đến server để cập nhật danh sách favorites
-        const response = await fetch(`http://192.168.1.10:3000/users/${userId}`, {
+        const response = await fetch(`http://192.168.0.104:3000/users/${userId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -142,7 +142,7 @@ const Home = ({route, favorites, setFavorites}) => {
       <TouchableOpacity
         style={styles.heartIcon}
         onPress={() => toggleFavorite(item)}>
-        <Text style={{fontSize: 25, color: favorites.find(fav => fav.id === item.id) ? 'red' : 'gray'}}>
+        <Text style={{fontSize: 30, color: favorites.find(fav => fav.id === item.id) ? 'red' : 'gray'}}>
         {favorites.find(fav => fav.id === item.id) ? '❤️' : '🤍'}
         </Text>
       </TouchableOpacity>
@@ -230,14 +230,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   itemImage:{
-
     height: 150,
     marginBottom: 10,
     borderRadius: 20,
+    marginTop: 0,
   },
   heartIcon: {
     position: 'absolute',
-    right: 10,
-    top: 5,
+    right: 5,
+    top: 0,
   },
 });

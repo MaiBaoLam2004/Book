@@ -26,26 +26,26 @@ function Login() {
       Alert.alert('Lỗi', 'Vui lòng nhập đầy đủ tài khoản và mật khẩu');
       return;
     }
-
+  
     try {
-      const response = await fetch('http://192.168.1.10:3000/users');
+      const response = await fetch('http://192.168.0.104:3000/users');
       const users = await response.json();
-
+  
       const user = users.find(
         u => u.username === username && u.password === password,
       );
-
+      
       if (user) {
+        const userId = user.id; // Lấy userId từ đối tượng user
         // Điều hướng đến màn hình BottomTabNav và truyền thông tin người dùng
         navigation.navigate('BottomTabNav', { 
           screen: 'Trang chủ', 
           params: { 
-            userId: user.id, // Truyền userId
+            userId: userId, // Truyền userId
             username: user.username, 
             favorites: user.favorites // Truyền danh sách yêu thích
           } 
         });
-             
       } else {
         Alert.alert('Đăng nhập thất bại', 'Tài khoản hoặc mật khẩu không đúng');
       }
@@ -53,7 +53,7 @@ function Login() {
       Alert.alert('Lỗi', 'Không thể kết nối đến máy chủ');
     }
   };
-
+  
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
