@@ -1,11 +1,19 @@
-import { StyleSheet, Text, View, Button, Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import React from 'react';
-import { useRoute, useNavigation } from '@react-navigation/native';
-
+import {useNavigation} from '@react-navigation/native';
 
 const Detail = ({route}) => {
   const navigation = useNavigation();
-  const { product } = route.params;
+  const {product} = route.params;
 
   const handleBooking = () => {
     // Thêm logic đặt sân ở đây
@@ -16,15 +24,28 @@ const Detail = ({route}) => {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.topbar}>
-          <Button title="Quay lại" onPress={() => navigation.navigate('BottomTabNav')} />
+          <Button
+            title="Quay lại"
+            onPress={() => navigation.navigate('BottomTabNav')}
+          />
         </View>
-        <Image source={{ uri: product.image_url }} style={styles.image} />
-        <Text style={styles.itemText}>Tên sân: {product.name}</Text>
-        <Text style={styles.itemText}>Địa điểm: {product.location}</Text>
-        <Text style={styles.itemText}>Giá mỗi giờ: {product.price_per_hour} VND</Text>
-        <Text style={styles.itemText}>Tình trạng: {product.availability}</Text>
-        <Text style={styles.itemText}>Loại mặt sân: {product.surface_type}</Text>
-        <Text style={styles.itemText}>Số lượng người chơi tối đa: {product.max_players}</Text>
+        <Image source={{uri: product.image_url}} style={styles.image} />
+        <View style={{margin:10}}>
+          <Text style={styles.itemText}>Tên sân: {product.name}</Text>
+          <Text style={styles.itemText}>Địa điểm: {product.location}</Text>
+          <Text style={styles.itemText}>
+            Giá mỗi giờ: {product.price_per_hour} VND
+          </Text>
+          <Text style={styles.itemText}>
+            Tình trạng: {product.availability}
+          </Text>
+          <Text style={styles.itemText}>
+            Loại mặt sân: {product.surface_type}
+          </Text>
+          <Text style={styles.itemText}>
+            Số lượng người chơi tối đa: {product.max_players}
+          </Text>
+        </View>
       </ScrollView>
       <TouchableOpacity style={styles.bookButton} onPress={handleBooking}>
         <Text style={styles.bookButtonText}>Đặt sân</Text>
@@ -41,7 +62,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-    padding: 20,
+    //padding: 20,
   },
   topbar: {
     flexDirection: 'row',
@@ -51,13 +72,15 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: 300,
-    borderRadius: 10,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
     marginBottom: 20,
   },
   itemText: {
     marginBottom: 10,
-    fontSize: 18,
+    fontSize: 20,
     color: '#333',
+    fontWeight: 'bold',
   },
   bookButton: {
     position: 'absolute',

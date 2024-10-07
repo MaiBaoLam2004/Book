@@ -7,8 +7,11 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Favourite = ({favorites, setFavorites, userId}) => {
+  const navigation = useNavigation();
+
   const deleteFavorite = async itemId => {
     const updatedFavorites = favorites.filter(fav => fav.id !== itemId);
     setFavorites(updatedFavorites);
@@ -79,6 +82,10 @@ const Favourite = ({favorites, setFavorites, userId}) => {
     }
   };
 
+  const navigateToDetail = item => {
+    navigation.navigate('Detail', {product: item});
+  };
+
   return (
     <View style={styles.container}>
       {favorites.length === 0 ? (
@@ -91,22 +98,24 @@ const Favourite = ({favorites, setFavorites, userId}) => {
         <FlatList
           data={favorites}
           renderItem={({item}) => (
-            <View style={styles.itemContainer}>
-              <Image source={{uri: item.image_url}} style={styles.image} 
-              resizeMode='stretch'/>
-              <View>
-                <Text style={styles.text}>Tên sân: {item.name}</Text>
-                <Text style={styles.text}>Địa điểm: {item.location}</Text>
-                <Text style={styles.text}>
-                  Giá mỗi giờ: {item.price_per_hour} VND
-                </Text>
+            <TouchableOpacity onPress={() => navigateToDetail(item)}>
+              <View style={styles.itemContainer}>
+                <Image source={{uri: item.image_url}} style={styles.image} 
+                resizeMode='cover'/>
+                <View>
+                  <Text style={styles.text}>Tên sân: {item.name}</Text>
+                  <Text style={styles.text}>Địa điểm: {item.location}</Text>
+                  <Text style={styles.text}>
+                    Giá mỗi giờ: {item.price_per_hour} VND
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  style={styles.heartIcon}
+                  onPress={() => toggleFavorite(item.id)}>
+                  <Text style={{fontSize: 35, color: 'red'}}>❤️</Text>
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity
-                style={styles.heartIcon}
-                onPress={() => toggleFavorite(item.id)}>
-                <Text style={{fontSize: 30, color: 'red'}}>❤️</Text>
-              </TouchableOpacity>
-            </View>
+            </TouchableOpacity>
           )}
           keyExtractor={(item, index) => `${item.id}-${index}`}
         />
@@ -132,17 +141,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   itemContainer: {
-    padding: 10,
-    margin: 5,
+
+    margin: 6,
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 20,
-    //alignItems: 'center',
-    top: 10,
   },
   image: {
-    width: 400,
-    height: 250,
+    width: 350,
+    height: 200,
     marginBottom: 10,
     borderRadius: 20,
   },
@@ -156,5 +163,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginLeft: 10,
+    marginBottom: 5,
   },
 });

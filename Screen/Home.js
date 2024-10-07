@@ -8,7 +8,7 @@ import {
   RefreshControl,
   ScrollView,
 } from 'react-native';
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 const Home = ({route, favorites, setFavorites}) => {
@@ -17,6 +17,37 @@ const Home = ({route, favorites, setFavorites}) => {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
+  const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
+  const bannerRef = useRef(null);
+
+  // Danh sách banner có chứa id sản phẩm liên quan
+  const [banners, setBanners] = useState([
+    {
+      id: 1,
+      productId: 1,
+      name: 'Sân bóng',
+      availability:'có sẵn',
+      image_url:
+        'https://vecgroup.vn/upload_images/images/2021/12/09/kich-thuoc-san-bong-11-nguoi(1).png',
+    },
+    {
+      id: 2,
+      productId: 2,
+      name: 'Sân bóng',
+      availability:'có sẵn',
+      image_url:
+        'https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg',
+    },
+    {
+      id: 3,
+      productId: 3,
+      name: 'Sân bóng',
+      availability:'có sẵn',
+      image_url:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb8NfCTslFpGd8kkVaU4sjW1oUXKyZeHQh9djEhzR_JhzPe78gNf92xRArn7Kxiut5eqQ&usqp=CAU',
+    },
+    // Thêm các ảnh banner khác tương ứng với id sản phẩm
+  ]);
 
   const fetchFootballFields = async () => {
     try {
@@ -46,6 +77,7 @@ const Home = ({route, favorites, setFavorites}) => {
 
   useEffect(() => {
     fetchFootballFields();
+
     fetchUserFavorites(); // Lấy danh sách yêu thích của người dùng khi màn hình Home được mở
   }, []);
 
@@ -150,9 +182,43 @@ const Home = ({route, favorites, setFavorites}) => {
     );
   };
 
+// Tự động cuộn banner sau mỗi 3 giây
+useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrentBannerIndex(prevIndex =>
+      prevIndex === banners.length - 1 ? 0 : prevIndex + 1,
+    );
+
+    if (bannerRef.current) {
+      bannerRef.current.scrollToIndex({
+        index: currentBannerIndex === banners.length - 1 ? 0 : currentBannerIndex + 1,
+        animated: true,
+      });
+    }
+  }, 3000); // Thời gian cuộn banner 2 giây
+
+  return () => clearInterval(interval); // Xóa interval khi component unmount
+}, [currentBannerIndex, banners.length]);
+
+// Hàm render banner
+const renderBanner = ({item}) => {
+  return (
+    <TouchableOpacity 
+    onPress={() => navigation.navigate('Detail', {product: item})}
+    >
+      <Image
+        source={{uri: item.image_url}}
+        style={styles.bannerImage}
+        resizeMode="cover"
+        
+      />
+    </TouchableOpacity>
+  );
+};
+
+
   return (
     <ScrollView
-      contentContainerStyle={{flexGrow: 1}}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }>
@@ -160,6 +226,17 @@ const Home = ({route, favorites, setFavorites}) => {
         <Image
           source={require('../Images/icon_logo.png')}
           style={styles.logo}
+        />
+        <FlatList
+          ref={bannerRef}
+          data={banners} // Sử dụng danh sách banner đã tạo
+          renderItem={renderBanner}
+          keyExtractor={item => item.id.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled // Cho phép banner cuộn mượt
+          style={styles.bannerList}
+          //contentContainerStyle={{ justifyContent: 'center' }}
         />
         <Text
           style={{
@@ -179,6 +256,7 @@ const Home = ({route, favorites, setFavorites}) => {
           style={styles.list}
           contentContainerStyle={styles.listContent}
         />
+        
       </View>
     </ScrollView>
   );
@@ -189,7 +267,7 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'ceter',
+    alignItems: 'center',
   },
   logo: {
     width: 100,
@@ -239,5 +317,42 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 5,
     top: 0,
+  },
+  itemContainer: {
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: 'black',
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  touchableContainer: {
+    width: '100%',
+  },
+  itemText: {
+    marginBottom: 5,
+    color: 'black',
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+  itemImage: {
+    height: 150,
+    marginBottom: 10,
+    borderRadius: 20,
+    marginTop: 0,
+  },
+  bannerList: {
+    //backgroundColor: 'gray',
+    marginBottom: 10,
+  },
+  bannerImage: {
+    width: 400, // Giảm chiều rộng của banner nếu cần
+    height: 250, // Giảm chiều cao của banner
+    marginHorizontal: 10,
+    borderRadius: 20,
+    
+  },
+  list: {
+    marginTop: 20,
   },
 });
