@@ -7,9 +7,12 @@ import {
   TouchableOpacity,
   RefreshControl,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import React, {useEffect, useState, useCallback, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
+
+const { width: screenWidth } = Dimensions.get('window');
 
 const Home = ({route, favorites, setFavorites}) => {
   const {userId} = route.params; // Nhận userId từ params
@@ -28,7 +31,7 @@ const Home = ({route, favorites, setFavorites}) => {
       name: 'Sân bóng',
       availability:'có sẵn',
       image_url:
-        'https://vecgroup.vn/upload_images/images/2021/12/09/kich-thuoc-san-bong-11-nguoi(1).png',
+        'https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-football-colorful-game-poster-banner-background-image_194132.jpg',
     },
     {
       id: 2,
@@ -245,6 +248,7 @@ const renderBanner = ({item}) => {
             alignSelf: 'flex-start',
             marginLeft: 25,
             color: 'black',
+            marginTop: 10,
           }}>
           Tất cả các sân
         </Text>
@@ -268,31 +272,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   logo: {
     width: 100,
     height: 100,
     marginBottom: 10,
-    marginTop: 10,
     alignSelf: 'center',
-  },
-  list: {
-    flexGrow: 0,
-    marginTop: 20,
   },
   listContent: {
     alignItems: 'center',
-  },
-  itemContainer: {
-    padding: 10,
-    //marginHorizontal: 5,
-    //marginBottom: 10,
-    borderWidth: 1,
-    borderRadius: 20,
-    borderColor: 'black',
-    marginLeft: 10,
-    //backgroundColor: 'blue',
-    marginRight: 10,
   },
   touchableContainer:{
     //backgroundColor: 'white',
@@ -323,8 +312,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     borderColor: 'black',
-    marginLeft: 10,
-    marginRight: 10,
+    // marginLeft: 10,
+    // marginRight: 10,
+    marginHorizontal: 10,
   },
   touchableContainer: {
     width: '100%',
@@ -346,11 +336,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   bannerImage: {
-    width: 400, // Giảm chiều rộng của banner nếu cần
-    height: 250, // Giảm chiều cao của banner
-    marginHorizontal: 10,
+    width: screenWidth, // Chiều rộng của màn hình
+    height: 250, // Chiều cao của banner
+    marginHorizontal: 5,
     borderRadius: 20,
-    
   },
   list: {
     marginTop: 20,

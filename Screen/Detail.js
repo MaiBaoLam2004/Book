@@ -9,11 +9,11 @@ import {
   Alert,
 } from 'react-native';
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
-const Detail = ({route}) => {
+const Detail = ({ route }) => {
   const navigation = useNavigation();
-  const {product} = route.params;
+  const { product } = route.params;
 
   const handleBooking = () => {
     // Thêm logic đặt sân ở đây
@@ -26,11 +26,11 @@ const Detail = ({route}) => {
         <View style={styles.topbar}>
           <Button
             title="Quay lại"
-            onPress={() => navigation.navigate('BottomTabNav')}
+            onPress={() => navigation.goBack()} // Sử dụng goBack để quay lại
           />
         </View>
-        <Image source={{uri: product.image_url}} style={styles.image} />
-        <View style={{margin:10}}>
+        <Image source={{ uri: product.image_url }} style={styles.image} />
+        <View style={{ margin: 10 }}>
           <Text style={styles.itemText}>Tên sân: {product.name}</Text>
           <Text style={styles.itemText}>Địa điểm: {product.location}</Text>
           <Text style={styles.itemText}>
@@ -53,6 +53,7 @@ const Detail = ({route}) => {
     </View>
   );
 };
+
 export default Detail;
 
 const styles = StyleSheet.create({

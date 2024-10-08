@@ -16,14 +16,15 @@ import Favourite from './Screen/Favourite';
 import BookingSucces from './Screen/BookingSucces';
 import Home from './Screen/Home';
 
-
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function BottomTabNav({route}) { // Nhận userId từ props
-  //const { userId } = route.params;
-  const [favorites, setFavorites] = useState([]);
+function BottomTabNav({route}) {
+  const {userId, username, favorites} = route.params; 
+  // Lấy userId, username, favorites từ route.params
+  const [userFavorites, setUserFavorites] = useState(favorites || []); // Khởi tạo favorites
 
+  
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -47,33 +48,36 @@ function BottomTabNav({route}) { // Nhận userId từ props
       })}>
       <Tab.Screen name="Trang chủ">
         {props => (
-          <Home {...props} favorites={favorites} setFavorites={setFavorites} />
+          <Home
+            {...props}
+            userId={userId}
+            favorites={userFavorites}
+            setFavorites={setUserFavorites}
+          />
         )}
       </Tab.Screen>
       <Tab.Screen name="Yêu thích">
         {props => (
           <Favourite
             {...props}
-            favorites={favorites}
-            setFavorites={setFavorites}
-            //userId={userId} // Truyền userId vào đây
+            userId={userId} // Truyền userId vào đây
+            favorites={userFavorites}
+            setFavorites={setUserFavorites}
           />
         )}
       </Tab.Screen>
-
       <Tab.Screen name="Thông báo" component={Notification} />
       <Tab.Screen name="Tài khoản">
         {props => (
           <Users
             {...props}
-            //userId={userId} // Truyền userId vào đây
+            userId={userId} // Truyền userId vào đây
           />
         )}
       </Tab.Screen>
     </Tab.Navigator>
   );
 }
-
 
 function App() {
   return (

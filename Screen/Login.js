@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,6 +20,7 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Thêm trạng thái loading
   const navigation = useNavigation();
 
   const handleLogin = async () => {
@@ -26,34 +28,36 @@ function Login() {
       Alert.alert('Lỗi', 'Vui lòng nhập đầy đủ tài khoản và mật khẩu');
       return;
     }
-  
+
+    setIsLoading(true); // Hiển thị trạng thái loading khi bắt đầu đăng nhập
     try {
       const response = await fetch('http://192.168.0.104:3000/users');
       const users = await response.json();
-  
+
       const user = users.find(
         u => u.username === username && u.password === password,
       );
-      
+
       if (user) {
-        const userId = user.id; // Lấy userId từ đối tượng user
-        // Điều hướng đến màn hình BottomTabNav và truyền thông tin người dùng
-        navigation.navigate('BottomTabNav', { 
-          screen: 'Trang chủ', 
-          params: { 
-            userId: userId, // Truyền userId
-            username: user.username, 
-            favorites: user.favorites // Truyền danh sách yêu thích
-          } 
+        const userId = user.id;
+        navigation.navigate('BottomTabNav', {
+          screen: 'Trang chủ',
+          params: {
+            userId: userId,
+            username: user.username,
+            favorites: user.favorites,
+          },
         });
       } else {
         Alert.alert('Đăng nhập thất bại', 'Tài khoản hoặc mật khẩu không đúng');
       }
     } catch (error) {
       Alert.alert('Lỗi', 'Không thể kết nối đến máy chủ');
+    } finally {
+      setIsLoading(false); // Tắt trạng thái loading khi kết thúc đăng nhập
     }
   };
-  
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -100,15 +104,19 @@ function Login() {
           >
             <Text style={styles.forgotPasswordText}>Quên mật khẩu?</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-            <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 20 }}>
-              Đăng nhập
-            </Text>
-          </TouchableOpacity>
-          <View
-            style={{ flexDirection: 'column', alignItems: 'center', marginTop: 20 }}
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={handleLogin}
+            disabled={isLoading} // Vô hiệu hóa khi đang đăng nhập
           >
-            <Text style={{ fontSize: 16 }}>Bạn chưa có tài khoản?</Text>
+            {isLoading ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Text style={styles.loginButtonText}>Đăng nhập</Text>
+            )}
+          </TouchableOpacity>
+          <View style={styles.registerContainer}>
+            <Text style={styles.registerText}>Bạn chưa có tài khoản?</Text>
             <TouchableOpacity
               style={styles.registerButton}
               onPress={() => navigation.navigate('Register')}
@@ -127,7 +135,6 @@ export default Login;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
     backgroundColor: '#f5f5f5',
@@ -143,8 +150,6 @@ const styles = StyleSheet.create({
   logoapp: {
     width: 200,
     height: 200,
-    //position: 'absolute',
-    top: 0,
   },
   input: {
     width: '100%',
@@ -178,6 +183,28 @@ const styles = StyleSheet.create({
     color: '#841584',
     textDecorationLine: 'underline',
   },
+  loginButton: {
+    width: '80%',
+    height: 70,
+    backgroundColor: 'blue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 20,
+    marginTop: 20,
+  },
+  loginButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 20,
+  },
+  registerContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  registerText: {
+    fontSize: 16,
+  },
   registerButton: {
     marginTop: 5,
   },
@@ -186,14 +213,5 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     fontWeight: 'bold',
     fontSize: 20,
-  },
-  loginButton: {
-    width: '80%',
-    height: 70,
-    backgroundColor: 'blue', // Màu nền của nút
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 20,
-    marginTop: 20,
   },
 });
