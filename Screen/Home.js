@@ -172,7 +172,7 @@ const Home = ({route, favorites, setFavorites}) => {
         style={styles.itemImage}
         />
         <Text style={styles.itemText}>Tên sân: {item.name}</Text>
-        <Text style={styles.itemText}>Địa điểm: {item.location}</Text>
+        {/* <Text style={styles.itemText}>Địa điểm: {item.location}</Text> */}
         <Text style={styles.itemText}>
           Giá mỗi giờ: {item.price_per_hour} VND
         </Text>
@@ -237,9 +237,9 @@ const renderBanner = () => (
             fontWeight: 'bold',
             fontSize: 30,
             alignSelf: 'flex-start',
-            marginLeft: 25,
+            marginLeft: 20,
             color: 'black',
-            marginTop: 10,
+            marginTop: 20,
           }}>
           Tất cả các sân
         </Text>
@@ -288,10 +288,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   itemImage:{
+    width: 250,
     height: 150,
     marginBottom: 10,
     borderRadius: 20,
     marginTop: 0,
+    resizeMode: 'cover'
   },
   heartIcon: {
     position: 'absolute',
@@ -315,12 +317,6 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 17,
     fontWeight: 'bold',
-  },
-  itemImage: {
-    height: 150,
-    marginBottom: 10,
-    borderRadius: 20,
-    marginTop: 0,
   },
   bannerList: {
     //backgroundColor: 'gray',

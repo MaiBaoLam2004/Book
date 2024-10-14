@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { useNavigation } from '@react-navigation/native';
 
 const Users = ({ route }) => {
   const { userId } = route.params || {}; // Nhận userId từ route.params
   const [imageUri, setImageUri] = useState(null);
+  const navigation = useNavigation(); // Hook for navigation
 
   useEffect(() => {
     // Lấy ảnh từ server khi component được mount
@@ -23,7 +25,6 @@ const Users = ({ route }) => {
         console.log('Error fetching user image:', error);
       }
     };
-    
 
     fetchUserImage();
   }, [userId]);
@@ -37,7 +38,6 @@ const Users = ({ route }) => {
       } else {
         const uri = response.assets[0].uri;
         setImageUri(uri);
-        saveImage(uri); // Lưu ảnh vào db
       }
     });
   };
@@ -65,6 +65,10 @@ const Users = ({ route }) => {
     }
   };
 
+  const navigateToBookingSuccess = () => {
+    navigation.navigate('BookingSucces');
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={pickImage}>
@@ -77,6 +81,9 @@ const Users = ({ route }) => {
         </View>
       </TouchableOpacity>
       <Text style={styles.userNameText}>ID người dùng: {userId}</Text>
+      <TouchableOpacity style={styles.button} onPress={navigateToBookingSuccess}>
+        <Text style={styles.buttonText}>Đã đặt sân</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -110,5 +117,15 @@ const styles = StyleSheet.create({
   userNameText: {
     fontSize: 16,
     marginTop: 10,
+  },
+  button: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#007BFF',
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });

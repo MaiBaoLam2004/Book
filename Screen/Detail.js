@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons'; // Import thư viện icon
 
 const Detail = ({ route }) => {
   const navigation = useNavigation();
@@ -23,13 +24,12 @@ const Detail = ({ route }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.topbar}>
-          <Button
-            title="Quay lại"
-            onPress={() => navigation.goBack()} // Sử dụng goBack để quay lại
-          />
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: product.image_url }} style={styles.image} />
+          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+            <Icon name="arrow-back" size={30} color="white" />
+          </TouchableOpacity>
         </View>
-        <Image source={{ uri: product.image_url }} style={styles.image} />
         <View style={{ margin: 10 }}>
           <Text style={styles.itemText}>Tên sân: {product.name}</Text>
           <Text style={styles.itemText}>Địa điểm: {product.location}</Text>
@@ -47,7 +47,7 @@ const Detail = ({ route }) => {
           </Text>
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.bookButton} onPress={handleBooking}>
+      <TouchableOpacity style={styles.bookButton} onPress={() => navigation.navigate('Payment')}>
         <Text style={styles.bookButtonText}>Đặt sân</Text>
       </TouchableOpacity>
     </View>
@@ -65,10 +65,8 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     //padding: 20,
   },
-  topbar: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginBottom: 20,
+  imageContainer: {
+    position: 'relative',
   },
   image: {
     width: '100%',
@@ -76,6 +74,15 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     marginBottom: 20,
+    resizeMode: 'cover'
+  },
+  backButton: {
+    position: 'absolute',
+    top: 10,
+    left: 15,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 20,
+    padding: 6,
   },
   itemText: {
     marginBottom: 10,
