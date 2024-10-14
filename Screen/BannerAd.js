@@ -37,6 +37,11 @@ const BannerAd = ({ banners, onPress }) => {
     setCurrentIndex(index);
   };
 
+  const handleDotPress = (index) => {
+    setCurrentIndex(index);
+    flatListRef.current.scrollToIndex({ index, animated: true });
+  };
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -56,13 +61,14 @@ const BannerAd = ({ banners, onPress }) => {
       />
       <View style={styles.pagination}>
         {banners.map((_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.paginationDot,
-              index === currentIndex ? styles.paginationDotActive : null,
-            ]}
-          />
+          <TouchableOpacity key={index} onPress={() => handleDotPress(index)}>
+            <View
+              style={[
+                styles.paginationDot,
+                index === currentIndex ? styles.paginationDotActive : null,
+              ]}
+            />
+          </TouchableOpacity>
         ))}
       </View>
     </View>
@@ -102,11 +108,16 @@ const styles = StyleSheet.create({
   pagination: {
     flexDirection: 'row',
     position: 'absolute',
-    bottom: 10,
+    bottom: 0,
     alignSelf: 'center',
+   // backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    height: 20,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   paginationDot: {
-    width: 8,
+    width: 20,
     height: 8,
     borderRadius: 4,
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
