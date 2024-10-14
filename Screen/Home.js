@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import React, {useEffect, useState, useCallback, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import BannerAd from './BannerAd';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -48,6 +49,14 @@ const Home = ({route, favorites, setFavorites}) => {
       availability:'có sẵn',
       image_url:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb8NfCTslFpGd8kkVaU4sjW1oUXKyZeHQh9djEhzR_JhzPe78gNf92xRArn7Kxiut5eqQ&usqp=CAU',
+    },
+    {
+      id: 4,
+      productId: 4,
+      name: 'Sân bóng',
+      availability:'có sẵn',
+      image_url:
+        'https://png.pngtree.com/png-vector/20220211/ourmid/pngtree-abstract-soccer-football-banner-flashlight-professional-vector-png-image_35162972.jpg',
     },
     // Thêm các ảnh banner khác tương ứng với id sản phẩm
   ]);
@@ -204,20 +213,12 @@ useEffect(() => {
 }, [currentBannerIndex, banners.length]);
 
 // Hàm render banner
-const renderBanner = ({item}) => {
-  return (
-    <TouchableOpacity 
-    onPress={() => navigation.navigate('Detail', {product: item})}
-    >
-      <Image
-        source={{uri: item.image_url}}
-        style={styles.bannerImage}
-        resizeMode="cover"
-        
-      />
-    </TouchableOpacity>
-  );
-};
+const renderBanner = () => (
+  <BannerAd 
+    banners={banners}
+    onPress={(item) => navigation.navigate('Detail', { product: item })}
+  />
+);
 
 
   return (
@@ -230,17 +231,7 @@ const renderBanner = ({item}) => {
           source={require('../Images/icon_logo.png')}
           style={styles.logo}
         />
-        <FlatList
-          ref={bannerRef}
-          data={banners} // Sử dụng danh sách banner đã tạo
-          renderItem={renderBanner}
-          keyExtractor={item => item.id.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled // Cho phép banner cuộn mượt
-          style={styles.bannerList}
-          //contentContainerStyle={{ justifyContent: 'center' }}
-        />
+        {renderBanner()}
         <Text
           style={{
             fontWeight: 'bold',
@@ -333,6 +324,7 @@ const styles = StyleSheet.create({
   },
   bannerList: {
     //backgroundColor: 'gray',
+    width: screenWidth,
     marginBottom: 10,
   },
   bannerImage: {
@@ -343,5 +335,14 @@ const styles = StyleSheet.create({
   },
   list: {
     marginTop: 20,
+  },
+  sectionTitle: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    alignSelf: 'flex-start',
+    marginLeft: 25,
+    color: 'black',
+    marginTop: 10,
+    marginBottom: 10,
   },
 });

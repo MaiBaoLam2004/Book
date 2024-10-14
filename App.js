@@ -15,6 +15,7 @@ import Users from './Screen/Users';
 import Favourite from './Screen/Favourite';
 import BookingSucces from './Screen/BookingSucces';
 import Home from './Screen/Home';
+import BannerAd from './Screen/BannerAd';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -99,6 +100,7 @@ function App() {
         <Stack.Screen name="Users" component={Users} />
         <Stack.Screen name="Favourite" component={Favourite} />
         <Stack.Screen name="BookingSucces" component={BookingSucces} />
+        <Stack.Screen name="BannerAd" component={BannerAd} />
       </Stack.Navigator>
     </NavigationContainer>
   );

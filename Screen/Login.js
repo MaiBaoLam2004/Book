@@ -12,9 +12,9 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -59,11 +59,10 @@ function Login() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.container}>
           <Image
             resizeMode="center"
@@ -80,7 +79,7 @@ function Login() {
           />
           <View style={styles.passwordContainer}>
             <TextInput
-              style={[styles.input, { flex: 1 }]}
+              style={[styles.input, {flex: 1}]}
               placeholder="Mật khẩu"
               placeholderTextColor="#888"
               secureTextEntry={!passwordVisible}
@@ -89,8 +88,7 @@ function Login() {
             />
             <TouchableOpacity
               style={styles.eyeIcon}
-              onPress={() => setPasswordVisible(!passwordVisible)}
-            >
+              onPress={() => setPasswordVisible(!passwordVisible)}>
               <Icon
                 name={passwordVisible ? 'eye' : 'eye-off'}
                 size={24}
@@ -100,8 +98,7 @@ function Login() {
           </View>
           <TouchableOpacity
             style={styles.forgotPassword}
-            onPress={() => navigation.navigate('ForgotPassword')}
-          >
+            onPress={() => navigation.navigate('ForgotPassword')}>
             <Text style={styles.forgotPasswordText}>Quên mật khẩu?</Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -119,14 +116,13 @@ function Login() {
             <Text style={styles.registerText}>Bạn chưa có tài khoản?</Text>
             <TouchableOpacity
               style={styles.registerButton}
-              onPress={() => navigation.navigate('Register')}
-            >
+              onPress={() => navigation.navigate('Register')}>
               <Text style={styles.registerButtonText}>Đăng ký</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 
@@ -172,7 +168,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 10,
     top: '40%',
-    transform: [{ translateY: -12 }],
+    transform: [{translateY: -12}],
   },
   forgotPassword: {
     alignSelf: 'flex-end',

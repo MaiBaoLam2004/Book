@@ -12,12 +12,15 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const navigation = useNavigation();
 
   const handleRegister = async () => {
@@ -60,13 +63,13 @@ const Register = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{flex: 1}}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView>
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View style={styles.container}>
         <Image
-          resizeMode='center'
+          resizeMode="center"
           style={[styles.logoapp, {marginTop: 0}]}
           source={require('../Images/icon_logo.png')}
         />
@@ -86,32 +89,57 @@ const Register = () => {
           onChangeText={setEmail}
           keyboardType="email-address"
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Mật khẩu"
-          placeholderTextColor="#888"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Nhập lại mật khẩu"
-          placeholderTextColor="#888"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry
-        />
-        <TouchableOpacity style={styles.registerButton} onPress={handleRegister}>
-          <Text style={{color:'white', fontWeight:'bold', fontSize:20}}>
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={[styles.input, {flex: 1}]}
+            placeholder="Mật khẩu"
+            placeholderTextColor="#888"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={!passwordVisible}
+          />
+          <TouchableOpacity
+            style={styles.eyeIcon}
+            onPress={() => setPasswordVisible(!passwordVisible)}>
+            <Icon
+              name={passwordVisible ? 'eye' : 'eye-off'}
+              size={24}
+              color="#888"
+            />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.passwordContainer}>
+          <TextInput
+            style={[styles.input, {flex: 1}]}
+            placeholder="Nhập lại mật khẩu"
+            placeholderTextColor="#888"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry={!confirmPasswordVisible}
+          />
+          <TouchableOpacity
+            style={styles.eyeIcon}
+            onPress={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
+            <Icon
+              name={confirmPasswordVisible ? 'eye' : 'eye-off'}
+              size={24}
+              color="#888"
+            />
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity
+          style={styles.registerButton}
+          onPress={handleRegister}>
+          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
             Đăng ký
           </Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
           <Text style={styles.loginText}>Bạn đã có tài khoản? Đăng nhập</Text>
         </TouchableOpacity>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
@@ -131,7 +159,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     color: '#333',
     textTransform: 'uppercase',
-    marginTop: 0 // Thêm khoảng cách phía trên
+    marginTop: 0, // Thêm khoảng cách phía trên
   },
   logoapp: {
     width: 200,
@@ -149,8 +177,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
     backgroundColor: '#fff',
-    color:'black'
-
+    color: 'black',
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    position: 'relative',
+  },
+  eyeIcon: {
+    position: 'absolute',
+    right: 10,
+    top: '40%',
+    transform: [{translateY: -12}],
   },
   registerButton: {
     width: '80%',
