@@ -5,63 +5,109 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  ActivityIndicator,
+  ToastAndroid,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
+import {URL} from './Home';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {useNavigation} from '@react-navigation/native';
 
-function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+
+function Login(props) {
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [showPass, setShowPass] = useState(true);
+  const [checkRemember, setCheckRemember] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Thêm trạng thái loading
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const navigation = useNavigation();
 
-  const handleLogin = async () => {
-    if (!username || !password) {
-      Alert.alert('Lỗi', 'Vui lòng nhập đầy đủ tài khoản và mật khẩu');
+  const CheckLogin = async () => {
+    if (email === "") {
+      ToastAndroid.show("Email không được bỏ trống", ToastAndroid.SHORT);
+      return;
+    }
+    if (pass === "") {
+      ToastAndroid.show("Pass không được bỏ trống", ToastAndroid.SHORT);
       return;
     }
 
-    setIsLoading(true); // Hiển thị trạng thái loading khi bắt đầu đăng nhập
+    let url = `${URL}/users?email=` + email + `&pass=` + pass;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then(async (data) => {
+        if (data.length !== 1) {
+          ToastAndroid.show("Email không chính xác", ToastAndroid.SHORT);
+          return false;
+        }
+        const user = data[0];
+        if (user.pass !== pass) {
+          ToastAndroid.show("Pass không chính xác", ToastAndroid.SHORT);
+          return false;
+        } else {
+          await AsyncStorage.setItem("User", JSON.stringify(user, userRole));
+          const userRole = user.role;
+          rememberAccount();
+          ToastAndroid.show("Login thành công", ToastAndroid.SHORT);
+          props.navigation.navigate("Main");
+        }
+      });
+  };
+
+  const rememberAccount = async () => {
     try {
-      const response = await fetch('http://192.168.0.104:3000/users');
-      const users = await response.json();
-
-      const user = users.find(
-        u => u.username === username && u.password === password,
-      );
-
-      if (user) {
-        const userId = user.id;
-        navigation.navigate('BottomTabNav', {
-          screen: 'Trang chủ',
-          params: {
-            userId: userId,
-            username: user.username,
-            favorites: user.favorites,
-          },
-        });
+      if (checkRemember) {
+        await AsyncStorage.setItem("email", email);
+        await AsyncStorage.setItem("pass", pass);
       } else {
-        Alert.alert('Đăng nhập thất bại', 'Tài khoản hoặc mật khẩu không đúng');
+        await AsyncStorage.setItem("email", "");
+        await AsyncStorage.setItem("pass", "");
       }
     } catch (error) {
-      Alert.alert('Lỗi', 'Không thể kết nối đến máy chủ');
-    } finally {
-      setIsLoading(false); // Tắt trạng thái loading khi kết thúc đăng nhập
+      console.error(error);
     }
   };
 
+  const retrieveData = async () => {
+    try {
+      const storedEmail = await AsyncStorage.getItem("email");
+      const storedPassword = await AsyncStorage.getItem("pass");
+      if (storedEmail !== null && storedPassword !== null) {
+        setEmail(storedEmail);
+        setPass(storedPassword);
+        setCheckRemember(true);
+      } else {
+        setPass("");
+        setCheckRemember(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      retrieveData();
+      return () => {
+        setEmail("");
+        setPass("");
+        setShowPass(true);
+        setCheckRemember(false);
+      };
+    }, [])
+  );
+
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
       <KeyboardAvoidingView
-        style={{flex: 1}}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.container}>
           <Image
@@ -72,57 +118,68 @@ function Login() {
           <Text style={styles.title}>Đăng nhập</Text>
           <TextInput
             style={styles.input}
-            placeholder="Tài khoản"
+            placeholder="Nhập email"
             placeholderTextColor="#888"
-            value={username}
-            onChangeText={setUsername}
+            onChangeText={(txt) => setEmail(txt)}
+              value={email || ""}
           />
           <View style={styles.passwordContainer}>
             <TextInput
               style={[styles.input, {flex: 1}]}
-              placeholder="Mật khẩu"
+           
+              placeholder="Nhập mật khẩu"
               placeholderTextColor="#888"
-              secureTextEntry={!passwordVisible}
-              value={password}
-              onChangeText={setPassword}
+              onChangeText={(txt) => setPass(txt)}
+                value={pass || ""}
+                secureTextEntry={!confirmPasswordVisible}
             />
             <TouchableOpacity
-              style={styles.eyeIcon}
-              onPress={() => setPasswordVisible(!passwordVisible)}>
-              <Icon
-                name={passwordVisible ? 'eye' : 'eye-off'}
-                size={24}
-                color="#888"
-              />
-            </TouchableOpacity>
+            style={styles.eyeIcon}
+            onPress={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
+            <Icon
+              name={confirmPasswordVisible ? 'eye' : 'eye-off'}
+              size={24}
+              color="#888"
+            />
+          </TouchableOpacity>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flexDirection: 'row'}}>
+              <TouchableOpacity
+                onPress={() => setCheckRemember(!checkRemember)}>
+                <Image
+                  style={{width: 20, height: 20}}
+                  source={
+                    checkRemember
+                      ? require('../Image/check.png')
+                      : require('../Image/circle.png')
+                  }
+                />
+              </TouchableOpacity>
+              <Text style={{marginLeft: 10}}>Nhớ tài khoản</Text>
+            </View>
           </View>
           <TouchableOpacity
             style={styles.forgotPassword}
-            onPress={() => navigation.navigate('ForgotPassword')}>
+            onPress={() => props.navigation.navigate('ForgotPassword')}>
             <Text style={styles.forgotPasswordText}>Quên mật khẩu?</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.loginButton}
-            onPress={handleLogin}
-            disabled={isLoading} // Vô hiệu hóa khi đang đăng nhập
-          >
-            {isLoading ? (
-              <ActivityIndicator size="small" color="#fff" />
-            ) : (
-              <Text style={styles.loginButtonText}>Đăng nhập</Text>
-            )}
+          <TouchableOpacity style={styles.loginButton} onPress={() => CheckLogin()}>
+            <Text style={styles.loginButtonText}>Đăng nhập</Text>
           </TouchableOpacity>
           <View style={styles.registerContainer}>
             <Text style={styles.registerText}>Bạn chưa có tài khoản?</Text>
             <TouchableOpacity
               style={styles.registerButton}
-              onPress={() => navigation.navigate('Register')}>
+              onPress={() => {
+                props.navigation.navigate("Register");
+              }}>
               <Text style={styles.registerButtonText}>Đăng ký</Text>
             </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 
@@ -130,7 +187,7 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     alignItems: 'center',
     padding: 20,
     backgroundColor: '#f5f5f5',

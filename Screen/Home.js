@@ -13,14 +13,14 @@ import React, {useEffect, useState, useCallback, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import BannerAd from './BannerAd';
 
+export const URL = "http://192.168.0.104:3000";
+
 const { width: screenWidth } = Dimensions.get('window');
 
-const Home = ({route, favorites, setFavorites}) => {
-  const {userId} = route.params; // Nhận userId từ params
+const Home = ({ navigation }) => {
   const [footballFields, setFootballFields] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
   const bannerRef = useRef(null);
 

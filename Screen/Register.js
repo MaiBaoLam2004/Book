@@ -14,7 +14,7 @@ import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Register = () => {
+const Register = (props) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,16 +33,18 @@ const Register = () => {
       Alert.alert('Lỗi', 'Mật khẩu không khớp');
       return;
     }
-
-    const role = 'user'; // Gán quyền hạn mặc định là 'user'
-
     try {
       const response = await fetch('http://192.168.0.104:3000/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({username, email, password, role}), // Bao gồm quyền hạn trong dữ liệu gửi lên server
+        body: JSON.stringify({
+          username, 
+          email:email, 
+          password:password, 
+          avatar : 'https://i.pinimg.com/474x/6d/50/9d/6d509d329b23502e4f4579cbad5f3d7f.jpg',
+          role : 'user'}), // Bao gồm quyền hạn trong dữ liệu gửi lên server
       });
 
       const data = await response.json();

@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image, Keyb
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-const ForgotPassword = () => {
+const ForgotPassword = (props) => {
     const [email, setEmail] = useState('');
     const navigation = useNavigation();
 
