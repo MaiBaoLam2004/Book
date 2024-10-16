@@ -32,7 +32,7 @@ const Home = ({route, favorites, setFavorites}) => {
       name: 'Sân bóng',
       availability:'có sẵn',
       image_url:
-        'https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-football-colorful-game-poster-banner-background-image_194132.jpg',
+        'https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/dashboard/editor_upload/hinh-nen-bong-da-1.jpg',
     },
     {
       id: 2,
@@ -40,7 +40,7 @@ const Home = ({route, favorites, setFavorites}) => {
       name: 'Sân bóng',
       availability:'có sẵn',
       image_url:
-        'https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg',
+        'https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/dashboard/editor_upload/hinh-nen-bong-da-120.jpg',
     },
     {
       id: 3,
@@ -48,7 +48,7 @@ const Home = ({route, favorites, setFavorites}) => {
       name: 'Sân bóng',
       availability:'có sẵn',
       image_url:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb8NfCTslFpGd8kkVaU4sjW1oUXKyZeHQh9djEhzR_JhzPe78gNf92xRArn7Kxiut5eqQ&usqp=CAU',
+        'https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-guild-wars-world-cup-soccer-background-template-image_192600.jpg',
     },
     {
       id: 4,

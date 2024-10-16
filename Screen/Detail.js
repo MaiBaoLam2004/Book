@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 300,
+    height: 250,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     marginBottom: 20,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
     top: 10,
-    left: 15,
+    left: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 20,
     padding: 6,
