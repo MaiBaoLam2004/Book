@@ -1,4 +1,3 @@
-
 import {
   StyleSheet,
   Text,
@@ -9,17 +8,23 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import thư viện icon
 
 const Detail = ({ route }) => {
   const navigation = useNavigation();
   const { product } = route.params;
+  const [isFavorite, setIsFavorite] = useState(false); // State to manage favorite status
 
   const handleBooking = () => {
     // Thêm logic đặt sân ở đây
     Alert.alert('Đặt sân thành công!');
+  };
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+    // Add logic to update favorite status in your backend or state management
   };
 
   return (
@@ -29,6 +34,11 @@ const Detail = ({ route }) => {
           <Image source={{ uri: product.image_url }} style={styles.image} />
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Icon name="arrow-back" size={30} color="white" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={toggleFavorite} style={styles.heartButton}>
+            <Text style={{ fontSize: 25, color: isFavorite ? 'red' : 'gray' }}>
+              {isFavorite ? '❤️' : '🤍'}
+            </Text>
           </TouchableOpacity>
         </View>
         <View style={{ margin: 10 }}>
@@ -75,7 +85,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     marginBottom: 20,
-    resizeMode: 'cover'
+    resizeMode: 'stretch'
   },
   backButton: {
     position: 'absolute',
@@ -83,6 +93,14 @@ const styles = StyleSheet.create({
     left: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 20,
+    padding: 6,
+  },
+  heartButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 50,
     padding: 6,
   },
   itemText: {
