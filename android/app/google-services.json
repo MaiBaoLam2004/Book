@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "238252676949",
+    "project_id": "sportapp-b7caf",
+    "storage_bucket": "sportapp-b7caf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238252676949:android:c82950f502f1106fbe01dc",
+        "android_client_info": {
+          "package_name": "com.book"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCI08qqOfme0--9OJuP4i15GgIvvNaTAgA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

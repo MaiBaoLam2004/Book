@@ -42,7 +42,7 @@ const Register = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({username, email, password, role}), // Bao gồm quyền hạn trong dữ liệu gửi lên server
+        body: JSON.stringify({username, email, password, role:'user'}), // Bao gồm quyền hạn trong dữ liệu gửi lên server
       });
 
       const data = await response.json();

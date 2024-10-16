@@ -195,22 +195,22 @@ const Home = ({route, favorites, setFavorites}) => {
   };
 
 // Tự động cuộn banner sau mỗi 3 giây
-useEffect(() => {
-  const interval = setInterval(() => {
-    setCurrentBannerIndex(prevIndex =>
-      prevIndex === banners.length - 1 ? 0 : prevIndex + 1,
-    );
+// useEffect(() => {
+//   const interval = setInterval(() => {
+//     setCurrentBannerIndex(prevIndex =>
+//       prevIndex === banners.length - 1 ? 0 : prevIndex + 1,
+//     );
 
-    if (bannerRef.current) {
-      bannerRef.current.scrollToIndex({
-        index: currentBannerIndex === banners.length - 1 ? 0 : currentBannerIndex + 1,
-        animated: true,
-      });
-    }
-  }, 3000); // Thời gian cuộn banner 2 giây
+//     if (bannerRef.current) {
+//       bannerRef.current.scrollToIndex({
+//         index: currentBannerIndex === banners.length - 1 ? 0 : currentBannerIndex + 1,
+//         animated: true,
+//       });
+//     }
+//   }, 3000); // Thời gian cuộn banner 2 giây
 
-  return () => clearInterval(interval); // Xóa interval khi component unmount
-}, [currentBannerIndex, banners.length]);
+//   return () => clearInterval(interval); // Xóa interval khi component unmount
+// }, [currentBannerIndex, banners.length]);
 
 // Hàm render banner
 const renderBanner = () => (
