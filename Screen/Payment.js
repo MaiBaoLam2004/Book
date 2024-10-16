@@ -13,23 +13,27 @@ const Payment = () => {
                 <TextInput
                     style={styles.input}
                     placeholder="Tên Chủ Thẻ"
+                    placeholderTextColor="#888"
                 />
                 <TextInput
                     style={styles.input}
                     placeholder="Nhập Số Thẻ Visa"
                     keyboardType="numeric"
+                    placeholderTextColor="#888"
                 />
                 <View style={styles.row}>
                     <TextInput
                         style={[styles.input, styles.halfInput]}
                         placeholder="Ngày Hết Hạn (MM/YY)"
                         keyboardType="numeric"
+                        placeholderTextColor="#888"
                     />
                     <TextInput
-                        style={[styles.input, styles.halfInput]}
+                        style={[styles.input, styles.halfInput1]}
                         placeholder="CVV"
                         keyboardType="numeric"
                         secureTextEntry={true}
+                        placeholderTextColor="#888"
                     />
                 </View>
             </View>
@@ -79,14 +83,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         marginBottom: 20,
         width: '100%',
-        backgroundColor: 'white', // Thêm màu nền trắng cho input
+        backgroundColor: 'white',
+        
+         // Thêm màu nền trắng cho input
     },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
     halfInput: {
-        width: '48%',
+        width: '65%',
+    },
+    halfInput1: {
+        width: '30%',
     },
     backButton: {
         position: 'absolute',

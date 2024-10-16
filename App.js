@@ -81,9 +81,6 @@ function BottomTabNav({ route }) {
 }
 
 function App() {
-  const userId = 'someUserId'; // Thay thế bằng userId thực tế
-  const favorites = []; // Đặt giá trị yêu thích mặc định nếu cần
-
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -92,21 +89,21 @@ function App() {
           contentStyle: { paddingTop: 0 },
         }}
         initialRouteName="WellCome">
-        <Stack.Screen name="WellCome" component={WellCome} initialParams={{ userId, favorites }} />
-        <Stack.Screen name="Register" component={Register} initialParams={{ userId, favorites }} />
-        <Stack.Screen name="Login" component={Login} initialParams={{ userId, favorites }} />
-        <Stack.Screen name="Admin" component={Admin} initialParams={{ userId, favorites }} />
-        <Stack.Screen name="BottomTabNav" component={BottomTabNav} initialParams={{ userId, favorites }} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPassword} initialParams={{ userId }} />
-        <Stack.Screen name="Detail" component={Detail} initialParams={{ userId }} />
-        <Stack.Screen name="Notification" component={Notification} initialParams={{ userId }} />
-        <Stack.Screen name="Users" component={Users} initialParams={{ userId }} />
-        <Stack.Screen name="Favourite" component={Favourite} initialParams={{ userId }} />
-        <Stack.Screen name="BookingSucces" component={BookingSucces} initialParams={{ userId }} />
-        <Stack.Screen name="BannerAd" component={BannerAd} initialParams={{ userId }} />
-        <Stack.Screen name="Payment" component={Payment} initialParams={{ userId }} />
-        <Stack.Screen name="Payok" component={Payok} initialParams={{ userId }} />
-        <Stack.Screen name="SetTime" component={SetTime} initialParams={{ userId }} />
+        <Stack.Screen name="WellCome" component={WellCome} />
+        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Admin" component={Admin} />
+        <Stack.Screen name="BottomTabNav" component={BottomTabNav} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="Detail" component={Detail} />
+        <Stack.Screen name="Notification" component={Notification} />
+        <Stack.Screen name="Users" component={Users} />
+        <Stack.Screen name="Favourite" component={Favourite} />
+        <Stack.Screen name="BookingSucces" component={BookingSucces} />
+        <Stack.Screen name="BannerAd" component={BannerAd} />
+        <Stack.Screen name="Payment" component={Payment} />
+        <Stack.Screen name="Payok" component={Payok} />
+        <Stack.Screen name="SetTime" component={SetTime} />
       </Stack.Navigator>
     </NavigationContainer>
   );

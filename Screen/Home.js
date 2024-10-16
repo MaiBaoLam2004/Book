@@ -256,7 +256,7 @@ const renderBanner = () => (
           style={styles.favoritesButton}
           onPress={() => navigation.navigate('Favourite', { userId })}
         >
-          <Icon name="heart" size={30} color="white" />
+          <Icon name="heart" size={30} color="gray" />
         </TouchableOpacity>
         
       </View>
@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    //backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 100,
     padding: 6,
   },

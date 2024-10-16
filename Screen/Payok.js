@@ -10,7 +10,7 @@ const Payok = () => {
             <Text style={styles.message}>Thanh toán thành công!</Text>
             <Button
                 title="Quay lại màn hình chính"
-                onPress={() => navigation.goBack()}
+                onPress={() => navigation.navigate('BottomTabNav')}
                 color="#841584"
             />
         </View>

@@ -75,11 +75,6 @@ const Favourite = ({ route }) => {
       }
     }
   };
-
-  const navigateToDetail = (item) => {
-    navigation.navigate('Detail', { product: item });
-  };
-
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
@@ -95,7 +90,7 @@ const Favourite = ({ route }) => {
         <FlatList
           data={favorites}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigateToDetail(item)}>
+            <TouchableOpacity onPress={() => navigation.navigate('Detail', { product: item })}>
               <View style={styles.itemContainer}>
                 <Image source={{ uri: item.image_url }} style={styles.image} resizeMode='cover' />
                 <View>

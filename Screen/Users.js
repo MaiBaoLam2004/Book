@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
 
-const Users = ({ route }) => {
+const Users = ({ route, navigation }) => {
   const { userId } = route.params || {}; // Nhận userId từ route.params
   const [imageUri, setImageUri] = useState(null);
 
@@ -23,17 +23,18 @@ const Users = ({ route }) => {
         console.log('Error fetching user image:', error);
       }
     };
-    
 
-    fetchUserImage();
+    if (userId) {
+      fetchUserImage();
+    }
   }, [userId]);
 
   const pickImage = () => {
-    launchImageLibrary({}, response => {
+    launchImageLibrary({ mediaType: 'photo' }, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
+      } else if (response.errorCode) {
+        console.log('ImagePicker Error: ', response.errorMessage);
       } else {
         const uri = response.assets[0].uri;
         setImageUri(uri);
@@ -77,6 +78,9 @@ const Users = ({ route }) => {
         </View>
       </TouchableOpacity>
       <Text style={styles.userNameText}>ID người dùng: {userId}</Text>
+      <TouchableOpacity style={styles.bookingButton} onPress={() => navigation.navigate('BookingSucces')}>
+        <Text style={styles.bookingButtonText}>Đã đặt sân</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -88,7 +92,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: 'white',
-    //justifyContent: 'center', // Center the content vertically
   },
   imageContainer: {
     width: 100,
@@ -110,5 +113,21 @@ const styles = StyleSheet.create({
   userNameText: {
     fontSize: 16,
     marginTop: 10,
+  },
+  bookingButton: {
+    marginTop: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '80%',
+    borderWidth: 1,
+    borderBlockColor: 'black',
+  },
+  bookingButtonText: {
+    color: 'black',
+    fontSize: 16,
   },
 });
