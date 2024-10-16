@@ -104,5 +104,18 @@
       "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
     }
   ],
-  "favorites": []
+  "favorites": [
+    {
+      "id": "1",
+      "name": "Sân A",
+      "location": "123 Đường Chính, Hà Nội",
+      "price_per_hour": 100,
+      "availability": "có sẵn",
+      "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
+      "surface_type": "cỏ tự nhiên",
+      "max_players": 22,
+      "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg",
+      "userId": "3e9b"
+    }
+  ]
 }

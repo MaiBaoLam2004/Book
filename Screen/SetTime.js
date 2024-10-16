@@ -4,13 +4,22 @@ import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const hours = Array.from({length: 15}, (_, i) => `${i + 7}:00`);
+const fieldTypes = ['Sân cỏ nhân tạo', 'Sân cỏ tự nhiên'];
 
 const SetTime = () => {
     const navigation = useNavigation();
     const [selectedHour, setSelectedHour] = useState(null);
+    const [selectedFieldType, setSelectedFieldType] = useState(null);
+    const [showFieldTypes, setShowFieldTypes] = useState(false);
 
     const handlePress = (item) => {
         setSelectedHour(item);
+        setSelectedFieldType(null); // Reset selected field type when a new hour is selected
+        setShowFieldTypes(true); // Always show field types when an hour is selected
+    };
+
+    const handleFieldTypePress = (type) => {
+        setSelectedFieldType(type);
     };
 
     return (
@@ -23,10 +32,19 @@ const SetTime = () => {
                     <TouchableOpacity onPress={() => handlePress(item)}>
                         <View style={styles.timeSlot}>
                             <Text style={styles.timeText}>{item}</Text>
-                            {selectedHour === item && (
-                                <Icon name="checkmark-circle" size={24} color="green" style={styles.checkmark} />
-                            )}
                         </View>
+                        {selectedHour === item && showFieldTypes && (
+                            <View style={styles.fieldTypeContainer}>
+                                {fieldTypes.map((type, index) => (
+                                    <TouchableOpacity key={index} style={styles.fieldTypeOption} onPress={() => handleFieldTypePress(type)}>
+                                        <Text style={styles.fieldTypeText}>{type}</Text>
+                                        {selectedFieldType === type && (
+                                            <Icon name="checkmark-circle" size={24} color="green" style={styles.checkmark} />
+                                        )}
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        )}
                     </TouchableOpacity>
                 )}
             />
@@ -76,6 +94,25 @@ const styles = StyleSheet.create({
     },
     checkmark: {
         marginLeft: 10,
+    },
+    fieldTypeContainer: {
+        marginTop: 10,
+        padding: 10,
+        backgroundColor: '#e9ecef',
+        borderRadius: 10,
+    },
+    fieldTypeOption: {
+        padding: 10,
+        backgroundColor: '#ffffff',
+        borderRadius: 5,
+        marginVertical: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    fieldTypeText: {
+        fontSize: 18,
+        color: '#333',
     },
     button: {
         marginTop: 20,
