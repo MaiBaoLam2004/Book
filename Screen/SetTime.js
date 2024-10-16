@@ -13,9 +13,13 @@ const SetTime = () => {
     const [showFieldTypes, setShowFieldTypes] = useState(false);
 
     const handlePress = (item) => {
-        setSelectedHour(item);
-        setSelectedFieldType(null); // Reset selected field type when a new hour is selected
-        setShowFieldTypes(true); // Always show field types when an hour is selected
+        if (selectedHour === item) {
+            setShowFieldTypes(!showFieldTypes);
+        } else {
+            setSelectedHour(item);
+            setSelectedFieldType(null); // Reset selected field type when a new hour is selected
+            setShowFieldTypes(true); // Always show field types when a new hour is selected
+        }
     };
 
     const handleFieldTypePress = (type) => {
