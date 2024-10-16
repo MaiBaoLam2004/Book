@@ -23,10 +23,7 @@ import SetTime from './Screen/SetTime';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function BottomTabNav({ route }) {
-  const { userId, favorites } = route.params || {}; // Thêm kiểm tra sự tồn tại
-  const [userFavorites, setUserFavorites] = useState(favorites || []);
-
+function BottomTabNav() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -47,35 +44,9 @@ function BottomTabNav({ route }) {
         tabBarInactiveTintColor: 'black',
         headerShown: false,
       })}>
-      <Tab.Screen name="Trang chủ">
-        {props => (
-          <Home
-            {...props}
-            userId={userId}
-            favorites={userFavorites}
-            setFavorites={setUserFavorites}
-          />
-        )}
-      </Tab.Screen>
-      {/* <Tab.Screen name="Yêu thích">
-        {props => (
-          <Favourite
-            {...props}
-            userId={userId}
-            favorites={userFavorites}
-            setFavorites={setUserFavorites}
-          />
-        )}
-      </Tab.Screen> */}
+      <Tab.Screen name="Trang chủ" component={Home}/>
       <Tab.Screen name="Thông báo" component={Notification} />
-      <Tab.Screen name="Tài khoản">
-        {props => (
-          <Users
-            {...props}
-            userId={userId}
-          />
-        )}
-      </Tab.Screen>
+      <Tab.Screen name="Tài khoản" component={Users}/>
     </Tab.Navigator>
   );
 }
@@ -90,11 +61,11 @@ function App() {
         }}
         initialRouteName="WellCome">
         <Stack.Screen name="WellCome" component={WellCome} />
-        <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Admin" component={Admin} />
-        <Stack.Screen name="BottomTabNav" component={BottomTabNav} />
+        <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+        <Stack.Screen name="BottomTabNav" component={BottomTabNav} />
+        <Stack.Screen name="Admin" component={Admin} />
         <Stack.Screen name="Detail" component={Detail} />
         <Stack.Screen name="Notification" component={Notification} />
         <Stack.Screen name="Users" component={Users} />

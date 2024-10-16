@@ -45,8 +45,8 @@ function Login() {
           screen: 'Trang chủ',
           params: {
             userId: userId,
-            username: user.username,
-            favorites: user.favorites,
+            // username: user.username,
+            // favorites: user.favorites,
           },
         });
       } else {
@@ -77,6 +77,7 @@ function Login() {
             placeholderTextColor="#888"
             value={username}
             onChangeText={setUsername}
+            autoCapitalize="none"
           />
           <View style={styles.passwordContainer}>
             <TextInput
@@ -86,6 +87,7 @@ function Login() {
               secureTextEntry={!passwordVisible}
               value={password}
               onChangeText={setPassword}
+              autoCapitalize="none"
             />
             <TouchableOpacity
               style={styles.eyeIcon}

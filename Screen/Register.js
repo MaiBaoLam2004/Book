@@ -89,6 +89,7 @@ const Register = () => {
             placeholderTextColor="#888"
             value={username}
             onChangeText={setUsername}
+            autoCapitalize="none"
           />
           <TextInput
             style={styles.input}
@@ -97,6 +98,7 @@ const Register = () => {
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
+            autoCapitalize="none"
           />
           <View style={styles.passwordContainer}>
             <TextInput
@@ -106,6 +108,7 @@ const Register = () => {
               value={password}
               onChangeText={setPassword}
               secureTextEntry={!passwordVisible}
+              autoCapitalize="none"
             />
             <TouchableOpacity
               style={styles.eyeIcon}
@@ -125,6 +128,7 @@ const Register = () => {
               value={confirmPassword}
               onChangeText={setConfirmPassword}
               secureTextEntry={!confirmPasswordVisible}
+              autoCapitalize="none"
             />
             <TouchableOpacity
               style={styles.eyeIcon}

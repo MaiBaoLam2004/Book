@@ -46,6 +46,8 @@ const Favourite = ({ route }) => {
         if (!response.ok) {
           throw new Error('Failed to delete favorite');
         }
+        // Fetch updated favorites list
+        fetchFavorites();
       } catch (error) {
         console.error('Error deleting favorite:', error);
         // Revert the UI change
@@ -68,6 +70,8 @@ const Favourite = ({ route }) => {
         if (!response.ok) {
           throw new Error('Failed to add favorite');
         }
+        // Fetch updated favorites list
+        fetchFavorites();
       } catch (error) {
         console.error('Error adding favorite:', error);
         // Revert the UI change
@@ -75,9 +79,10 @@ const Favourite = ({ route }) => {
       }
     }
   };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+      <TouchableOpacity onPress={() => navigation.navigate('BottomTabNav')} style={styles.backButton}>
         <Icon name="arrow-back" size={30} color="white" />
       </TouchableOpacity>
       {favorites.length === 0 ? (
@@ -103,7 +108,7 @@ const Favourite = ({ route }) => {
                 <TouchableOpacity
                   style={styles.heartIcon}
                   onPress={() => toggleFavorite(item)}>
-                  <Text style={{ fontSize: 35, color: 'red' }}>{favorites.some(fav => fav.id === item.id) ? '❤️' : '🤍'}</Text>
+                  <Text style={{ fontSize: 30, color: 'red' }}>{favorites.some(fav => fav.id === item.id) ? '❤️' : '🤍'}</Text>
                 </TouchableOpacity>
               </View>
             </TouchableOpacity>

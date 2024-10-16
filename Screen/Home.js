@@ -17,14 +17,15 @@ import Icon from 'react-native-vector-icons/Ionicons'; // Import thư viện ico
 
 const { width: screenWidth } = Dimensions.get('window');
 
-const Home = ({route, favorites, setFavorites}) => {
+const Home = ({route}) => {
   const {userId} = route.params; // Nhận userId từ params
   const [footballFields, setFootballFields] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
-  const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
-  const bannerRef = useRef(null);
+  const [favorites, setFavorites] = useState([]);
+  //const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
+  //const bannerRef = useRef(null);
 
   // Danh sách banner có chứa id sản phẩm liên quan
   const [banners, setBanners] = useState([
@@ -256,7 +257,7 @@ const renderBanner = () => (
           style={styles.favoritesButton}
           onPress={() => navigation.navigate('Favourite', { userId })}
         >
-          <Icon name="heart" size={30} color="gray" />
+          <Icon name="heart" size={30} color="red" />
         </TouchableOpacity>
         
       </View>
