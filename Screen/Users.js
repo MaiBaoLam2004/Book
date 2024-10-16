@@ -110,6 +110,28 @@ const Users = ({route}) => {
     }
   };
 
+  const handleLogout = () => {
+    Alert.alert(
+      'Xác nhận',
+      'Bạn có chắc chắn muốn đăng xuất?',
+      [
+        {
+          text: 'Hủy',
+          style: 'cancel',
+        },
+        {
+          text: 'Đồng ý',
+          onPress: () => {
+            console.log('User logged out');
+            navigation.navigate('Login'); // Navigate to the login screen
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
+  
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white',}}>
       <View style={styles.container}>
@@ -130,6 +152,11 @@ const Users = ({route}) => {
           style={styles.bookingButton}
           onPress={() => navigation.navigate('BookingSucces')}>
           <Text style={styles.bookingButtonText}>Đã đặt sân</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}>
+          <Text style={styles.logoutButtonText}>Đăng xuất</Text>
         </TouchableOpacity>
       </View>
 
@@ -204,6 +231,22 @@ const styles = StyleSheet.create({
     borderBlockColor: 'black',
   },
   bookingButtonText: {
+    color: 'black',
+    fontSize: 16,
+  },
+  logoutButton: {
+    marginTop: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '80%',
+    borderWidth: 1,
+    borderBlockColor: 'black',
+  },
+  logoutButtonText: {
     color: 'black',
     fontSize: 16,
   },

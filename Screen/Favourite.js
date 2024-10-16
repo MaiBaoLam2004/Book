@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon library
@@ -14,6 +15,7 @@ const Favourite = ({ route }) => {
   const { userId } = route.params || {}; // Provide a default empty object
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(false); // Add loading state
+  const [refreshing, setRefreshing] = useState(false); // Add refreshing state
   const navigation = useNavigation();
 
   const fetchFavorites = async () => {
@@ -31,24 +33,29 @@ const Favourite = ({ route }) => {
     console.log('Current userId:', userId); // In ra giá trị của userId
     fetchFavorites();
   }, [userId]);
-  
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchFavorites();
+    setRefreshing(false);
+  };
 
   const toggleFavorite = async (item) => {
     if (loading) return; // Prevent multiple deletions at the same time
     setLoading(true);
 
     const isFavorite = favorites.find(fav => fav.id === item.id);
-  
+
     if (isFavorite) {
       // Optimistically update the UI
       const updatedFavorites = favorites.filter(fav => fav.id !== item.id);
       setFavorites(updatedFavorites);
-  
+
       try {
         const response = await fetch(`http://192.168.0.104:3000/favorites/${isFavorite.id}`, {
           method: 'DELETE',
         });
-  
+
         if (!response.ok) {
           throw new Error('Failed to delete favorite');
         }
@@ -63,7 +70,7 @@ const Favourite = ({ route }) => {
       const newFavorite = { ...item, userId };
       const updatedFavorites = [...favorites, newFavorite];
       setFavorites(updatedFavorites);
-  
+
       try {
         const response = await fetch(`http://192.168.0.104:3000/favorites`, {
           method: 'POST',
@@ -72,7 +79,7 @@ const Favourite = ({ route }) => {
           },
           body: JSON.stringify(newFavorite),
         });
-  
+
         if (!response.ok) {
           throw new Error('Failed to add favorite');
         }
@@ -91,7 +98,7 @@ const Favourite = ({ route }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.navigate('BottomTabNav')} style={styles.backButton}>
-        <Icon name="arrow-back" size={30} color="white" />
+        <Icon name="arrow-back" size={25} color="white" />
       </TouchableOpacity>
       {favorites.length === 0 ? (
         <View style={styles.noFavoritesContainer}>
@@ -124,6 +131,9 @@ const Favourite = ({ route }) => {
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id.toString()} // Chỉ dùng item.id
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       )}
     </View>
@@ -140,7 +150,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 10,
+    top: 15,
     left: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 20,
@@ -157,7 +167,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   itemContainer: {
-    margin: 6,
+    margin: 10,
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 20,
@@ -165,8 +175,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff', // Thêm màu nền cho item
   },
   image: {
-    width: 350,
-    height: 200,
+    width: 300,
+    height: 150,
     marginBottom: 10,
     borderRadius: 20,
   },
@@ -177,7 +187,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'black',
-    fontSize: 20,
+    fontSize: 17,
     fontWeight: 'bold',
     marginLeft: 10,
     marginBottom: 5,

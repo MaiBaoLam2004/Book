@@ -3,7 +3,11 @@ import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const hours = Array.from({length: 15}, (_, i) => `${i + 7}:00`);
+const hours = Array.from({length: 15}, (_, i) => {
+    const startHour = i + 7;
+    const endHour = startHour + 1;
+    return `${startHour}:00 - ${endHour}:00`;
+});
 const fieldTypes = ['Sân cỏ nhân tạo', 'Sân cỏ tự nhiên'];
 
 const SetTime = () => {
@@ -60,7 +64,7 @@ const SetTime = () => {
             <TouchableOpacity
                 onPress={() => navigation.goBack()}
                 style={styles.backButton}>
-                <Icon name="arrow-back" size={30} color="white" />
+                <Icon name="arrow-back" size={25} color="white" />
             </TouchableOpacity>
         </View>
     );
@@ -115,7 +119,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     fieldTypeText: {
-        fontSize: 18,
+        fontSize: 20,
         color: '#333',
     },
     button: {
@@ -138,8 +142,8 @@ const styles = StyleSheet.create({
     },
     backButton: {
         position: 'absolute',
-        top: 10,
-        left: 15,
+        top: 15,
+        left: 10,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         borderRadius: 20,
         padding: 6,

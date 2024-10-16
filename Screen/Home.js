@@ -47,15 +47,15 @@ const Home = ({ route }) => {
       name: 'Sân bóng',
       availability: 'có sẵn',
       image_url:
-        'https://png.pngtree.com/thumb_back/fh260/back_our/20190621/ourmid/pngtree-guild-wars-world-cup-soccer-background-template-image_192600.jpg',
+        'https://cdn.bongdaplus.vn/Assets/Media/2022/11/25/41/ronaldo7.jpg',
     },
     {
       id: 4,
       productId: 4,
-      name: 'Sân bóng',
+      name: 'Tình yêu nồng cháy',
       availability: 'có sẵn',
       image_url:
-        'https://png.pngtree.com/png-vector/20220211/ourmid/pngtree-abstract-soccer-football-banner-flashlight-professional-vector-png-image_35162972.jpg',
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTowJiIx7fQdG7c8MmKzWrRAoC1NDA71uSkdQ&s',
     },
   ]);
 

@@ -33,7 +33,7 @@ const Detail = ({ route }) => {
         <View style={styles.imageContainer}>
           <Image source={{ uri: product.image_url }} style={styles.image} />
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-            <Icon name="arrow-back" size={30} color="white" />
+            <Icon name="arrow-back" size={25} color="white" />
           </TouchableOpacity>
           {/* <TouchableOpacity onPress={toggleFavorite} style={styles.heartButton}>
             <Text style={{ fontSize: 25, color: isFavorite ? 'red' : 'gray' }}>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   heartButton: {
     position: 'absolute',
-    top: 10,
+    top: 15,
     right: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 50,

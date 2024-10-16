@@ -58,7 +58,7 @@ function Login() {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+    <SafeAreaView style={{flex: 1, justifyContent: 'center', backgroundColor: 'white'}}>
       <ScrollView>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     //flex: 1,
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: 'white',
   },
   title: {
     fontSize: 30,

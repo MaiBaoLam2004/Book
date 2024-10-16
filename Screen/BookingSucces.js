@@ -9,7 +9,7 @@ const BookingSucces = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Icon name="arrow-back" size={30} color="white" />
+        <Icon name="arrow-back" size={25} color="white" />
       </TouchableOpacity>
       <Text>BookingSucces</Text>
     </View>
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 10,
+    top: 15,
     left: 10,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 20,

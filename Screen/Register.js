@@ -71,7 +71,7 @@ const Register = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+    <SafeAreaView style={{flex: 1, justifyContent: 'center', backgroundColor: 'white'}}>
       <ScrollView>
       <KeyboardAvoidingView
         style={{flex: 1}}
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     //justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: 'white'
   },
   title: {
     fontSize: 30,
