@@ -1,22 +1,34 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker';
+import {useNavigation} from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  ActivityIndicator,
+  SafeAreaView,
+} from 'react-native';
+import {launchImageLibrary} from 'react-native-image-picker';
 
-const Users = ({ route }) => {
-  const { userId } = route.params || {};
+const Users = ({route}) => {
+  const {userId} = route.params || {};
   const navigation = useNavigation();
   const [imageUri, setImageUri] = useState(null);
+  const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUserImage = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`http://192.168.0.104:3000/users/${userId}`);
+        const response = await fetch(
+          `http://192.168.0.104:3000/users/${userId}`,
+        );
         if (response.ok) {
           const user = await response.json();
           setImageUri(user.imageUri);
+          setUsername(user.username);
         } else {
           console.log('User not found');
         }
@@ -25,14 +37,14 @@ const Users = ({ route }) => {
       }
       setLoading(false);
     };
-  
+
     if (userId) {
       fetchUserImage();
     }
   }, [userId]);
 
   const pickImage = () => {
-    launchImageLibrary({ mediaType: 'photo' }, response => {
+    launchImageLibrary({mediaType: 'photo'}, response => {
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.errorCode) {
@@ -45,17 +57,20 @@ const Users = ({ route }) => {
     });
   };
 
-  const saveImage = async (uri) => {
-    const userData = { imageUri: uri };
+  const saveImage = async uri => {
+    const userData = {imageUri: uri};
 
     try {
-      const response = await fetch(`http://192.168.0.104:3000/users/${userId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `http://192.168.0.104:3000/users/${userId}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
         },
-        body: JSON.stringify(userData),
-      });
+      );
 
       if (response.ok) {
         console.log('Image updated successfully');
@@ -68,23 +83,28 @@ const Users = ({ route }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity onPress={pickImage}>
-        <View style={styles.imageContainer}>
-          {loading ? (
-            <ActivityIndicator size="large" color="#0000ff" />
-          ) : imageUri ? (
-            <Image source={{ uri: imageUri }} style={styles.image} />
-          ) : (
-            <Text style={styles.addPhotoText}>Thêm ảnh</Text>
-          )}
-        </View>
-      </TouchableOpacity>
-      <Text style={styles.userNameText}>ID người dùng: {userId}</Text>
-      <TouchableOpacity style={styles.bookingButton} onPress={() => navigation.navigate('BookingSucces')}>
-        <Text style={styles.bookingButtonText}>Đã đặt sân</Text>
-      </TouchableOpacity>
-    </View>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white',}}>
+      <View style={styles.container}>
+        <TouchableOpacity onPress={pickImage}>
+          <View style={styles.imageContainer}>
+            {loading ? (
+              <ActivityIndicator size="large" color="#0000ff" />
+            ) : imageUri ? (
+              <Image source={{uri: imageUri}} style={styles.image} />
+            ) : (
+              <Text style={styles.addPhotoText}>Thêm ảnh</Text>
+            )}
+          </View>
+        </TouchableOpacity>
+        <Text style={styles.userNameText}>ID người dùng: {userId}</Text>
+        <Text style={styles.userNameText}>Tên người dùng: {username}</Text>
+        <TouchableOpacity
+          style={styles.bookingButton}
+          onPress={() => navigation.navigate('BookingSucces')}>
+          <Text style={styles.bookingButtonText}>Đã đặt sân</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -92,23 +112,24 @@ export default Users;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     alignItems: 'center',
     backgroundColor: 'white',
   },
   imageContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 150,
+    height: 150,
+    borderRadius: 100,
     backgroundColor: '#ccc',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
+    marginTop: 20,
   },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 150,
+    height: 150,
+    borderRadius: 100,
   },
   addPhotoText: {
     color: '#333',
@@ -116,6 +137,7 @@ const styles = StyleSheet.create({
   userNameText: {
     fontSize: 16,
     marginTop: 10,
+    color: '#333',
   },
   bookingButton: {
     marginTop: 20,
