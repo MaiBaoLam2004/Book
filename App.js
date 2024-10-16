@@ -18,6 +18,7 @@ import Home from './Screen/Home';
 import BannerAd from './Screen/BannerAd';
 import Payment from './Screen/Payment';
 import Payok from './Screen/Payok';
+import SetTime from './Screen/SetTime';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -105,6 +106,7 @@ function App() {
         <Stack.Screen name="BannerAd" component={BannerAd} />
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Payok" component={Payok} />
+        <Stack.Screen name="SetTime" component={SetTime} />
       </Stack.Navigator>
     </NavigationContainer>
   );

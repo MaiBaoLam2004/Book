@@ -58,7 +58,7 @@ const Detail = ({ route }) => {
           </Text>
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.bookButton} onPress={() => navigation.navigate('Payment')}>
+      <TouchableOpacity style={styles.bookButton} onPress={() => navigation.navigate('SetTime')}>
         <Text style={styles.bookButtonText}>Đặt sân</Text>
       </TouchableOpacity>
     </View>
