@@ -40,14 +40,12 @@ function Login() {
       );
 
       if (user) {
-        const userId = user.id;
+        //const userId = user.id;
         navigation.navigate('BottomTabNav', {
-          screen: 'Trang chủ',
-          params: {
-            userId: userId,
+            userId: user.id,
             // username: user.username,
             // favorites: user.favorites,
-          },
+          
         });
       } else {
         Alert.alert('Đăng nhập thất bại', 'Tài khoản hoặc mật khẩu không đúng');

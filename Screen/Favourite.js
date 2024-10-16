@@ -11,8 +11,9 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon library
 
 const Favourite = ({ route }) => {
-  const { userId } = route.params; // Provide a default empty object
+  const { userId } = route.params || {}; // Provide a default empty object
   const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(false); // Add loading state
   const navigation = useNavigation();
 
   const fetchFavorites = async () => {
@@ -27,10 +28,15 @@ const Favourite = ({ route }) => {
   };
 
   useEffect(() => {
+    console.log('Current userId:', userId); // In ra giá trị của userId
     fetchFavorites();
   }, [userId]);
+  
 
   const toggleFavorite = async (item) => {
+    if (loading) return; // Prevent multiple deletions at the same time
+    setLoading(true);
+
     const isFavorite = favorites.find(fav => fav.id === item.id);
   
     if (isFavorite) {
@@ -78,6 +84,8 @@ const Favourite = ({ route }) => {
         setFavorites(favorites.filter(fav => fav.id !== item.id));
       }
     }
+
+    setLoading(false);
   };
 
   return (
@@ -107,7 +115,9 @@ const Favourite = ({ route }) => {
                 </View>
                 <TouchableOpacity
                   style={styles.heartIcon}
-                  onPress={() => toggleFavorite(item)}>
+                  onPress={() => toggleFavorite(item)}
+                  disabled={loading} // Disable button while loading
+                >
                   <Text style={{ fontSize: 30, color: 'red' }}>{favorites.some(fav => fav.id === item.id) ? '❤️' : '🤍'}</Text>
                 </TouchableOpacity>
               </View>

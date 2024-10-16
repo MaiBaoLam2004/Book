@@ -23,7 +23,8 @@ import SetTime from './Screen/SetTime';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function BottomTabNav() {
+function BottomTabNav({ route }) {
+  const { userId } = route.params || {};
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -43,13 +44,15 @@ function BottomTabNav() {
         tabBarActiveTintColor: 'red',
         tabBarInactiveTintColor: 'black',
         headerShown: false,
-      })}>
-      <Tab.Screen name="Trang chủ" component={Home}/>
-      <Tab.Screen name="Thông báo" component={Notification} />
-      <Tab.Screen name="Tài khoản" component={Users}/>
+      })}
+    >
+      <Tab.Screen name="Trang chủ" component={Home} initialParams={{ userId }} />
+      <Tab.Screen name="Thông báo" component={Notification} initialParams={{ userId }} />
+      <Tab.Screen name="Tài khoản" component={Users} initialParams={{ userId }} />
     </Tab.Navigator>
   );
 }
+
 
 function App() {
   return (
@@ -69,7 +72,7 @@ function App() {
         <Stack.Screen name="Detail" component={Detail} />
         <Stack.Screen name="Notification" component={Notification} />
         <Stack.Screen name="Users" component={Users} />
-        <Stack.Screen name="Favourite" component={Favourite} />
+        <Stack.Screen name="Favourite" component={Favourite}/>
         <Stack.Screen name="BookingSucces" component={BookingSucces} />
         <Stack.Screen name="BannerAd" component={BannerAd} />
         <Stack.Screen name="Payment" component={Payment} />
