@@ -16,6 +16,8 @@ import Favourite from './Screen/Favourite';
 import BookingSucces from './Screen/BookingSucces';
 import Home from './Screen/Home';
 import BannerAd from './Screen/BannerAd';
+import Payment from './Screen/Payment';
+import Payok from './Screen/Payok';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -101,6 +103,8 @@ function App() {
         <Stack.Screen name="Favourite" component={Favourite} />
         <Stack.Screen name="BookingSucces" component={BookingSucces} />
         <Stack.Screen name="BannerAd" component={BannerAd} />
+        <Stack.Screen name="Payment" component={Payment} />
+        <Stack.Screen name="Payok" component={Payok} />
       </Stack.Navigator>
     </NavigationContainer>
   );

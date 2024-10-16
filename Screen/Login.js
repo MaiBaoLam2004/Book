@@ -11,6 +11,7 @@ import {
   Platform,
   ScrollView,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -59,9 +60,8 @@ function Login() {
   };
 
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+    <SafeAreaView>
       <KeyboardAvoidingView
-        style={{flex: 1}}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.container}>
           <Image
@@ -122,7 +122,7 @@ function Login() {
           </View>
         </View>
       </KeyboardAvoidingView>
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 

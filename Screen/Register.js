@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   Platform,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -63,7 +64,7 @@ const Register = () => {
   };
 
   return (
-    <ScrollView>
+    <SafeAreaView>
       <KeyboardAvoidingView
         style={{flex: 1}}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -139,7 +140,7 @@ const Register = () => {
         </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
