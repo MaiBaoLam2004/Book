@@ -35,11 +35,11 @@ const Detail = ({ route }) => {
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Icon name="arrow-back" size={30} color="white" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={toggleFavorite} style={styles.heartButton}>
+          {/* <TouchableOpacity onPress={toggleFavorite} style={styles.heartButton}>
             <Text style={{ fontSize: 25, color: isFavorite ? 'red' : 'gray' }}>
               {isFavorite ? '❤️' : '🤍'}
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={{ margin: 10 }}>
           <Text style={styles.itemText}>Tên sân: {product.name}</Text>
@@ -94,6 +94,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 20,
     padding: 6,
+    // borderColor:'black',
+    // borderWidth:1,
   },
   heartButton: {
     position: 'absolute',

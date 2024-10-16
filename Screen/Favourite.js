@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,83 +8,73 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon library
 
-const Favourite = ({ favorites, setFavorites, userId , route  }) => {
+const Favourite = ({ route }) => {
+  const { userId } = route.params; // Provide a default empty object
+  const [favorites, setFavorites] = useState([]);
   const navigation = useNavigation();
-  console.log('Favourite User ID:', userId);
 
-  const deleteFavorite = async (itemId) => {
-    // Lọc các mục yêu thích để loại bỏ mục có id bằng itemId
-    const updatedFavorites = favorites.filter(fav => fav.id !== itemId);
-    setFavorites(updatedFavorites); // Cập nhật danh sách yêu thích cục bộ
-  
-    if (!userId) {
-      console.error('User ID is undefined.');
-      return;
-    }
-  
+  const fetchFavorites = async () => {
+    if (!userId) return; // Check if userId is valid
     try {
-      // Gửi yêu cầu PATCH để cập nhật mục favorites trong db.json
-      const response = await fetch(`http://192.168.0.104:3000/users/${userId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          favorites: updatedFavorites, // Cập nhật danh sách yêu thích mới
-        }),
-      });
-  
-      if (response.ok) {
-        console.log('Deleted favorite successfully');
-      } else {
-        console.error(`Error deleting favorite: ${response.status}`);
-        setFavorites(favorites); // Hoàn tác cập nhật nếu lỗi từ server
-      }
+      const response = await fetch(`http://192.168.0.104:3000/favorites?userId=${userId}`);
+      const data = await response.json();
+      setFavorites(data);
     } catch (error) {
-      console.error('Error connecting to the server:', error);
-      setFavorites(favorites); // Hoàn tác cập nhật nếu có lỗi kết nối
+      console.error('Error fetching favorites:', error);
     }
   };
-  
+
+  useEffect(() => {
+    fetchFavorites();
+  }, [userId]);
 
   const toggleFavorite = async (item) => {
     const isFavorite = favorites.find(fav => fav.id === item.id);
+  
     if (isFavorite) {
-      await deleteFavorite(item.id); // Gọi hàm xóa yêu thích
-    } else {
-      const updatedFavorites = [...favorites, item];
+      // Optimistically update the UI
+      const updatedFavorites = favorites.filter(fav => fav.id !== item.id);
       setFavorites(updatedFavorites);
   
-      if (!userId) {
-        console.error('User ID is undefined.');
-        return;
+      try {
+        const response = await fetch(`http://192.168.0.104:3000/favorites/${isFavorite.id}`, {
+          method: 'DELETE',
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to delete favorite');
+        }
+      } catch (error) {
+        console.error('Error deleting favorite:', error);
+        // Revert the UI change
+        setFavorites([...updatedFavorites, item]);
       }
+    } else {
+      const newFavorite = { ...item, userId };
+      const updatedFavorites = [...favorites, newFavorite];
+      setFavorites(updatedFavorites);
   
       try {
-        const response = await fetch(`http://192.168.0.104:3000/users/${userId}`, {
-          method: 'PATCH',
+        const response = await fetch(`http://192.168.0.104:3000/favorites`, {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            favorites: updatedFavorites,
-          }),
+          body: JSON.stringify(newFavorite),
         });
   
-        if (response.ok) {
-          console.log('Added favorite successfully');
-        } else {
-          console.error('Error adding favorite:', response.status);
-          setFavorites(favorites); // Hoàn tác cập nhật nếu lỗi từ server
+        if (!response.ok) {
+          throw new Error('Failed to add favorite');
         }
       } catch (error) {
-        console.error('Error connecting to the server:', error);
-        setFavorites(favorites); // Hoàn tác cập nhật nếu có lỗi kết nối
+        console.error('Error adding favorite:', error);
+        // Revert the UI change
+        setFavorites(favorites.filter(fav => fav.id !== item.id));
       }
     }
   };
-  
 
   const navigateToDetail = (item) => {
     navigation.navigate('Detail', { product: item });
@@ -92,6 +82,9 @@ const Favourite = ({ favorites, setFavorites, userId , route  }) => {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Icon name="arrow-back" size={30} color="white" />
+      </TouchableOpacity>
       {favorites.length === 0 ? (
         <View style={styles.noFavoritesContainer}>
           <Text style={styles.noFavoritesText}>
@@ -134,6 +127,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: 'white',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 20,
+    padding: 6,
+    zIndex: 1,
   },
   noFavoritesContainer: {
     flex: 1,

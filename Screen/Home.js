@@ -8,10 +8,12 @@ import {
   RefreshControl,
   ScrollView,
   Dimensions,
+  SafeAreaView,
 } from 'react-native';
 import React, {useEffect, useState, useCallback, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import BannerAd from './BannerAd';
+import Icon from 'react-native-vector-icons/Ionicons'; // Import thư viện icon
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -75,10 +77,10 @@ const Home = ({route, favorites, setFavorites}) => {
 
   const fetchUserFavorites = async () => {
     try {
-      const response = await fetch(`http://192.168.0.104:3000/users/${userId}`);
+      const response = await fetch(`http://192.168.0.104:3000/favorites?userId=${userId}`);
       if (response.ok) {
-        const userData = await response.json();
-        setFavorites(userData.favorites || []);
+        const favoritesData = await response.json();
+        setFavorites(favoritesData);
       } else {
         console.error('Failed to fetch user favorites');
       }
@@ -89,9 +91,12 @@ const Home = ({route, favorites, setFavorites}) => {
 
   useEffect(() => {
     fetchFootballFields();
-
     fetchUserFavorites(); // Lấy danh sách yêu thích của người dùng khi màn hình Home được mở
   }, []);
+
+  useEffect(() => {
+    fetchUserFavorites(); // Cập nhật danh sách yêu thích khi có sự thay đổi
+  }, [favorites]);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -107,15 +112,9 @@ const Home = ({route, favorites, setFavorites}) => {
       setFavorites(updatedFavorites); // Cập nhật danh sách cục bộ ngay lập tức
   
       try {
-        // Gửi yêu cầu PATCH đến server để cập nhật danh sách favorites
-        const response = await fetch(`http://192.168.0.104:3000/users/${userId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            favorites: updatedFavorites, // Cập nhật danh sách yêu thích
-          }),
+        // Gửi yêu cầu DELETE đến server để xóa khỏi danh sách favorites
+        const response = await fetch(`http://192.168.0.104:3000/favorites/${isFavorite.id}`, {
+          method: 'DELETE',
         });
   
         if (response.ok) {
@@ -131,19 +130,18 @@ const Home = ({route, favorites, setFavorites}) => {
       }
     } else {
       // Nếu chưa phải yêu thích, thêm vào danh sách
-      const updatedFavorites = [...favorites, item];
+      const newFavorite = { ...item, userId };
+      const updatedFavorites = [...favorites, newFavorite];
       setFavorites(updatedFavorites); // Cập nhật danh sách cục bộ ngay lập tức
   
       try {
-        // Gửi yêu cầu PATCH đến server để cập nhật danh sách favorites
-        const response = await fetch(`http://192.168.0.104:3000/users/${userId}`, {
-          method: 'PATCH',
+        // Gửi yêu cầu POST đến server để thêm vào danh sách favorites
+        const response = await fetch(`http://192.168.0.104:3000/favorites`, {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            favorites: updatedFavorites, // Cập nhật danh sách yêu thích
-          }),
+          body: JSON.stringify(newFavorite),
         });
   
         if (response.ok) {
@@ -155,7 +153,7 @@ const Home = ({route, favorites, setFavorites}) => {
       } catch (error) {
         console.error('Lỗi khi kết nối đến server:', error);
         // Nếu có lỗi, phục hồi lại trạng thái danh sách yêu thích
-        setFavorites([...updatedFavorites.filter(fav => fav.id !== item.id)]);
+        setFavorites(updatedFavorites.filter(fav => fav.id !== item.id));
       }
     }
   };
@@ -222,6 +220,7 @@ const renderBanner = () => (
 
 
   return (
+    <SafeAreaView style={{flex: 1, justifyContent: 'center', backgroundColor: 'white',}}>
     <ScrollView
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -252,8 +251,17 @@ const renderBanner = () => (
           contentContainerStyle={styles.listContent}
         />
         
+        {/* Button to navigate to Favourite component */}
+        <TouchableOpacity
+          style={styles.favoritesButton}
+          onPress={() => navigation.navigate('Favourite', { userId })}
+        >
+          <Icon name="heart" size={30} color="white" />
+        </TouchableOpacity>
+        
       </View>
     </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -261,7 +269,7 @@ export default Home;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     alignItems: 'center',
     backgroundColor: 'white',
   },
@@ -344,5 +352,18 @@ const styles = StyleSheet.create({
     color: 'black',
     marginTop: 10,
     marginBottom: 10,
+  },
+  favoritesButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 100,
+    padding: 6,
+  },
+  favoritesButtonText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });

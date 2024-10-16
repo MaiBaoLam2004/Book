@@ -43,7 +43,14 @@ const Register = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({username, email, password, role:'user'}), // Bao gồm quyền hạn trong dữ liệu gửi lên server
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          role: 'user',
+          imageUri:
+            'https://e7.pngegg.com/pngimages/505/761/png-clipart-login-computer-icons-avatar-icon-monochrome-black.png',
+        }), // Bao gồm quyền hạn trong dữ liệu gửi lên server
       });
 
       const data = await response.json();
@@ -65,81 +72,85 @@ const Register = () => {
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+      <ScrollView>
       <KeyboardAvoidingView
         style={{flex: 1}}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.container}>
-        <Image
-          resizeMode="center"
-          style={[styles.logoapp, {marginTop: 0}]}
-          source={require('../Images/icon_logo.png')}
-        />
-        <Text style={styles.title}>Đăng ký</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Tên đăng nhập"
-          placeholderTextColor="#888"
-          value={username}
-          onChangeText={setUsername}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor="#888"
-          value={email}
-          onChangeText={setEmail}
-          keyboardType="email-address"
-        />
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={[styles.input, {flex: 1}]}
-            placeholder="Mật khẩu"
-            placeholderTextColor="#888"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={!passwordVisible}
+          <Image
+            resizeMode="center"
+            style={[styles.logoapp, {marginTop: 0}]}
+            source={require('../Images/icon_logo.png')}
           />
-          <TouchableOpacity
-            style={styles.eyeIcon}
-            onPress={() => setPasswordVisible(!passwordVisible)}>
-            <Icon
-              name={passwordVisible ? 'eye' : 'eye-off'}
-              size={24}
-              color="#888"
-            />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.passwordContainer}>
+          <Text style={styles.title}>Đăng ký</Text>
           <TextInput
-            style={[styles.input, {flex: 1}]}
-            placeholder="Nhập lại mật khẩu"
+            style={styles.input}
+            placeholder="Tên đăng nhập"
             placeholderTextColor="#888"
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            secureTextEntry={!confirmPasswordVisible}
+            value={username}
+            onChangeText={setUsername}
           />
-          <TouchableOpacity
-            style={styles.eyeIcon}
-            onPress={() => setConfirmPasswordVisible(!confirmPasswordVisible)}>
-            <Icon
-              name={confirmPasswordVisible ? 'eye' : 'eye-off'}
-              size={24}
-              color="#888"
+          <TextInput
+            style={styles.input}
+            placeholder="Email"
+            placeholderTextColor="#888"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={[styles.input, {flex: 1}]}
+              placeholder="Mật khẩu"
+              placeholderTextColor="#888"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={!passwordVisible}
             />
+            <TouchableOpacity
+              style={styles.eyeIcon}
+              onPress={() => setPasswordVisible(!passwordVisible)}>
+              <Icon
+                name={passwordVisible ? 'eye' : 'eye-off'}
+                size={24}
+                color="#888"
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.passwordContainer}>
+            <TextInput
+              style={[styles.input, {flex: 1}]}
+              placeholder="Nhập lại mật khẩu"
+              placeholderTextColor="#888"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry={!confirmPasswordVisible}
+            />
+            <TouchableOpacity
+              style={styles.eyeIcon}
+              onPress={() =>
+                setConfirmPasswordVisible(!confirmPasswordVisible)
+              }>
+              <Icon
+                name={confirmPasswordVisible ? 'eye' : 'eye-off'}
+                size={24}
+                color="#888"
+              />
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            style={styles.registerButton}
+            onPress={handleRegister}>
+            <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
+              Đăng ký
+            </Text>
           </TouchableOpacity>
-        </View>
-        <TouchableOpacity
-          style={styles.registerButton}
-          onPress={handleRegister}>
-          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 20}}>
-            Đăng ký
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.loginText}>Bạn đã có tài khoản? Đăng nhập</Text>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.loginText}>Bạn đã có tài khoản? Đăng nhập</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
+      </ScrollView>
     </SafeAreaView>
   );
 };
