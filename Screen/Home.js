@@ -10,7 +10,7 @@ import {
   Dimensions,
   SafeAreaView,
 } from 'react-native';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import BannerAd from './BannerAd';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -24,46 +24,12 @@ const Home = ({ route }) => {
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
   const [favorites, setFavorites] = useState([]);
-  const [banners] = useState([
-    {
-      id: 1,
-      productId: 1,
-      name: 'Sân bóng',
-      availability: 'có sẵn',
-      image_url:
-        'https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/dashboard/editor_upload/hinh-nen-bong-da-1.jpg',
-    },
-    {
-      id: 2,
-      productId: 2,
-      name: 'Sân bóng',
-      availability: 'có sẵn',
-      image_url:
-        'https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/dashboard/editor_upload/hinh-nen-bong-da-120.jpg',
-    },
-    {
-      id: 3,
-      productId: 3,
-      name: 'Sân bóng',
-      availability: 'có sẵn',
-      image_url:
-        'https://cdn.bongdaplus.vn/Assets/Media/2022/11/25/41/ronaldo7.jpg',
-    },
-    {
-      id: 4,
-      productId: 4,
-      name: 'Tình yêu nồng cháy',
-      availability: 'có sẵn',
-      image_url:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTowJiIx7fQdG7c8MmKzWrRAoC1NDA71uSkdQ&s',
-    },
-  ]);
 
   const fetchData = async () => {
     try {
       const [fieldsResponse, favoritesResponse] = await Promise.all([
-        fetch('http://192.168.0.104:3000/football_fields'),
-        fetch(`http://192.168.0.104:3000/favorites?userId=${userId}`)
+        fetch('http://10.24.36.153:3000/football_fields'),
+        fetch(`http://10.24.36.153:3000/favorites?userId=${userId}`)
       ]);
 
       const fieldsData = await fieldsResponse.json();
@@ -96,7 +62,7 @@ const Home = ({ route }) => {
       : [...favorites, { ...item, userId }];
 
     try {
-      const response = await fetch(`http://192.168.0.104:3000/favorites${isFavorite ? `/${item.id}` : ''}`, {
+      const response = await fetch(`http://10.24.36.153:3000/favorites${isFavorite ? `/${item.id}` : ''}`, {
         method: isFavorite ? 'DELETE' : 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -116,7 +82,7 @@ const Home = ({ route }) => {
     }
   };
 
-  const renderItem = ({ item }) => (
+  const renderItem = useCallback(({ item }) => (
     <View style={styles.itemContainer}>
       <TouchableOpacity
         style={styles.touchableContainer}
@@ -125,9 +91,6 @@ const Home = ({ route }) => {
         <View>
           <Image source={{ uri: item.image_url }} style={styles.itemImage} />
           <Text style={styles.itemText}>Tên sân: {item.name}</Text>
-          <Text style={styles.itemText}>Địa điểm: {item.location}</Text>
-          <Text style={styles.itemText}>Giá mỗi giờ: {item.price_per_hour} VND</Text>
-          <Text style={styles.itemText}>Tình trạng: {item.availability}</Text>
           <Text style={styles.itemText}>Loại mặt sân: {item.surface_type}</Text>
         </View>
       </TouchableOpacity>
@@ -137,29 +100,23 @@ const Home = ({ route }) => {
         </Text>
       </TouchableOpacity>
     </View>
-  );
-
-  const renderBanner = () => (
-    <BannerAd
-      banners={banners}
-      onPress={(item) => navigation.navigate('Detail', { product: item })}
-    />
-  );
+  ), [favorites]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+      <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
           <Image source={require('../Images/icon_logo.png')} style={styles.logo} />
-          {renderBanner()}
+          <BannerAd />
           <Text style={styles.sectionTitle}>Tất cả các sân</Text>
           <FlatList
             data={footballFields}
+            numColumns={2}
             renderItem={renderItem}
             keyExtractor={item => item.id.toString()}
-            horizontal
-            style={styles.list}
-            contentContainerStyle={styles.listContent}
+            showsHorizontalScrollIndicator={false}
+            columnWrapperStyle={styles.columnWrapper}
+            scrollEnabled={false}
           />
           <TouchableOpacity
             style={styles.favoritesButton}
@@ -191,23 +148,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: 'center',
   },
-  listContent: {
-    alignItems: 'center',
-  },
   touchableContainer: {
     width: '100%',
   },
   itemText: {
     marginBottom: 5,
     color: 'black',
-    fontSize: 17,
+    fontSize: 15,
     fontWeight: 'bold',
   },
   itemImage: {
+    width: '100%',
     height: 150,
     marginBottom: 10,
     borderRadius: 20,
-    marginTop: 0,
   },
   heartIcon: {
     position: 'absolute',
@@ -219,20 +173,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     borderColor: 'black',
-    marginHorizontal: 10,
-  },
-  bannerList: {
-    width: screenWidth,
-    marginBottom: 10,
-  },
-  bannerImage: {
-    width: screenWidth,
-    height: 250,
-    marginHorizontal: 5,
-    borderRadius: 20,
-  },
-  list: {
-    marginTop: 20,
+    width: screenWidth / 2 - 20,
+    margin: 5,
+    backgroundColor: 'white',
   },
   sectionTitle: {
     fontWeight: 'bold',
@@ -240,14 +183,17 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginLeft: 25,
     color: 'black',
-    marginTop: 10,
+    marginTop: 15,
     marginBottom: 10,
   },
   favoritesButton: {
     position: 'absolute',
-    top: 0,
-    right: 0,
+    top: 5,
+    right: 5,
     borderRadius: 100,
     padding: 6,
+  },
+  columnWrapper: {
+    justifyContent: 'space-between',
   },
 });

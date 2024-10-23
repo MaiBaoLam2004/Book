@@ -35,6 +35,8 @@ const SetTime = () => {
             <Text style={styles.headerText}>Khung giờ đặt sân</Text>
             <FlatList
                 data={hours}
+                showsVerticalScrollIndicator={false}
+                // horizontal={false}
                 keyExtractor={item => item}
                 renderItem={({item}) => (
                     <TouchableOpacity onPress={() => handlePress(item)}>

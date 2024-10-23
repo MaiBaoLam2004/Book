@@ -1,21 +1,55 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Image, Text, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-const BannerItem = ({ item, onPress }) => (
-  <TouchableOpacity onPress={() => onPress(item)} style={styles.bannerItem}>
-    <Image source={{ uri: item.image_url }} style={styles.bannerImage} />
-    {/* <View style={styles.bannerInfo}>
-      <Text style={styles.bannerName}>{item.name}</Text>
-      <Text style={styles.bannerAvailability}>{item.availability}</Text>
-    </View> */}
-  </TouchableOpacity>
-);
-
-const BannerAd = ({ banners, onPress }) => {
+const BannerAd = ({ onPress }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef(null);
+  const navigation = useNavigation();
+  const [banners] = useState([
+    {
+      id: 1,
+      productId: 1,
+      name: 'Sân bóng',
+      availability: 'có sẵn',
+      image_url:
+        'https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/dashboard/editor_upload/hinh-nen-bong-da-1.jpg',
+    },
+    {
+      id: 2,
+      productId: 2,
+      name: 'Sân bóng',
+      availability: 'có sẵn',
+      image_url:
+        'https://kenh14cdn.com/zoom/600_315/2018/7/2/photo1530500879363-15305008793631926738934.jpg',
+    },
+    {
+      id: 3,
+      productId: 3,
+      name: 'Sân bóng',
+      availability: 'có sẵn',
+      image_url:
+        'https://cdn.bongdaplus.vn/Assets/Media/2022/11/25/41/ronaldo7.jpg',
+    },
+    {
+      id: 4,
+      productId: 4,
+      name: 'Tình yêu nồng cháy',
+      availability: 'có sẵn',
+      image_url:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTowJiIx7fQdG7c8MmKzWrRAoC1NDA71uSkdQ&s',
+    },
+    {
+      id: 5,
+      productId: 5,
+      name: 'Ván cờ định mệnh',
+      availability: 'có sẵn',
+      image_url:
+        'https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/11/20/1118715/Messi-Ronaldo.jpg',
+    },
+  ]);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -37,6 +71,16 @@ const BannerAd = ({ banners, onPress }) => {
     setCurrentIndex(index);
   };
 
+  const BannerItem = ({ item }) => (
+    <TouchableOpacity onPress={() => navigation.navigate('Detail', { product: item })} style={styles.bannerItem}>
+      <Image source={{ uri: item.image_url }} style={styles.bannerImage} />
+      {/* <View style={styles.bannerInfo}>
+        <Text style={styles.bannerName}>{item.name}</Text>
+        <Text style={styles.bannerAvailability}>{item.availability}</Text>
+      </View> */}
+    </TouchableOpacity>
+  );
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -48,7 +92,7 @@ const BannerAd = ({ banners, onPress }) => {
         pagingEnabled
         showsHorizontalScrollIndicator={false}
         onScroll={handleScroll}
-        getItemLayout={(data, index) => ({
+        getItemLayout={(_, index) => ({
           length: screenWidth,
           offset: screenWidth * index,
           index,

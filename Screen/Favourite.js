@@ -21,7 +21,7 @@ const Favourite = ({ route }) => {
   const fetchFavorites = async () => {
     if (!userId) return; // Check if userId is valid
     try {
-      const response = await fetch(`http://192.168.0.104:3000/favorites?userId=${userId}`);
+      const response = await fetch(`http://10.24.36.153:3000/favorites?userId=${userId}`);
       const data = await response.json();
       setFavorites(data);
     } catch (error) {
@@ -52,7 +52,7 @@ const Favourite = ({ route }) => {
       setFavorites(updatedFavorites);
 
       try {
-        const response = await fetch(`http://192.168.0.104:3000/favorites/${isFavorite.id}`, {
+        const response = await fetch(`http://10.24.36.153:3000/favorites/${isFavorite.id}`, {
           method: 'DELETE',
         });
 
@@ -72,7 +72,7 @@ const Favourite = ({ route }) => {
       setFavorites(updatedFavorites);
 
       try {
-        const response = await fetch(`http://192.168.0.104:3000/favorites`, {
+        const response = await fetch(`http://10.24.36.153:3000/favorites`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

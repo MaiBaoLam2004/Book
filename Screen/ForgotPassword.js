@@ -17,7 +17,7 @@ const ForgotPassword = () => {
         }
 
         try {
-            const response = await fetch('http://192.168.0.104:3000/users'); // Thay đổi URL thành URL của JSON Server của bạn
+            const response = await fetch('http://10.24.36.153:3000/users'); // Thay đổi URL thành URL của JSON Server của bạn
             const users = await response.json();
 
             const userExists = users.some(user => user.email === email);
