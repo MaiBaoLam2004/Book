@@ -23,6 +23,7 @@ const Home = ({ route }) => {
   const [footballFields, setFootballFields] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [selectedType, setSelectedType] = useState(null); // State for selected type
   const navigation = useNavigation();
   const [favorites, setFavorites] = useState([]);
 
@@ -103,6 +104,11 @@ const Home = ({ route }) => {
     </View>
   ), [favorites, navigation, toggleFavorite]);
 
+  const filteredFields = useMemo(() => {
+    if (!selectedType) return footballFields;
+    return footballFields.filter(field => field.surface_type === selectedType);
+  }, [footballFields, selectedType]);
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} showsVerticalScrollIndicator={false}>
@@ -110,8 +116,19 @@ const Home = ({ route }) => {
           <Image source={require('../Images/icon_logo.png')} style={styles.logo} />
           <BannerAd />
           <Text style={styles.sectionTitle}>Tất cả các sân</Text>
+          <View style={styles.filterButtonsContainer}>
+            <TouchableOpacity style={styles.filterButton} onPress={() => setSelectedType(null)}>
+              <Text style={styles.filterButtonText}>Tất cả các sân</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.filterButton} onPress={() => setSelectedType('cỏ nhân tạo')}>
+              <Text style={styles.filterButtonText}>Cỏ nhân tạo</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.filterButton} onPress={() => setSelectedType('cỏ tự nhiên')}>
+              <Text style={styles.filterButtonText}>Cỏ tự nhiên</Text>
+            </TouchableOpacity>
+          </View>
           <FlatList
-            data={footballFields}
+            data={filteredFields}
             numColumns={2}
             renderItem={renderItem}
             keyExtractor={item => item.id.toString()}
@@ -213,5 +230,24 @@ const styles = StyleSheet.create({
   columnWrapper: {
     justifyContent: 'space-between',
     backgroundColor: 'white',
+  },
+  filterButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    margin: 10,
+    justifyContent: 'space-between',
+  },
+  filterButton: {
+    marginHorizontal: 10,
+    padding: 8,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+
+  },
+  filterButtonText: {
+    fontSize: 16,
+    color: 'black',
   },
 });
