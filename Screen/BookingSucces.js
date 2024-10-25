@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -20,6 +20,37 @@ const BookingSucces = ({ route, navigation }) => {
       });
   }, [userId]);
 
+  const handleCancel = (paymentId) => {
+    Alert.alert(
+      'Xác nhận huỷ',
+      'Bạn có chắc chắn muốn huỷ đặt sân này không?',
+      [
+        { text: 'Không', style: 'cancel' },
+        { text: 'Có', onPress: () => cancelBooking(paymentId) },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const cancelBooking = (paymentId) => {
+    fetch(`${URL}:3000/payments/${paymentId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ status: false }),
+    })
+      .then(response => response.json())
+      .then(data => {
+        setPayments(payments.map(payment => 
+          payment.id === paymentId ? { ...payment, status: false } : payment
+        ));
+      })
+      .catch(error => {
+        console.error('Lỗi khi huỷ đặt sân:', error);
+      });
+  };
+
   const renderPayment = ({ item }) => (
     <View style={styles.paymentItem}>
       <Text style={styles.text}>Sân: {item.fieldId.name}</Text>
@@ -29,6 +60,11 @@ const BookingSucces = ({ route, navigation }) => {
       <Text style={[styles.text, item.status ? styles.successText : styles.cancelledText]}>
         {item.status ? 'Đặt thành công' : 'Đã huỷ'}
       </Text>
+      {item.status && (
+        <TouchableOpacity onPress={() => handleCancel(item.id)} style={styles.cancelButton}>
+          <Text style={styles.cancelButtonText}>Huỷ đặt sân</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 
@@ -93,14 +129,27 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   text: {
-    color: '#333',
+    color: 'black',
     marginBottom: 5,
     left: 0,
+    fontSize: 17,
   },
   successText: {
     color: 'green',
   },
   cancelledText: {
     color: 'red',
+  },
+  cancelButton: {
+    marginTop: 10,
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 10,
+    width: '80%',
+    alignSelf: 'center', // Thêm dòng này để căn giữa nút
+  },
+  cancelButtonText: {
+    color: 'white',
+    textAlign: 'center',
   },
 });

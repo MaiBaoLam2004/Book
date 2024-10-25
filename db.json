@@ -6,7 +6,7 @@
       "email": "a",
       "password": "a",
       "role": "user",
-      "imageUri": "file:///data/user/0/com.book/cache/rn_image_picker_lib_temp_61d8632b-1277-4db7-978f-65a33db57974.jpg"
+      "imageUri": "file:///data/user/0/com.book/cache/rn_image_picker_lib_temp_183ebc3b-24ab-4d42-8945-fca8f294abfa.jpg"
     },
     {
       "id": "236f",
@@ -200,58 +200,12 @@
       "surface_type": "cỏ nhân tạo",
       "max_players": 22,
       "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg",
-      "userId": "3e9b"
-    },
-    {
-      "id": "2",
-      "name": "Sân B",
-      "location": "456 Đường Elm, Hà Nội",
-      "price_per_hour": 150,
-      "availability": "đã đặt",
-      "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
-      "surface_type": "cỏ nhân tạo",
-      "max_players": 22,
-      "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg",
       "userId": "236f"
     }
   ],
   "payments": [
     {
-      "id": "d97c",
-      "userId": "3e9b",
-      "time": "13:00 - 14:00",
-      "fieldType": "Sân cỏ tự nhiên",
-      "fieldId": {
-        "id": "2",
-        "name": "Sân B",
-        "location": "456 Đường Elm, Hà Nội",
-        "price_per_hour": 150,
-        "availability": "đã đặt",
-        "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
-        "surface_type": "cỏ nhân tạo",
-        "max_players": 22,
-        "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
-      }
-    },
-    {
-      "id": "5d17",
-      "userId": "3e9b",
-      "time": "13:00 - 14:00",
-      "fieldType": "Sân cỏ nhân tạo",
-      "fieldId": {
-        "id": "1",
-        "name": "Sân A",
-        "location": "123 Đường Chính, Hà Nội",
-        "price_per_hour": 100,
-        "availability": "có sẵn",
-        "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
-        "surface_type": "cỏ tự nhiên",
-        "max_players": 22,
-        "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
-      }
-    },
-    {
-      "id": "9cde",
+      "id": "ac7a",
       "userId": "3e9b",
       "time": "11:00 - 12:00",
       "fieldType": "Sân cỏ nhân tạo",
@@ -265,122 +219,14 @@
         "surface_type": "cỏ tự nhiên",
         "max_players": 22,
         "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
-      }
-    },
-    {
-      "id": "b653",
-      "userId": "3e9b",
-      "time": "9:00 - 10:00",
-      "fieldType": "Sân cỏ nhân tạo",
-      "fieldId": {
-        "id": "1",
-        "name": "Sân A",
-        "location": "123 Đường Chính, Hà Nội",
-        "price_per_hour": 100,
-        "availability": "có sẵn",
-        "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
-        "surface_type": "cỏ tự nhiên",
-        "max_players": 22,
-        "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
-      }
-    },
-    {
-      "id": "e5c6",
-      "userId": "3e9b",
-      "time": "18:00 - 19:00",
-      "fieldType": "Sân cỏ tự nhiên",
-      "fieldId": {
-        "id": "1",
-        "name": "Sân A",
-        "location": "123 Đường Chính, Hà Nội",
-        "price_per_hour": 100,
-        "availability": "có sẵn",
-        "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
-        "surface_type": "cỏ tự nhiên",
-        "max_players": 22,
-        "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
-      }
-    },
-    {
-      "id": "80ee",
-      "userId": "3e9b",
-      "time": "18:00 - 19:00",
-      "fieldType": "Sân cỏ tự nhiên",
-      "fieldId": {
-        "id": "1",
-        "name": "Sân A",
-        "location": "123 Đường Chính, Hà Nội",
-        "price_per_hour": 100,
-        "availability": "có sẵn",
-        "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
-        "surface_type": "cỏ tự nhiên",
-        "max_players": 22,
-        "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
       },
-      "status": true,
+      "status": false,
       "note": "Thành công"
     },
     {
-      "id": "d820",
+      "id": "6cad",
       "userId": "3e9b",
-      "time": "18:00 - 19:00",
-      "fieldType": "Sân cỏ tự nhiên",
-      "fieldId": {
-        "id": "1",
-        "name": "Sân A",
-        "location": "123 Đường Chính, Hà Nội",
-        "price_per_hour": 100,
-        "availability": "có sẵn",
-        "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
-        "surface_type": "cỏ tự nhiên",
-        "max_players": 22,
-        "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
-      },
-      "status": true,
-      "note": "Thành công"
-    },
-    {
-      "id": "e9ef",
-      "userId": "3e9b",
-      "time": "18:00 - 19:00",
-      "fieldType": "Sân cỏ tự nhiên",
-      "fieldId": {
-        "id": "1",
-        "name": "Sân A",
-        "location": "123 Đường Chính, Hà Nội",
-        "price_per_hour": 100,
-        "availability": "có sẵn",
-        "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
-        "surface_type": "cỏ tự nhiên",
-        "max_players": 22,
-        "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
-      },
-      "status": true,
-      "note": "Thành công"
-    },
-    {
-      "id": "0437",
-      "userId": "3e9b",
-      "time": "13:00 - 14:00",
-      "fieldType": "Sân cỏ nhân tạo",
-      "fieldId": {
-        "id": "1",
-        "name": "Sân A",
-        "location": "123 Đường Chính, Hà Nội",
-        "price_per_hour": 100,
-        "availability": "có sẵn",
-        "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
-        "surface_type": "cỏ tự nhiên",
-        "max_players": 22,
-        "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
-      },
-      "status": true,
-      "note": "Thành công"
-    },
-    {
-      "id": "7bd7",
-      "userId": "236f",
-      "time": "21:00 - 22:00",
+      "time": "14:00 - 15:00",
       "fieldType": "Sân cỏ nhân tạo",
       "fieldId": {
         "id": "2",
@@ -393,8 +239,26 @@
         "max_players": 22,
         "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
       },
-      "status": true,
+      "status": false,
       "note": "Thành công"
+    },
+    {
+      "id": "b894",
+      "userId": "3e9b",
+      "time": "11:00 - 12:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "2",
+        "name": "Sân B",
+        "location": "456 Đường Elm, Hà Nội",
+        "price_per_hour": 150,
+        "availability": "đã đặt",
+        "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
+        "surface_type": "cỏ nhân tạo",
+        "max_players": 22,
+        "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+      },
+      "status": true
     }
   ]
 }

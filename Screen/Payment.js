@@ -17,8 +17,6 @@ const Payment = ({ route }) => {
             fieldType: selectedField,
             fieldId: product,
             status: true,
-            note: "Thành công"
-            
         };
 
         try {
