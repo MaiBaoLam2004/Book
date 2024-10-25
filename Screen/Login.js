@@ -32,7 +32,7 @@ function Login() {
 
     setIsLoading(true); // Hiển thị trạng thái loading khi bắt đầu đăng nhập
     try {
-      const response = await fetch('http://10.24.36.153:3000/users');
+      const response = await fetch('http://192.168.0.104:3000/users');
       const users = await response.json();
 
       const user = users.find(

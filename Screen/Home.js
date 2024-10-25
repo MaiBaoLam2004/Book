@@ -25,11 +25,11 @@ const Home = ({ route }) => {
   const navigation = useNavigation();
   const [favorites, setFavorites] = useState([]);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [fieldsResponse, favoritesResponse] = await Promise.all([
-        fetch('http://10.24.36.153:3000/football_fields'),
-        fetch(`http://10.24.36.153:3000/favorites?userId=${userId}`)
+        fetch('http://192.168.0.104:3000/football_fields'),
+        fetch(`http://192.168.0.104:3000/favorites?userId=${userId}`)
       ]);
 
       const fieldsData = await fieldsResponse.json();
@@ -42,27 +42,27 @@ const Home = ({ route }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
 
   useFocusEffect(
     useCallback(() => {
       fetchData();
-    }, [])
+    }, [fetchData])
   );
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     fetchData().then(() => setRefreshing(false));
-  }, []);
+  }, [fetchData]);
 
-  const toggleFavorite = async (item) => {
+  const toggleFavorite = useCallback(async (item) => {
     const isFavorite = favorites.some(fav => fav.id === item.id);
     const updatedFavorites = isFavorite
       ? favorites.filter(fav => fav.id !== item.id)
       : [...favorites, { ...item, userId }];
 
     try {
-      const response = await fetch(`http://10.24.36.153:3000/favorites${isFavorite ? `/${item.id}` : ''}`, {
+      const response = await fetch(`http://192.168.0.104:3000/favorites${isFavorite ? `/${item.id}` : ''}`, {
         method: isFavorite ? 'DELETE' : 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ const Home = ({ route }) => {
     } catch (error) {
       console.error(`Lỗi khi kết nối đến server:`, error);
     }
-  };
+  }, [favorites, userId]);
 
   const renderItem = useCallback(({ item }) => (
     <View style={styles.itemContainer}>
@@ -100,7 +100,7 @@ const Home = ({ route }) => {
         </Text>
       </TouchableOpacity>
     </View>
-  ), [favorites]);
+  ), [favorites, navigation, toggleFavorite]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -195,5 +195,6 @@ const styles = StyleSheet.create({
   },
   columnWrapper: {
     justifyContent: 'space-between',
+    backgroundColor: 'white',
   },
 });

@@ -26,7 +26,7 @@ const Users = ({route}) => {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://10.24.36.153:3000/users/${userId}`,
+          `http://192.168.0.104:3000/users/${userId}`,
         );
         if (response.ok) {
           const user = await response.json();
@@ -90,7 +90,7 @@ const Users = ({route}) => {
 
     try {
       const response = await fetch(
-        `http://10.24.36.153:3000/users/${userId}`,
+        `http://192.168.0.104:3000/users/${userId}`,
         {
           method: 'PATCH',
           headers: {
