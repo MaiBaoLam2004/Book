@@ -61,28 +61,35 @@ const BannerAd = ({ onPress }) => {
 
     return () => clearInterval(intervalId);
   }, [currentIndex]);
+  
   const scrollToNext = () => {
     let nextIndex = currentIndex + 1;
     if (nextIndex >= banners.length) {
-      // Nếu cuộn đến cuối danh sách, quay lại ảnh đầu tiên
+      // Nếu cuộn đến cuối danh sách, quay về ảnh đầu tiên
       nextIndex = 0;
-      flatListRef.current.scrollToIndex({ index: 0, animated: true });
-    } else {
-      flatListRef.current.scrollToIndex({ index: nextIndex, animated: true });
     }
     setCurrentIndex(nextIndex);
+    flatListRef.current.scrollToIndex({ index: nextIndex, animated: true });
   };
+  
   
   const handleScroll = (event) => {
     const scrollPosition = event.nativeEvent.contentOffset.x;
     let index = Math.round(scrollPosition / screenWidth);
+    
     if (index >= banners.length) {
-      // Nếu cuộn đến cuối danh sách, quay lại ảnh đầu tiên
+      // Nếu cuộn đến cuối danh sách, quay về ảnh đầu tiên
       index = 0;
       flatListRef.current.scrollToIndex({ index: 0, animated: false });
+    } else if (index < 0) {
+      // Nếu cuộn về ảnh đầu tiên từ trái sang, quay về ảnh cuối
+      index = banners.length - 1;
+      flatListRef.current.scrollToIndex({ index: banners.length - 1, animated: false });
     }
+    
     setCurrentIndex(index);
   };
+  
   
   const BannerItem = ({ item }) => (
     <TouchableOpacity onPress={() => navigation.navigate('Detail', { product: item })} style={styles.bannerItem}>

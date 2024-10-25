@@ -118,12 +118,20 @@ const Home = ({ route }) => {
             columnWrapperStyle={styles.columnWrapper}
             scrollEnabled={false}
           />
-          <TouchableOpacity
-            style={styles.favoritesButton}
-            onPress={() => navigation.navigate('Favourite', { userId })}
-          >
-            <Icon name="heart" size={40} color="red" />
-          </TouchableOpacity>
+          <View style={styles.iconsContainer}>
+            <TouchableOpacity
+              style={styles.searchButton}
+              onPress={() => navigation.navigate('SearchText')}
+            >
+              <Icon name="search" size={40} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.favoritesButton}
+              onPress={() => navigation.navigate('Favourite', { userId })}
+            >
+              <Icon name="heart" size={40} color="red" />
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -186,10 +194,18 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 10,
   },
-  favoritesButton: {
+  iconsContainer: {
     position: 'absolute',
     top: 5,
     right: 5,
+    flexDirection: 'row',
+  },
+  searchButton: {
+    borderRadius: 100,
+    padding: 6,
+    marginRight: 0,
+  },
+  favoritesButton: {
     borderRadius: 100,
     padding: 6,
   },

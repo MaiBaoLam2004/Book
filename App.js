@@ -19,6 +19,7 @@ import BannerAd from './Screen/BannerAd';
 import Payment from './Screen/Payment';
 import Payok from './Screen/Payok';
 import SetTime from './Screen/SetTime';
+import SearchText from './Screen/SearchText';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -78,6 +79,7 @@ function App() {
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Payok" component={Payok} />
         <Stack.Screen name="SetTime" component={SetTime} />
+        <Stack.Screen name="SearchText" component={SearchText} />
       </Stack.Navigator>
     </NavigationContainer>
   );

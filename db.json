@@ -110,6 +110,83 @@
       "surface_type": "cỏ tự nhiên",
       "max_players": 22,
       "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
+    },
+    {
+      "id": "8",
+      "name": "Sân H",
+      "location": "123 Đường Chính, Hà Nội",
+      "price_per_hour": 100,
+      "availability": "có sẵn",
+      "details": "Sân H nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
+      "surface_type": "cỏ tự nhiên",
+      "max_players": 22,
+      "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
+    },
+    {
+      "id": "9",
+      "name": "Sân I",
+      "location": "456 Đường Elm, Hà Nội",
+      "price_per_hour": 150,
+      "availability": "đã đặt",
+      "details": "Sân I nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
+      "surface_type": "cỏ nhân tạo",
+      "max_players": 22,
+      "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+    },
+    {
+      "id": "10",
+      "name": "Sân J",
+      "location": "789 Đường Maple, Hà Nội",
+      "price_per_hour": 120,
+      "availability": "có sẵn",
+      "details": "Sân J có mặt cỏ tự nhiên và hệ thống thoát nước tốt.",
+      "surface_type": "cỏ tự nhiên",
+      "max_players": 22,
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb8NfCTslFpGd8kkVaU4sjW1oUXKyZeHQh9djEhzR_JhzPe78gNf92xRArn7Kxiut5eqQ&usqp=CAU"
+    },
+    {
+      "id": "11",
+      "name": "Sân K",
+      "location": "101 Đường Oak, Hà Nội",
+      "price_per_hour": 130,
+      "availability": "đã đặt",
+      "details": "Sân K có mặt cỏ nhân tạo và hệ thống chiếu sáng ban đêm.",
+      "surface_type": "cỏ nhân tạo",
+      "max_players": 22,
+      "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
+    },
+    {
+      "id": "12",
+      "name": "Sân L",
+      "location": "202 Đường Pine, Hà Nội",
+      "price_per_hour": 110,
+      "availability": "có sẵn",
+      "details": "Sân L có mặt cỏ tự nhiên và khu vực khán đài rộng rãi.",
+      "surface_type": "cỏ tự nhiên",
+      "max_players": 22,
+      "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+    },
+    {
+      "id": "13",
+      "name": "Sân M",
+      "location": "303 Đường Birch, Hà Nội",
+      "price_per_hour": 140,
+      "availability": "đã đặt",
+      "details": "Sân M có mặt cỏ nhân tạo và hệ thống thoát nước tốt.",
+      "surface_type": "cỏ nhân tạo",
+      "max_players": 22,
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb8NfCTslFpGd8kkVaU4sjW1oUXKyZeHQh9djEhzR_JhzPe78gNf92xRArn7Kxiut5eqQ&usqp=CAU"
+    },
+    {
+      "id": "14",
+      "name": "Sân N",
+      "location": "404 Đường Cedar, Hà Nội",
+      "price_per_hour": 160,
+      "availability": "có sẵn",
+      "details": "Sân N có mặt cỏ tự nhiên và hệ thống chiếu sáng hiện đại.",
+      "surface_type": "cỏ tự nhiên",
+      "max_players": 22,
+      "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
     }
   ],
   "favorites": []
