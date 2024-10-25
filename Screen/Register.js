@@ -14,6 +14,7 @@ import {
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { URL } from './Home';
 
 const Register = () => {
   const [username, setUsername] = useState('');
@@ -38,7 +39,7 @@ const Register = () => {
     const role = 'user'; // Gán quyền hạn mặc định là 'user'
 
     try {
-      const response = await fetch('http://192.168.0.104:3000/users', {
+      const response = await fetch(`${URL}:3000/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

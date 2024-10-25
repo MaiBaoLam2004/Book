@@ -1,10 +1,45 @@
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { URL } from './Home';
 
-const Payment = () => {
+const Payment = ({ route }) => {
     const navigation = useNavigation();
+    const { selectedTime, selectedField, userId, product } = route.params; // Retrieve userId from route params
+
+    // console.log('userId pay:', userId);
+    // console.log('product pay:', product);
+    const handlePayment = async () => {
+        const paymentData = {
+            userId,
+            time: selectedTime,
+            fieldType: selectedField,
+            fieldId: product,
+            status: true,
+            note: "Thành công"
+            
+        };
+
+        try {
+            const response = await fetch(`${URL}:3000/payments`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(paymentData),
+            });
+
+            if (response.ok) {
+                navigation.navigate('Payok');
+            } else {
+                alert('Payment failed. Please try again.');
+            }
+        } catch (error) {
+            console.error(error);
+            alert('An error occurred. Please try again.');
+        }
+    };
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -40,7 +75,7 @@ const Payment = () => {
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                 <Icon name="arrow-back" size={30} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.payButton} onPress={() => navigation.navigate('Payok')}>
+            <TouchableOpacity style={styles.payButton} onPress={handlePayment}>
                 <Text style={styles.payButtonText}>Thanh Toán Ngay</Text>
             </TouchableOpacity>
         </ScrollView>
@@ -58,7 +93,7 @@ const styles = StyleSheet.create({
     },
     card: {
         width: '100%',
-        backgroundColor: '#4CAF50', // Màu xanh lá cây
+        backgroundColor: '#4CAF50',
         borderRadius: 10,
         padding: 20,
         shadowColor: '#000',
@@ -73,7 +108,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'left',
-        color: 'white', // Thêm màu chữ trắng
+        color: 'white',
     },
     input: {
         height: 40,
@@ -84,8 +119,6 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         width: '100%',
         backgroundColor: 'white',
-        
-         // Thêm màu nền trắng cho input
     },
     row: {
         flexDirection: 'row',

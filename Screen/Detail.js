@@ -14,9 +14,10 @@ import Icon from 'react-native-vector-icons/Ionicons'; // Import thư viện ico
 
 const Detail = ({ route }) => {
   const navigation = useNavigation();
-  const { product } = route.params;
+  const { product, userId } = route.params;
   const [isFavorite, setIsFavorite] = useState(false); // State to manage favorite status
 
+  console.log('userId:', userId); // Log userId to the console
   const handleBooking = () => {
     // Thêm logic đặt sân ở đây
     Alert.alert('Đặt sân thành công!');
@@ -58,7 +59,7 @@ const Detail = ({ route }) => {
           </Text>
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.bookButton} onPress={() => navigation.navigate('SetTime')}>
+      <TouchableOpacity style={styles.bookButton} onPress={() => navigation.navigate('SetTime', { userId, product})}>
         <Text style={styles.bookButtonText}>Đặt sân</Text>
       </TouchableOpacity>
     </View>

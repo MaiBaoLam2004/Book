@@ -6,28 +6,47 @@ import Icon from 'react-native-vector-icons/Ionicons';
 const hours = Array.from({length: 15}, (_, i) => {
     const startHour = i + 7;
     const endHour = startHour + 1;
-    return `${startHour}:00 - ${endHour}:00`;
+    return { id: i, time: `${startHour}:00 - ${endHour}:00` };
 });
-const fieldTypes = ['Sân cỏ nhân tạo', 'Sân cỏ tự nhiên'];
+const fieldTypes = [
+    { id: 1, type: 'Sân cỏ nhân tạo' },
+    { id: 2, type: 'Sân cỏ tự nhiên' }
+];
 
-const SetTime = () => {
+const SetTime = ({ route }) => {
     const navigation = useNavigation();
+    const { userId, product } = route.params;
+    
+    // Log userId and product to the console
+    console.log('userId settime:', userId);
+    console.log('product settime:', product);
+
     const [selectedHour, setSelectedHour] = useState(null);
     const [selectedFieldType, setSelectedFieldType] = useState(null);
     const [showFieldTypes, setShowFieldTypes] = useState(false);
 
     const handlePress = (item) => {
-        if (selectedHour === item) {
+        if (selectedHour === item.id) {
             setShowFieldTypes(!showFieldTypes);
         } else {
-            setSelectedHour(item);
+            setSelectedHour(item.id);
             setSelectedFieldType(null); // Reset selected field type when a new hour is selected
             setShowFieldTypes(true); // Always show field types when a new hour is selected
         }
     };
 
     const handleFieldTypePress = (type) => {
-        setSelectedFieldType(type);
+        setSelectedFieldType(type.id);
+    };
+
+    const handlePaymentPress = () => {
+        if (selectedHour !== null && selectedFieldType !== null) {
+            const selectedTime = hours.find(hour => hour.id === selectedHour).time;
+            const selectedField = fieldTypes.find(field => field.id === selectedFieldType).type;
+            navigation.navigate('Payment', { selectedTime, selectedField, userId, product });
+        } else {
+            alert('Vui lòng chọn khung giờ và loại sân.');
+        }
     };
 
     return (
@@ -36,19 +55,18 @@ const SetTime = () => {
             <FlatList
                 data={hours}
                 showsVerticalScrollIndicator={false}
-                // horizontal={false}
-                keyExtractor={item => item}
+                keyExtractor={item => item.id.toString()}
                 renderItem={({item}) => (
                     <TouchableOpacity onPress={() => handlePress(item)}>
                         <View style={styles.timeSlot}>
-                            <Text style={styles.timeText}>{item}</Text>
+                            <Text style={styles.timeText}>{item.time}</Text>
                         </View>
-                        {selectedHour === item && showFieldTypes && (
+                        {selectedHour === item.id && showFieldTypes && (
                             <View style={styles.fieldTypeContainer}>
-                                {fieldTypes.map((type, index) => (
-                                    <TouchableOpacity key={index} style={styles.fieldTypeOption} onPress={() => handleFieldTypePress(type)}>
-                                        <Text style={styles.fieldTypeText}>{type}</Text>
-                                        {selectedFieldType === type && (
+                                {fieldTypes.map((type) => (
+                                    <TouchableOpacity key={type.id} style={styles.fieldTypeOption} onPress={() => handleFieldTypePress(type)}>
+                                        <Text style={styles.fieldTypeText}>{type.type}</Text>
+                                        {selectedFieldType === type.id && (
                                             <Icon name="checkmark-circle" size={24} color="green" style={styles.checkmark} />
                                         )}
                                     </TouchableOpacity>
@@ -60,7 +78,7 @@ const SetTime = () => {
             />
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => navigation.navigate('Payment')}>
+                onPress={handlePaymentPress}>
                 <Text style={styles.buttonText}>Thanh toán</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -109,19 +127,19 @@ const styles = StyleSheet.create({
         marginTop: 10,
         padding: 10,
         backgroundColor: '#e9ecef',
-        borderRadius: 10,
+        borderRadius: 20,
     },
     fieldTypeOption: {
         padding: 10,
         backgroundColor: '#ffffff',
-        borderRadius: 5,
+        borderRadius: 10,
         marginVertical: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
     fieldTypeText: {
-        fontSize: 20,
+        fontSize: 16,
         color: '#333',
     },
     button: {

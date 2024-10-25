@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity } from 'r
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { URL } from './Home';
 
 const SearchText = () => {
     const navigation = useNavigation();
@@ -10,7 +11,7 @@ const SearchText = () => {
 
     const handleSearch = async () => {
         try {
-            const response = await fetch(`http://192.168.0.104:3000/football_fields?name_like=${searchQuery}`);
+            const response = await fetch(`${URL}:3000/football_fields?name_like=${searchQuery}`);
             const data = await response.json();
             const filteredData = data.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
             setResults(filteredData);
@@ -70,7 +71,7 @@ export default SearchText;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        padding: 10,
         backgroundColor: 'white',
     },
     searchContainer: {

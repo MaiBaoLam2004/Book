@@ -16,6 +16,7 @@ import BannerAd from './BannerAd';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const { width: screenWidth } = Dimensions.get('window');
+export const URL = "http://192.168.0.104";
 
 const Home = ({ route }) => {
   const { userId } = route.params || {};
@@ -28,8 +29,8 @@ const Home = ({ route }) => {
   const fetchData = useCallback(async () => {
     try {
       const [fieldsResponse, favoritesResponse] = await Promise.all([
-        fetch('http://192.168.0.104:3000/football_fields'),
-        fetch(`http://192.168.0.104:3000/favorites?userId=${userId}`)
+        fetch(`${URL}:3000/football_fields`),
+        fetch(`${URL}:3000/favorites?userId=${userId}`)
       ]);
 
       const fieldsData = await fieldsResponse.json();
@@ -62,7 +63,7 @@ const Home = ({ route }) => {
       : [...favorites, { ...item, userId }];
 
     try {
-      const response = await fetch(`http://192.168.0.104:3000/favorites${isFavorite ? `/${item.id}` : ''}`, {
+      const response = await fetch(`${URL}:3000/favorites${isFavorite ? `/${item.id}` : ''}`, {
         method: isFavorite ? 'DELETE' : 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +87,7 @@ const Home = ({ route }) => {
     <View style={styles.itemContainer}>
       <TouchableOpacity
         style={styles.touchableContainer}
-        onPress={() => navigation.navigate('Detail', { product: item })}
+        onPress={() => navigation.navigate('Detail', { product: item, userId })}
       >
         <View>
           <Image source={{ uri: item.image_url }} style={styles.itemImage} />

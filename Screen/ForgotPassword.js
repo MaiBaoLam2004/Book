@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { URL } from './Home';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ const ForgotPassword = () => {
         }
 
         try {
-            const response = await fetch('http://192.168.0.104:3000/users'); // Thay đổi URL thành URL của JSON Server của bạn
+            const response = await fetch(`${URL}:3000/users`); // Thay đổi URL thành URL của JSON Server của bạn
             const users = await response.json();
 
             const userExists = users.some(user => user.email === email);

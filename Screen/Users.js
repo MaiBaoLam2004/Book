@@ -12,6 +12,7 @@ import {
   Modal,
 } from 'react-native';
 import {launchImageLibrary} from 'react-native-image-picker';
+import { URL } from './Home';
 
 const Users = ({route}) => {
   const {userId} = route.params || {};
@@ -26,7 +27,7 @@ const Users = ({route}) => {
       setLoading(true);
       try {
         const response = await fetch(
-          `http://192.168.0.104:3000/users/${userId}`,
+          `${URL}:3000/users/${userId}`,
         );
         if (response.ok) {
           const user = await response.json();
@@ -90,7 +91,7 @@ const Users = ({route}) => {
 
     try {
       const response = await fetch(
-        `http://192.168.0.104:3000/users/${userId}`,
+        `${URL}:3000/users/${userId}`,
         {
           method: 'PATCH',
           headers: {
@@ -150,7 +151,7 @@ const Users = ({route}) => {
         <Text style={styles.userNameText}>Tên người dùng: {username}</Text>
         <TouchableOpacity
           style={styles.bookingButton}
-          onPress={() => navigation.navigate('BookingSucces')}>
+          onPress={() => navigation.navigate('BookingSucces', { userId})}>
           <Text style={styles.bookingButtonText}>Đã đặt sân</Text>
         </TouchableOpacity>
         <TouchableOpacity
