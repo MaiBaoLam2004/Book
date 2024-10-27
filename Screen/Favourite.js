@@ -98,9 +98,12 @@ const Favourite = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('BottomTabNav')} style={styles.backButton}>
-        <Icon name="arrow-back" size={25} color="white" />
-      </TouchableOpacity>
+      <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('BottomTabNav')} style={styles.backButton}>
+          <Icon name="arrow-back" size={25} color="white" />
+        </TouchableOpacity>
+        <Text style={styles.header}>Danh sách yêu thích</Text>
+      </View>
       {favorites.length === 0 ? (
         <View style={styles.noFavoritesContainer}>
           <Text style={styles.noFavoritesText}>
@@ -146,17 +149,28 @@ export default Favourite;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: 'white',
+    paddingTop: 10,
+    paddingHorizontal: 20,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
   },
   backButton: {
     position: 'absolute',
-    top: 15,
-    left: 10,
+    left: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 20,
     padding: 6,
     zIndex: 1,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
   },
   noFavoritesContainer: {
     flex: 1,

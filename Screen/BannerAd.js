@@ -92,9 +92,11 @@ const BannerAd = ({ onPress }) => {
   
   
   const BannerItem = ({ item }) => (
-    <TouchableOpacity onPress={() => navigation.navigate('Detail', { product: item })} style={styles.bannerItem}>
+    <View 
+    // onPress={() => navigation.navigate('Detail', { product: item })} 
+    style={styles.bannerItem}>
       <Image source={{ uri: item.image_url }} style={styles.bannerImage} />
-    </TouchableOpacity>
+    </View>
   );
 
   return (

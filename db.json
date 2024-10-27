@@ -200,7 +200,7 @@
       "surface_type": "cỏ nhân tạo",
       "max_players": 22,
       "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg",
-      "userId": "236f"
+      "userId": "3e9b"
     }
   ],
   "payments": [
@@ -257,6 +257,23 @@
         "surface_type": "cỏ nhân tạo",
         "max_players": 22,
         "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+      },
+      "status": true
+    },
+    {
+      "id": "2f64",
+      "time": "9:00 - 10:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "13",
+        "name": "Sân M",
+        "location": "303 Đường Birch, Hà Nội",
+        "price_per_hour": 140,
+        "availability": "đã đặt",
+        "details": "Sân M có mặt cỏ nhân tạo và hệ thống thoát nước tốt.",
+        "surface_type": "cỏ nhân tạo",
+        "max_players": 22,
+        "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb8NfCTslFpGd8kkVaU4sjW1oUXKyZeHQh9djEhzR_JhzPe78gNf92xRArn7Kxiut5eqQ&usqp=CAU"
       },
       "status": true
     }

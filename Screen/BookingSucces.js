@@ -55,7 +55,7 @@ const BookingSucces = ({ route, navigation }) => {
     <View style={styles.paymentItem}>
       <Text style={styles.text}>Sân: {item.fieldId.name}</Text>
       <Text style={styles.text}>Loại sân: {item.fieldType}</Text>
-      <Text style={styles.text}>Ngày & Giờ: {item.time}</Text>
+      <Text style={styles.text}>Thời gian: {item.time}</Text>
       <Text style={styles.text}>Giá: {item.fieldId.price_per_hour}</Text>
       <Text style={[styles.text, item.status ? styles.successText : styles.cancelledText]}>
         {item.status ? 'Đặt thành công' : 'Đã huỷ'}
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    left: 10,
+    left: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 20,
     padding: 6,
