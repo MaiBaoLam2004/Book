@@ -17,6 +17,8 @@ import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
 import { URL } from './Home';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -58,72 +60,112 @@ function Login() {
     }
   };
 
+  useEffect(() => {
+    const checkRememberedUser = async () => {
+      const rememberedUsername = await AsyncStorage.getItem('rememberedUsername');
+      const rememberedPassword = await AsyncStorage.getItem('rememberedPassword');
+      if (rememberedUsername && rememberedPassword) {
+        setUsername(rememberedUsername);
+        setPassword(rememberedPassword);
+        handleLogin();
+      }
+    };
+    checkRememberedUser();
+  }, []);
+  
+  // const handleRememberMe = async () => {
+  //   if (rememberMe) {
+  //     await AsyncStorage.setItem('rememberedUsername', username);
+  //     await AsyncStorage.setItem('rememberedPassword', password);
+  //   } else {
+  //     await AsyncStorage.removeItem('rememberedUsername');
+  //     await AsyncStorage.removeItem('rememberedPassword');
+  //   }
+  // };
+  
+  const [rememberMe, setRememberMe] = useState(false);
+  
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center', backgroundColor: 'white'}}>
       <ScrollView>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <View style={styles.container}>
-          <Image
-            resizeMode="center"
-            style={styles.logoapp}
-            source={require('../Images/icon_logo.png')}
-          />
-          <Text style={styles.title}>Đăng nhập</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Tài khoản"
-            placeholderTextColor="#888"
-            value={username}
-            onChangeText={setUsername}
-            autoCapitalize="none"
-          />
-          <View style={styles.passwordContainer}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <View style={styles.container}>
+            <Image
+              resizeMode="center"
+              style={styles.logoapp}
+              source={require('../Images/icon_logo.png')}
+            />
+            <Text style={styles.title}>Đăng nhập</Text>
             <TextInput
-              style={[styles.input, {flex: 1}]}
-              placeholder="Mật khẩu"
+              style={styles.input}
+              placeholder="Tài khoản"
               placeholderTextColor="#888"
-              secureTextEntry={!passwordVisible}
-              value={password}
-              onChangeText={setPassword}
+              value={username}
+              onChangeText={setUsername}
               autoCapitalize="none"
             />
-            <TouchableOpacity
-              style={styles.eyeIcon}
-              onPress={() => setPasswordVisible(!passwordVisible)}>
-              <Icon
-                name={passwordVisible ? 'eye' : 'eye-off'}
-                size={24}
-                color="#888"
+            <View style={styles.passwordContainer}>
+              <TextInput
+                style={[styles.input, {flex: 1}]}
+                placeholder="Mật khẩu"
+                placeholderTextColor="#888"
+                secureTextEntry={!passwordVisible}
+                value={password}
+                onChangeText={setPassword}
+                autoCapitalize="none"
               />
-            </TouchableOpacity>
-          </View>
-          <TouchableOpacity
-            style={styles.forgotPassword}
-            onPress={() => navigation.navigate('ForgotPassword')}>
-            <Text style={styles.forgotPasswordText}>Quên mật khẩu?</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.loginButton}
-            onPress={handleLogin}
-            disabled={isLoading} // Vô hiệu hóa khi đang đăng nhập
-          >
-            {isLoading ? (
-              <ActivityIndicator size="small" color="#fff" />
-            ) : (
-              <Text style={styles.loginButtonText}>Đăng nhập</Text>
-            )}
-          </TouchableOpacity>
-          <View style={styles.registerContainer}>
-            <Text style={styles.registerText}>Bạn chưa có tài khoản?</Text>
+              <TouchableOpacity
+                style={styles.eyeIcon}
+                onPress={() => setPasswordVisible(!passwordVisible)}>
+                <Icon
+                  name={passwordVisible ? 'eye' : 'eye-off'}
+                  size={24}
+                  color="#888"
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.rememberMeContainer}>
+              <TouchableOpacity onPress={() => setRememberMe(!rememberMe)}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Icon
+                    name={rememberMe ? 'checkbox' : 'square-outline'}
+                    size={24}
+                    color="#888"
+                  />
+                  <Text style={styles.rememberMeText}>Nhớ tài khoản</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity
-              style={styles.registerButton}
-              onPress={() => navigation.navigate('Register')}>
-              <Text style={styles.registerButtonText}>Đăng ký</Text>
+              style={styles.forgotPassword}
+              onPress={() => navigation.navigate('ForgotPassword')}>
+              <Text style={styles.forgotPasswordText}>Quên mật khẩu?</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => {
+                // handleRememberMe();
+                handleLogin();
+              }}
+              disabled={isLoading} // Vô hiệu hóa khi đang đăng nhập
+            >
+              {isLoading ? (
+                <ActivityIndicator size="small" color="#fff" />
+              ) : (
+                <Text style={styles.loginButtonText}>Đăng nhập</Text>
+              )}
+            </TouchableOpacity>
+            <View style={styles.registerContainer}>
+              <Text style={styles.registerText}>Bạn chưa có tài khoản?</Text>
+              <TouchableOpacity
+                style={styles.registerButton}
+                onPress={() => navigation.navigate('Register')}>
+                <Text style={styles.registerButtonText}>Đăng ký</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
       </ScrollView>
     </SafeAreaView>
   );
@@ -212,5 +254,17 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     fontWeight: 'bold',
     fontSize: 20,
+  },
+  rememberMeContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+    justifyContent: 'flex-start',
+    width: '100%',
+    marginTop: 10,
+  },
+  rememberMeText: {
+    marginLeft: 10,
+    color: '#888',
   },
 });

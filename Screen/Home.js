@@ -111,9 +111,25 @@ const Home = ({ route }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
+      <View style={styles.logoContainer}>
+        <Image source={require('../Images/icon_logo.png')} style={styles.logo} />
+        <View style={styles.iconsContainer}>
+            <TouchableOpacity
+              style={styles.searchButton}
+              onPress={() => navigation.navigate('SearchText', { userId })}
+            >
+              <Icon name="search" size={40} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.favoritesButton}
+              onPress={() => navigation.navigate('Favourite', {  userId })}
+            >
+              <Icon name="heart" size={40} color="red" />
+            </TouchableOpacity>
+          </View>
+      </View>
       <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} showsVerticalScrollIndicator={false}>
         <View style={styles.container}>
-          <Image source={require('../Images/icon_logo.png')} style={styles.logo} />
           <BannerAd />
           <Text style={styles.sectionTitle}>Tất cả các sân</Text>
           <View style={styles.filterButtonsContainer}>
@@ -136,20 +152,7 @@ const Home = ({ route }) => {
             columnWrapperStyle={styles.columnWrapper}
             scrollEnabled={false}
           />
-          <View style={styles.iconsContainer}>
-            <TouchableOpacity
-              style={styles.searchButton}
-              onPress={() => navigation.navigate('SearchText', { product: userId })}
-            >
-              <Icon name="search" size={40} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.favoritesButton}
-              onPress={() => navigation.navigate('Favourite', { product: userId })}
-            >
-              <Icon name="heart" size={40} color="red" />
-            </TouchableOpacity>
-          </View>
+          
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -164,15 +167,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'white',
   },
-  container: {
+  logoContainer: {
     alignItems: 'center',
     backgroundColor: 'white',
   },
   logo: {
-    width: 90,
-    height: 90,
-    marginBottom: 10,
-    alignSelf: 'center',
+    width: 60,
+    height: 70,
+  },
+  container: {
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
   touchableContainer: {
     width: '100%',
@@ -220,12 +225,12 @@ const styles = StyleSheet.create({
   },
   searchButton: {
     borderRadius: 100,
-    padding: 6,
+    padding: 7,
     marginRight: 0,
   },
   favoritesButton: {
     borderRadius: 100,
-    padding: 6,
+    padding: 7,
   },
   columnWrapper: {
     justifyContent: 'space-between',
@@ -244,7 +249,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: 'black',
-
   },
   filterButtonText: {
     fontSize: 16,

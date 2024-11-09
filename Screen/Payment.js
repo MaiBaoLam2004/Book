@@ -42,7 +42,42 @@ const Payment = () => {
             console.error(error);
             Alert.alert('An error occurred. Please try again.');
         }
+    
     };
+    const createNotification = async () => {
+        const notificationData = {
+            userId,
+            message: `Thanh toán của bạn thành công.`,
+            name: product.name,
+            date: date,
+            time: selectedTime,
+            read: false,
+        };
+    
+        try {
+            const response = await fetch(`${URL}:3000/notification`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(notificationData),
+                
+            });
+            console.log('Notification created:', response);
+    
+            if (!response.ok) {
+                console.error('Failed to create notification');
+            }
+        } catch (error) {
+            console.error('Error creating notification:', error);
+        }
+    };
+    
+    // useEffect(() => {
+    //     if (route.params?.paymentSuccess) {
+    //         createNotification();
+    //     }
+    // }, [route.params?.paymentSuccess]);
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -78,7 +113,7 @@ const Payment = () => {
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                 <Icon name="arrow-back" size={30} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.payButton} onPress={handlePayment}>
+            <TouchableOpacity style={styles.payButton} onPress={() =>{handlePayment(), createNotification()}}>
                 <Text style={styles.payButtonText}>Thanh Toán Ngay</Text>
             </TouchableOpacity>
         </ScrollView>

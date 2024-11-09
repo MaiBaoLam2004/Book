@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons'; // Import the icon librar
 import { URL } from './Home';
 
 const Favourite = ({ route }) => {
-  const { userId } = route.params || {}; // Provide a default empty object
+  const { userId } = route.params || { userId: null }; // Provide a default userId as null
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(false); // Add loading state
   const [refreshing, setRefreshing] = useState(false); // Add refreshing state
@@ -24,14 +24,16 @@ const Favourite = ({ route }) => {
     try {
       const response = await fetch(`${URL}:3000/favorites?userId=${userId}`);
       const data = await response.json();
-      setFavorites(data);
+      // Sort the data by created_at in descending order
+      const sortedData = data.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+      setFavorites(sortedData);
     } catch (error) {
       console.error('Error fetching favorites:', error);
     }
   };
 
   useEffect(() => {
-    console.log('Current userId:', userId); // In ra giá trị của userId
+    //console.log('Current userId:', userId); // In ra giá trị của userId
     fetchFavorites();
   }, [userId]);
 

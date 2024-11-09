@@ -191,15 +191,15 @@
   ],
   "favorites": [
     {
-      "id": "2",
-      "name": "Sân B",
-      "location": "456 Đường Elm, Hà Nội",
-      "price_per_hour": 150,
-      "availability": "đã đặt",
-      "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
-      "surface_type": "cỏ nhân tạo",
+      "id": "1",
+      "name": "Sân A",
+      "location": "123 Đường Chính, Hà Nội",
+      "price_per_hour": 100,
+      "availability": "có sẵn",
+      "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
+      "surface_type": "cỏ tự nhiên",
       "max_players": 22,
-      "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg",
+      "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg",
       "userId": "3e9b"
     }
   ],
@@ -260,7 +260,280 @@
       },
       "date": "2024-11-09T14:46:22.042Z",
       "status": true
+    },
+    {
+      "id": "0eb9",
+      "userId": "3e9b",
+      "time": "11:00 - 12:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "2",
+        "name": "Sân B",
+        "location": "456 Đường Elm, Hà Nội",
+        "price_per_hour": 150,
+        "availability": "đã đặt",
+        "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
+        "surface_type": "cỏ nhân tạo",
+        "max_players": 22,
+        "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+      },
+      "date": "2024-11-09T14:57:58.747Z",
+      "status": true
+    },
+    {
+      "id": "1de0",
+      "userId": "3e9b",
+      "time": "11:00 - 12:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "2",
+        "name": "Sân B",
+        "location": "456 Đường Elm, Hà Nội",
+        "price_per_hour": 150,
+        "availability": "đã đặt",
+        "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
+        "surface_type": "cỏ nhân tạo",
+        "max_players": 22,
+        "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+      },
+      "date": "2024-11-09T15:00:00.752Z",
+      "status": true
+    },
+    {
+      "id": "d29b",
+      "userId": "3e9b",
+      "time": "11:00 - 12:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "2",
+        "name": "Sân B",
+        "location": "456 Đường Elm, Hà Nội",
+        "price_per_hour": 150,
+        "availability": "đã đặt",
+        "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
+        "surface_type": "cỏ nhân tạo",
+        "max_players": 22,
+        "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+      },
+      "date": "2024-11-09T15:03:00.898Z",
+      "status": true
+    },
+    {
+      "id": "47e5",
+      "userId": "3e9b",
+      "time": "12:00 - 13:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "2",
+        "name": "Sân B",
+        "location": "456 Đường Elm, Hà Nội",
+        "price_per_hour": 150,
+        "availability": "đã đặt",
+        "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
+        "surface_type": "cỏ nhân tạo",
+        "max_players": 22,
+        "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+      },
+      "date": "2024-11-09T15:03:58.925Z",
+      "status": true
+    },
+    {
+      "id": "0849",
+      "userId": "3e9b",
+      "time": "12:00 - 13:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "1",
+        "name": "Sân A",
+        "location": "123 Đường Chính, Hà Nội",
+        "price_per_hour": 100,
+        "availability": "có sẵn",
+        "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
+        "surface_type": "cỏ tự nhiên",
+        "max_players": 22,
+        "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
+      },
+      "date": "2024-11-09T15:04:04.225Z",
+      "status": true
+    },
+    {
+      "id": "4bc7",
+      "userId": "3e9b",
+      "time": "11:00 - 12:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "2",
+        "name": "Sân B",
+        "location": "456 Đường Elm, Hà Nội",
+        "price_per_hour": 150,
+        "availability": "đã đặt",
+        "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
+        "surface_type": "cỏ nhân tạo",
+        "max_players": 22,
+        "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+      },
+      "date": "2024-11-09T15:05:22.261Z",
+      "status": true
+    },
+    {
+      "id": "6bf0",
+      "userId": "3e9b",
+      "time": "12:00 - 13:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "1",
+        "name": "Sân A",
+        "location": "123 Đường Chính, Hà Nội",
+        "price_per_hour": 100,
+        "availability": "có sẵn",
+        "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
+        "surface_type": "cỏ tự nhiên",
+        "max_players": 22,
+        "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
+      },
+      "date": "2024-11-09T15:08:00.931Z",
+      "status": true
+    },
+    {
+      "id": "7b08",
+      "userId": "3e9b",
+      "time": "10:00 - 11:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "2",
+        "name": "Sân B",
+        "location": "456 Đường Elm, Hà Nội",
+        "price_per_hour": 150,
+        "availability": "đã đặt",
+        "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
+        "surface_type": "cỏ nhân tạo",
+        "max_players": 22,
+        "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+      },
+      "date": "2024-11-09T15:15:42.468Z",
+      "status": true
+    },
+    {
+      "id": "8153",
+      "userId": "3e9b",
+      "time": "13:00 - 14:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "1",
+        "name": "Sân A",
+        "location": "123 Đường Chính, Hà Nội",
+        "price_per_hour": 100,
+        "availability": "có sẵn",
+        "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
+        "surface_type": "cỏ tự nhiên",
+        "max_players": 22,
+        "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg"
+      },
+      "date": "2024-11-09T15:20:17.839Z",
+      "status": true
+    },
+    {
+      "id": "5372",
+      "userId": "3e9b",
+      "time": "10:00 - 11:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "2",
+        "name": "Sân B",
+        "location": "456 Đường Elm, Hà Nội",
+        "price_per_hour": 150,
+        "availability": "đã đặt",
+        "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
+        "surface_type": "cỏ nhân tạo",
+        "max_players": 22,
+        "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+      },
+      "date": "2024-11-09T15:29:32.450Z",
+      "status": true
+    },
+    {
+      "id": "957f",
+      "userId": "3e9b",
+      "time": "10:00 - 11:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "2",
+        "name": "Sân B",
+        "location": "456 Đường Elm, Hà Nội",
+        "price_per_hour": 150,
+        "availability": "đã đặt",
+        "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
+        "surface_type": "cỏ nhân tạo",
+        "max_players": 22,
+        "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+      },
+      "date": "2024-11-09T15:33:04.674Z",
+      "status": true
+    },
+    {
+      "id": "e37f",
+      "userId": "3e9b",
+      "time": "12:00 - 13:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "2",
+        "name": "Sân B",
+        "location": "456 Đường Elm, Hà Nội",
+        "price_per_hour": 150,
+        "availability": "đã đặt",
+        "details": "Sân B nằm ở ngoại ô Hà Nội, có mặt cỏ nhân tạo và khu vực khán đài rộng rãi.",
+        "surface_type": "cỏ nhân tạo",
+        "max_players": 22,
+        "image_url": "https://oct.vn/wp-content/uploads/2019/07/kich-thuoc-san-bong-da-696x372.jpg"
+      },
+      "date": "2024-11-09T15:47:22.634Z",
+      "status": true
+    },
+    {
+      "id": "ddb3",
+      "time": "8:00 - 9:00",
+      "fieldType": "Sân cỏ nhân tạo",
+      "fieldId": {
+        "id": "1",
+        "name": "Sân A",
+        "location": "123 Đường Chính, Hà Nội",
+        "price_per_hour": 100,
+        "availability": "có sẵn",
+        "details": "Sân A nằm ở trung tâm thành phố Hà Nội, có kích thước tiêu chuẩn và hệ thống chiếu sáng hiện đại.",
+        "surface_type": "cỏ tự nhiên",
+        "max_players": 22,
+        "image_url": "https://artcity.vn/wp-content/uploads/2020/07/thiet-ke-banner-bong-da-03.jpg",
+        "userId": "3e9b"
+      },
+      "date": "2024-11-09T15:59:29.310Z",
+      "status": true
     }
   ],
-  "notification": []
+  "notification": [
+    {
+      "id": "0a32",
+      "userId": "3e9b",
+      "message": "Thanh toán của bạn cho Sân B thành công.",
+      "date": "2024-11-09T15:33:04.674Z",
+      "time": "10:00 - 11:00",
+      "read": false
+    },
+    {
+      "id": "c992",
+      "userId": "3e9b",
+      "message": "Thanh toán của bạn thành công.",
+      "name": "Sân B",
+      "date": "2024-11-09T15:47:22.634Z",
+      "time": "12:00 - 13:00",
+      "read": false
+    },
+    {
+      "id": "0fc7",
+      "message": "Thanh toán của bạn thành công.",
+      "name": "Sân A",
+      "date": "2024-11-09T15:59:29.310Z",
+      "time": "8:00 - 9:00",
+      "read": false
+    }
+  ]
 }

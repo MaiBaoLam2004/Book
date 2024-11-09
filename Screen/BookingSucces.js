@@ -13,7 +13,9 @@ const BookingSucces = ({ route, navigation }) => {
     fetch(`${URL}:3000/payments?userId=${userId}`)
       .then(response => response.json())
       .then(data => {
-        setPayments(data);
+        // Sắp xếp danh sách đặt theo ngày giảm dần
+        const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setPayments(sortedData);
       })
       .catch(error => {
         console.error('Lỗi khi lấy thông tin thanh toán:', error);
@@ -56,8 +58,9 @@ const BookingSucces = ({ route, navigation }) => {
       <Text style={styles.text}>Sân: {item.fieldId.name}</Text>
       <Text style={styles.text}>Địa chỉ: {item.fieldId.location}</Text>
       <Text style={styles.text}>Loại sân: {item.fieldType}</Text>
-      <Text style={styles.text}>Ngày: {new Date(item.date).toLocaleDateString()}</Text>
-      <Text style={styles.text}>Thời gian: {item.time}</Text>
+      <Text style={styles.text}>Ngày sân: {new Date(item.date).toLocaleDateString()}</Text>
+      <Text style={styles.text}>Giờ đặt sân: {new Date(item.date).toLocaleTimeString()}</Text>
+      <Text style={styles.text}>Giờ của sân: {item.time}</Text>
       <Text style={styles.text}>Giá: {item.fieldId.price_per_hour}</Text>
       <Text style={[styles.text, item.status ? styles.successText : styles.cancelledText]}>
         Trạng thái:
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   paymentItem: {
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
     marginVertical: 10,
