@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity, Image } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { URL } from './Home';
@@ -10,24 +10,26 @@ const SearchText = ({ route }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [results, setResults] = useState([]);
 
-    const handleSearch = async () => {
+    const handleSearch = async (query) => {
         try {
-            const response = await fetch(`${URL}:3000/football_fields?name_like=${searchQuery}`);
+            const response = await fetch(`${URL}:3000/football_fields?name_like=${query}`);
             const data = await response.json();
-            const filteredData = data.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            const filteredData = data.filter(item => item.name.toLowerCase().includes(query.toLowerCase()));
             setResults(filteredData);
         } catch (error) {
             console.error(error);
         }
     };
 
-    useEffect(() => {
-        if (searchQuery) {
-            handleSearch();
+    const onChangeSearchQuery = (query) => {
+        setSearchQuery(query);
+        if (query) {
+            handleSearch(query);
         } else {
             setResults([]);
         }
-    }, [searchQuery]);
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.searchContainer}>
@@ -40,7 +42,7 @@ const SearchText = ({ route }) => {
                     style={styles.input}
                     placeholder="Tìm kiếm"
                     value={searchQuery}
-                    onChangeText={setSearchQuery}
+                    onChangeText={onChangeSearchQuery}
                     autoCapitalize="none"
                     placeholderTextColor="black"
                 />

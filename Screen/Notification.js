@@ -1,33 +1,40 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, RefreshControl } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { URL } from './Home';
 
 const Notification = ({ route }) => {
   const { userId } = route.params;
   const [notifications, setNotifications] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const fetchNotifications = async () => {
+    try {
+      const response = await fetch(`${URL}:3000/notification?userId=${userId}`);
+      if (response.ok) {
+        const data = await response.json();
+        // Sort notifications by date in descending order
+        const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+        setNotifications(sortedData);
+      } else {
+        console.error('Error fetching notifications:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching notifications:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await fetch(`${URL}:3000/notification?userId=${userId}`);
-        if (response.ok) {
-          const data = await response.json();
-          // Sort notifications by date in descending order
-          const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-          setNotifications(sortedData);
-        } else {
-          console.error('Error fetching notifications:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error fetching notifications:', error);
-      }
-    };
-
     fetchNotifications();
-    const intervalId = setInterval(fetchNotifications, 60000); // Fetch notifications every 60 seconds
+    const intervalId = setInterval(fetchNotifications, 6000); // Fetch notifications every 60 seconds
 
     return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, [userId]);
+
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchNotifications();
+    setRefreshing(false);
+  };
 
   return (
     <View style={styles.container}>
@@ -46,6 +53,9 @@ const Notification = ({ route }) => {
               <Text style={styles.notificationText}>Giờ của sân: {item.time}</Text>
             </View>
           )}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       ) : (
         <Text>Không có thông báo</Text>
