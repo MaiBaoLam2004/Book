@@ -2,6 +2,7 @@ import {StyleSheet, Text, View, FlatList, TouchableOpacity} from 'react-native';
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const hours = Array.from({length: 15}, (_, i) => {
     const startHour = i + 7;
@@ -24,6 +25,8 @@ const SetTime = ({ route }) => {
     const [selectedHour, setSelectedHour] = useState(null);
     const [selectedFieldType, setSelectedFieldType] = useState(null);
     const [showFieldTypes, setShowFieldTypes] = useState(false);
+    const [date, setDate] = useState(new Date());
+    const [showDatePicker, setShowDatePicker] = useState(false);
 
     const handlePress = (item) => {
         if (selectedHour === item.id) {
@@ -43,15 +46,32 @@ const SetTime = ({ route }) => {
         if (selectedHour !== null && selectedFieldType !== null) {
             const selectedTime = hours.find(hour => hour.id === selectedHour).time;
             const selectedField = fieldTypes.find(field => field.id === selectedFieldType).type;
-            navigation.navigate('Payment', { selectedTime, selectedField, userId, product });
+            navigation.navigate('Payment', { selectedTime, selectedField, userId, product, date: date.toISOString() });
         } else {
             alert('Vui lòng chọn khung giờ và loại sân.');
         }
     };
 
+    const handleDateChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShowDatePicker(false);
+        setDate(currentDate);
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>Khung giờ đặt sân</Text>
+            <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+                <Text style={styles.headerTextTime}>Ngày: {date.toLocaleDateString()}</Text>
+            </TouchableOpacity>
+            {showDatePicker && (
+                <DateTimePicker
+                    value={date}
+                    mode="date"
+                    display="default"
+                    onChange={handleDateChange}
+                />
+            )}
             <FlatList
                 data={hours}
                 showsVerticalScrollIndicator={false}
@@ -105,6 +125,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'black',
     },
+    headerTextTime: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'black',
+    },
     timeSlot: {
         padding: 20,
         marginVertical: 8,
@@ -143,17 +168,11 @@ const styles = StyleSheet.create({
         color: '#333',
     },
     button: {
-        marginTop: 20,
         backgroundColor: '#007BFF',
-        borderRadius: 5,
+        borderRadius: 20,
         paddingVertical: 15,
         paddingHorizontal: 25,
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {width: 0, height: 2},
-        shadowOpacity: 0.3,
-        shadowRadius: 5,
-        elevation: 5,
     },
     buttonText: {
         color: 'white',

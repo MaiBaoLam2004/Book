@@ -3,10 +3,13 @@ import React from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { URL } from './Home';
+import { useEffect } from 'react';
+import { Alert } from 'react-native';
 
-const Payment = ({ route }) => {
+const Payment = () => {
     const navigation = useNavigation();
-    const { selectedTime, selectedField, userId, product } = route.params; // Retrieve userId from route params
+    const route = useRoute();
+    const { selectedTime, selectedField, userId, product, date } = route.params; // Retrieve userId from route params
 
     // console.log('userId pay:', userId);
     // console.log('product pay:', product);
@@ -16,6 +19,7 @@ const Payment = ({ route }) => {
             time: selectedTime,
             fieldType: selectedField,
             fieldId: product,
+            date: date,
             status: true,
         };
 
@@ -30,12 +34,13 @@ const Payment = ({ route }) => {
 
             if (response.ok) {
                 navigation.navigate('Payok');
+                console.log('Payment successful', response);
             } else {
-                alert('Payment failed. Please try again.');
+                Alert.alert('Payment failed. Please try again.');
             }
         } catch (error) {
             console.error(error);
-            alert('An error occurred. Please try again.');
+            Alert.alert('An error occurred. Please try again.');
         }
     };
 

@@ -11,41 +11,26 @@ const BannerAd = ({ onPress }) => {
   const [banners] = useState([
     {
       id: 1,
-      productId: 1,
-      name: 'Sân bóng',
-      availability: 'có sẵn',
       image_url:
         'https://image.dienthoaivui.com.vn/x,webp,q90/https://dashboard.dienthoaivui.com.vn/uploads/dashboard/editor_upload/hinh-nen-bong-da-1.jpg',
     },
     {
       id: 2,
-      productId: 2,
-      name: 'Sân bóng',
-      availability: 'có sẵn',
       image_url:
-        'https://kenh14cdn.com/zoom/600_315/2018/7/2/photo1530500879363-15305008793631926738934.jpg',
+        'https://static.independent.co.uk/2021/08/29/14/85ace4848b73408a1c8daaf377214744Y29udGVudHNlYXJjaGFwaSwxNjMwMzI3OTkz-2.62001797.jpg',
     },
     {
       id: 3,
-      productId: 3,
-      name: 'Sân bóng',
-      availability: 'có sẵn',
       image_url:
         'https://cdn.bongdaplus.vn/Assets/Media/2022/11/25/41/ronaldo7.jpg',
     },
     {
       id: 4,
-      productId: 4,
-      name: 'Tình yêu nồng cháy',
-      availability: 'có sẵn',
       image_url:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTowJiIx7fQdG7c8MmKzWrRAoC1NDA71uSkdQ&s',
+        'https://images.teamtalk.com/content/uploads/2022/09/22210708/man-utd-centre-back-harry-maguire.jpg',
     },
     {
       id: 5,
-      productId: 5,
-      name: 'Ván cờ định mệnh',
-      availability: 'có sẵn',
       image_url:
         'https://media-cdn-v2.laodong.vn/Storage/NewsPortal/2022/11/20/1118715/Messi-Ronaldo.jpg',
     },

@@ -139,13 +139,13 @@ const Home = ({ route }) => {
           <View style={styles.iconsContainer}>
             <TouchableOpacity
               style={styles.searchButton}
-              onPress={() => navigation.navigate('SearchText')}
+              onPress={() => navigation.navigate('SearchText', { product: userId })}
             >
               <Icon name="search" size={40} color="black" />
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.favoritesButton}
-              onPress={() => navigation.navigate('Favourite', { userId })}
+              onPress={() => navigation.navigate('Favourite', { product: userId })}
             >
               <Icon name="heart" size={40} color="red" />
             </TouchableOpacity>

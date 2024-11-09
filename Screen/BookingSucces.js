@@ -54,11 +54,14 @@ const BookingSucces = ({ route, navigation }) => {
   const renderPayment = ({ item }) => (
     <View style={styles.paymentItem}>
       <Text style={styles.text}>Sân: {item.fieldId.name}</Text>
+      <Text style={styles.text}>Địa chỉ: {item.fieldId.location}</Text>
       <Text style={styles.text}>Loại sân: {item.fieldType}</Text>
+      <Text style={styles.text}>Ngày: {new Date(item.date).toLocaleDateString()}</Text>
       <Text style={styles.text}>Thời gian: {item.time}</Text>
       <Text style={styles.text}>Giá: {item.fieldId.price_per_hour}</Text>
       <Text style={[styles.text, item.status ? styles.successText : styles.cancelledText]}>
-        {item.status ? 'Đặt thành công' : 'Đã huỷ'}
+        Trạng thái:
+        {item.status ? ' Đặt thành công' : ' Đã huỷ'}
       </Text>
       {item.status && (
         <TouchableOpacity onPress={() => handleCancel(item.id)} style={styles.cancelButton}>

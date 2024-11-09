@@ -147,8 +147,9 @@ const Users = ({route}) => {
             )}
           </View>
         </TouchableOpacity>
-        <Text style={styles.userNameText}>ID người dùng: {userId}</Text>
-        <Text style={styles.userNameText}>Tên người dùng: {username}</Text>
+        {/* <Text style={styles.userNameText}>ID người dùng: {userId}</Text> */}
+        {/* <Text style={styles.userNameText}>Tên người dùng: {username}</Text> */}
+        <Text style={styles.userNameText}>Xin chào: {username}</Text>
         <TouchableOpacity
           style={styles.bookingButton}
           onPress={() => navigation.navigate('BookingSucces', { userId})}>

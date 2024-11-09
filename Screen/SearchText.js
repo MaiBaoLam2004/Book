@@ -1,10 +1,11 @@
-import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, FlatList, TouchableOpacity, Image } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { URL } from './Home';
 
-const SearchText = () => {
+const SearchText = ({ route }) => {
+    const { userId, product } = route.params;
     const navigation = useNavigation();
     const [searchQuery, setSearchQuery] = useState('');
     const [results, setResults] = useState([]);
@@ -52,8 +53,14 @@ const SearchText = () => {
                         <TouchableOpacity
                             style={styles.item}
                             onPress={() => navigation.navigate('Detail', { product: item })}>
-                            <Text style={styles.text}>{item.name}</Text>
-                            <Text style={styles.text}>{item.location}</Text>
+                            <Image source={{ uri: item.image_url }} style={styles.image} />
+                            <View style={styles.textContainer}>
+                                <Text style={styles.text}>Tên sân: {item.name}</Text>
+                                <Text style={styles.text}>Địa chỉ: {item.location}</Text>
+                                <Text style={styles.text}>
+                                    Số lượng người chơi: {item.max_players}
+                                </Text>
+                            </View>
                         </TouchableOpacity>
                     )}
                 />
@@ -88,12 +95,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     item: {
-        padding: 16,
+        flexDirection: 'row',
+        padding: 10,
         borderWidth: 1,
         borderRadius: 20,
         backgroundColor: 'white',
         marginTop: 10,
-        borderWidth: 1,
         borderColor: 'black',
     },
     backButton: {
@@ -104,6 +111,13 @@ const styles = StyleSheet.create({
     },
     text: {
         color: 'black',
+        fontSize: 16,
+        fontWeight: 'bold',
+        width: '100%',
+    },
+    textContainer: {
+        flex: 1,
+        paddingLeft: 10,
     },
     noResultsContainer: {
         flex: 1,
@@ -117,4 +131,12 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold',
     },
+    image: {
+        width: 150,
+        height: 100,
+        borderRadius: 20,
+        alignSelf: 'center',
+        borderWidth: 1,
+        borderColor: 'black',
+    }
 });
