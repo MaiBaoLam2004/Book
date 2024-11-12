@@ -27,7 +27,7 @@ const Users = ({route}) => {
       setLoading(true);
       try {
         const response = await fetch(
-          `${URL}:3000/users/${userId}`,
+          `${URL}:3000/users/${userId.id}`,
         );
         if (response.ok) {
           const user = await response.json();
@@ -91,7 +91,7 @@ const Users = ({route}) => {
 
     try {
       const response = await fetch(
-        `${URL}:3000/users/${userId}`,
+        `${URL}:3000/users/${userId.id}`,
         {
           method: 'PATCH',
           headers: {

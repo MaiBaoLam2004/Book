@@ -50,11 +50,11 @@ const Home = () => {
                                     style={{ marginLeft: 20 }}
                                 />
                                 <ListItemSecondaryAction>
-                                    <div >
+                                    <div style={{margin:10, marginBottom:10}}>
                                         <div style={{ backgroundColor: 'green', color: 'white', width: 60, height: 40, textAlign: 'center' }}>
                                             Sửa
                                         </div>
-                                        <div style={{ backgroundColor: 'red', color: 'white', width: 60, height: 40, marginLeft: 10, textAlign: 'center' }}>
+                                        <div style={{ backgroundColor: 'red', color: 'white', width: 60, height: 40, textAlign: 'center' }}>
                                             Xoá
                                         </div>
                                     </div>

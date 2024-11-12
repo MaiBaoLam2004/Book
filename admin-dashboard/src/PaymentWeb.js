@@ -29,9 +29,9 @@ export default function PaymentWeb() {
     };
 
     return (
-        <Grid container style={{ height: '100vh', }}>
+        <Grid container style={{ height: 'calc(100vh - 64px)', overflowY: 'auto', marginTop: 35, marginBottom: 30 }}>
             <Grid item xs={12} >
-                <Paper style={{ marginTop: 35, marginBottom: 30 }}>
+                <Paper >
                     {loading ? (
                         <CircularProgress />
                     ) : (
@@ -52,6 +52,8 @@ export default function PaymentWeb() {
                                     <ListItemText
                                         secondary={
                                             <>
+                                                <div>Email người dùng: {payment.userId.email}</div>
+                                                <div>Tên người dùng: {payment.userId.username}</div>
                                                 <div>Loại sân: {payment.fieldType}</div>
                                                 <div>Thời gian sân: {payment.time}</div>
                                                 <div>Ngày đặt: {new Date(payment.date).toLocaleDateString()}</div>

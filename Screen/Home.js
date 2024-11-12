@@ -77,6 +77,7 @@ const Home = ({ route }) => {
         console.error(`Lỗi khi ${isFavorite ? 'xóa' : 'thêm'} yêu thích:`, errorText);
       } else {
         console.log(`${isFavorite ? 'Xóa' : 'Thêm'} yêu thích thành công:`, item);
+        console.log('Danh sách yêu thích:', userId);
         setFavorites(updatedFavorites);
       }
     } catch (error) {

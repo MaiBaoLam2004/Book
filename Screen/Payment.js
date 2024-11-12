@@ -9,13 +9,12 @@ import { Alert } from 'react-native';
 const Payment = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const { selectedTime, selectedField, userId, product, date } = route.params; // Retrieve userId from route params
+    const { selectedTime, selectedField, userId, email, product, date } = route.params; // Retrieve email from route params
 
-    // console.log('userId pay:', userId);
-    // console.log('product pay:', product);
     const handlePayment = async () => {
         const paymentData = {
             userId,
+            email:email,
             time: selectedTime,
             fieldType: selectedField,
             fieldId: product,
@@ -42,8 +41,8 @@ const Payment = () => {
             console.error(error);
             Alert.alert('An error occurred. Please try again.');
         }
-    
     };
+
     const createNotification = async () => {
         const notificationData = {
             userId,
@@ -53,7 +52,7 @@ const Payment = () => {
             time: selectedTime,
             read: false,
         };
-    
+
         try {
             const response = await fetch(`${URL}:3000/notification`, {
                 method: 'POST',
@@ -61,10 +60,9 @@ const Payment = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(notificationData),
-                
             });
             console.log('Notification created:', response);
-    
+
             if (!response.ok) {
                 console.error('Failed to create notification');
             }
@@ -72,12 +70,6 @@ const Payment = () => {
             console.error('Error creating notification:', error);
         }
     };
-    
-    // useEffect(() => {
-    //     if (route.params?.paymentSuccess) {
-    //         createNotification();
-    //     }
-    // }, [route.params?.paymentSuccess]);
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -113,7 +105,7 @@ const Payment = () => {
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
                 <Icon name="arrow-back" size={30} color="white" />
             </TouchableOpacity>
-            <TouchableOpacity style={styles.payButton} onPress={() =>{handlePayment(), createNotification()}}>
+            <TouchableOpacity style={styles.payButton} onPress={() => { handlePayment(), createNotification() }}>
                 <Text style={styles.payButtonText}>Thanh Toán Ngay</Text>
             </TouchableOpacity>
         </ScrollView>

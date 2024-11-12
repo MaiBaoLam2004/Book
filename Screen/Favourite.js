@@ -116,7 +116,7 @@ const Favourite = ({ route }) => {
         <FlatList
           data={favorites}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigation.navigate('Detail', { product: item })}>
+            <TouchableOpacity onPress={() => navigation.navigate('Detail', { product: item,userId })}>
               <View style={styles.itemContainer}>
                 <Image source={{ uri: item.image_url }} style={styles.image} resizeMode='cover' />
                 <View>

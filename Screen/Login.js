@@ -45,7 +45,7 @@ function Login() {
       if (user) {
         //const userId = user.id;
         navigation.navigate('BottomTabNav', {
-            userId: user.id,
+            userId: user,
             // username: user.username,
             // favorites: user.favorites,
           
@@ -67,7 +67,7 @@ function Login() {
       if (rememberedUsername && rememberedPassword) {
         setUsername(rememberedUsername);
         setPassword(rememberedPassword);
-        handleLogin();
+        
       }
     };
     checkRememberedUser();
