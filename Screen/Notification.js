@@ -70,7 +70,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1,
-    padding: 20,
+    paddingTop: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   notificationItem: {
     padding: 10,
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: 'black',
     borderWidth: 1,
-    marginTop: 10,
+    marginBottom: 10,
   },
   notificationTitle: {
     fontWeight: 'bold',

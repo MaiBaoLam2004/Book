@@ -43,6 +43,7 @@ export default function PaymentWeb() {
                                     onClick={() => handlePaymentClick(payment)}
                                     sx={{
                                         border: '1px solid #1976d2',
+                                        borderRadius: '20px',
                                         marginBottom: '10px',
                                         '&:hover': {
                                             background: 'linear-gradient(to bottom, #05999E , #CBE7E3)', // Change background color on hover
@@ -52,23 +53,23 @@ export default function PaymentWeb() {
                                     <ListItemText
                                         secondary={
                                             <>
-                                                <div>Email người dùng: {payment.userId.email}</div>
-                                                <div>Tên người dùng: {payment.userId.username}</div>
-                                                <div>Loại sân: {payment.fieldType}</div>
-                                                <div>Thời gian sân: {payment.time}</div>
-                                                <div>Ngày đặt: {new Date(payment.date).toLocaleDateString()}</div>
-                                                <div>Giờ đặt: {new Date(payment.date).toLocaleTimeString()}</div>
-                                                <div>Thông tin sân:</div>
+                                                <div style={{ color: 'black' }}>Email người dùng: {payment.userId.email}</div>
+                                                <div style={{ color: 'black' }}>Tên người dùng: {payment.userId.username}</div>
+                                                <div style={{ color: 'black' }}>Loại sân: {payment.fieldType}</div>
+                                                <div style={{ color: 'black' }}>Thời gian sân: {payment.time}</div>
+                                                <div style={{ color: 'black' }}>Ngày đặt: {new Date(payment.date).toLocaleDateString()}</div>
+                                                <div style={{ color: 'black' }}>Giờ đặt: {new Date(payment.date).toLocaleTimeString()}</div>
+                                                <div style={{ color: 'black' }}>Thông tin sân:</div>
                                                 <div style={{
                                                     display: 'flex', alignItems: 'center', border: '1px solid #1976d2',
                                                     margin: '10px', gap: '10px', padding: '10px'
                                                 }}>
                                                     <img src={payment.fieldId.image_url} alt={payment.fieldId.name} style={{ width: '15%', height: 'auto', marginRight: '10px' }} />
                                                     <div>
-                                                        <div>Tên sân: {payment.fieldId.name}</div>
-                                                        <div>Địa chỉ: {payment.fieldId.location}</div>
-                                                        <div>Giá: {payment.fieldId.price_per_hour}</div>
-                                                        <div>Số lượng người: {payment.fieldId.max_players}</div>
+                                                        <div style={{ color: 'black' }}>Tên sân: {payment.fieldId.name}</div>
+                                                        <div style={{ color: 'black' }}>Địa chỉ: {payment.fieldId.location}</div>
+                                                        <div style={{ color: 'black' }}>Giá: {payment.fieldId.price_per_hour}</div>
+                                                        <div style={{ color: 'black' }}>Số lượng người: {payment.fieldId.max_players}</div>
                                                     </div>
                                                 </div>
                                             </>

@@ -37,6 +37,10 @@ const Favourite = ({ route }) => {
     fetchFavorites();
   }, [userId]);
 
+  useEffect(() => {
+    fetchFavorites();
+  }, [favorites]);
+
   const onRefresh = async () => {
     setRefreshing(true);
     await fetchFavorites();
@@ -116,7 +120,7 @@ const Favourite = ({ route }) => {
         <FlatList
           data={favorites}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigation.navigate('Detail', { product: item,userId })}>
+            <TouchableOpacity onPress={() => navigation.navigate('Detail', { product: item, userId })}>
               <View style={styles.itemContainer}>
                 <Image source={{ uri: item.image_url }} style={styles.image} resizeMode='cover' />
                 <View>

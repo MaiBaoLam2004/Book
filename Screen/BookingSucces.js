@@ -10,7 +10,7 @@ const BookingSucces = ({ route, navigation }) => {
 
   useEffect(() => {
     // Lấy thông tin thanh toán cho người dùng
-    fetch(`${URL}:3000/payments?userId=${userId}`)
+    fetch(`${URL}:3000/payments?userId=${userId.id}`)
       .then(response => response.json())
       .then(data => {
         // Sắp xếp danh sách đặt theo ngày giảm dần

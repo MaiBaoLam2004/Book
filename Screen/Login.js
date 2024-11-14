@@ -24,31 +24,39 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Thêm trạng thái loading
+  const [isLoading, setIsLoading] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const navigation = useNavigation();
 
-  const handleLogin = async () => {
-    if (!username || !password) {
+  const handleLogin = async (usernameParam, passwordParam) => {
+    const user = usernameParam || username;
+    const pass = passwordParam || password;
+
+    if (!user || !pass) {
       Alert.alert('Lỗi', 'Vui lòng nhập đầy đủ tài khoản và mật khẩu');
       return;
     }
 
-    setIsLoading(true); // Hiển thị trạng thái loading khi bắt đầu đăng nhập
+    setIsLoading(true);
     try {
       const response = await fetch(`${URL}:3000/users`);
       const users = await response.json();
 
-      const user = users.find(
-        u => u.username === username && u.password === password,
+      const foundUser = users.find(
+        u => u.username === user && u.password === pass,
       );
 
-      if (user) {
-        //const userId = user.id;
+      if (foundUser) {
+        if (rememberMe) {
+          await AsyncStorage.setItem('rememberedUsername', user);
+          await AsyncStorage.setItem('rememberedPassword', pass);
+        } else {
+          await AsyncStorage.removeItem('rememberedUsername');
+          await AsyncStorage.removeItem('rememberedPassword');
+        }
+
         navigation.navigate('BottomTabNav', {
-            userId: user,
-            // username: user.username,
-            // favorites: user.favorites,
-          
+          userId: foundUser,
         });
       } else {
         Alert.alert('Đăng nhập thất bại', 'Tài khoản hoặc mật khẩu không đúng');
@@ -56,7 +64,7 @@ function Login() {
     } catch (error) {
       Alert.alert('Lỗi', 'Không thể kết nối đến máy chủ');
     } finally {
-      setIsLoading(false); // Tắt trạng thái loading khi kết thúc đăng nhập
+      setIsLoading(false);
     }
   };
 
@@ -67,24 +75,12 @@ function Login() {
       if (rememberedUsername && rememberedPassword) {
         setUsername(rememberedUsername);
         setPassword(rememberedPassword);
-        
+        handleLogin(rememberedUsername, rememberedPassword);
       }
     };
     checkRememberedUser();
   }, []);
-  
-  // const handleRememberMe = async () => {
-  //   if (rememberMe) {
-  //     await AsyncStorage.setItem('rememberedUsername', username);
-  //     await AsyncStorage.setItem('rememberedPassword', password);
-  //   } else {
-  //     await AsyncStorage.removeItem('rememberedUsername');
-  //     await AsyncStorage.removeItem('rememberedPassword');
-  //   }
-  // };
-  
-  const [rememberMe, setRememberMe] = useState(false);
-  
+
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center', backgroundColor: 'white'}}>
       <ScrollView>
@@ -144,11 +140,8 @@ function Login() {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.loginButton}
-              onPress={() => {
-                // handleRememberMe();
-                handleLogin();
-              }}
-              disabled={isLoading} // Vô hiệu hóa khi đang đăng nhập
+              onPress={() => handleLogin()}
+              disabled={isLoading}
             >
               {isLoading ? (
                 <ActivityIndicator size="small" color="#fff" />
@@ -175,7 +168,6 @@ export default Login;
 
 const styles = StyleSheet.create({
   container: {
-    //flex: 1,
     alignItems: 'center',
     padding: 20,
     backgroundColor: 'white',

@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { URL } from './Home';
 
 const SearchText = ({ route }) => {
-    const { userId, product } = route.params;
+    const { userId } = route.params;
     const navigation = useNavigation();
     const [searchQuery, setSearchQuery] = useState('');
     const [results, setResults] = useState([]);
@@ -51,16 +51,17 @@ const SearchText = ({ route }) => {
                 <FlatList
                     data={results}
                     keyExtractor={(item) => item.id}
+                    style={{marginTop: 10}}
                     renderItem={({ item }) => (
                         <TouchableOpacity
                             style={styles.item}
-                            onPress={() => navigation.navigate('Detail', { product: item })}>
+                            onPress={() => navigation.navigate('Detail', { product: item, userId })}>
                             <Image source={{ uri: item.image_url }} style={styles.image} />
                             <View style={styles.textContainer}>
                                 <Text style={styles.text}>Tên sân: {item.name}</Text>
                                 <Text style={styles.text}>Địa chỉ: {item.location}</Text>
                                 <Text style={styles.text}>
-                                    Số lượng người chơi: {item.max_players}
+                                    Người chơi: {item.max_players}
                                 </Text>
                             </View>
                         </TouchableOpacity>
@@ -80,7 +81,9 @@ export default SearchText;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10,
+        paddingRight: 10,
+        paddingLeft: 10,
+        paddingTop: 10,
         backgroundColor: 'white',
     },
     searchContainer: {
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 20,
         backgroundColor: 'white',
-        marginTop: 10,
+        marginBottom: 10,
         borderColor: 'black',
     },
     backButton: {
